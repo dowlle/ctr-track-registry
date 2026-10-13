@@ -1,0 +1,75 @@
+{
+  "ap_name": "Cursed Trial Roulette",
+  "block_index": 20,
+  "credits": [
+    {
+      "name": "Blounard",
+      "role": "track"
+    }
+  ],
+  "display_title": "Cursed Trial Roulette",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 35,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "7ba88e5081821afd86714c83e72dcb4410ae39e4bfd3094c7b84404c547f0fdb",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "87127624",
+          "vrm": "8f88b98b"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "5452798160a19b3f9d4d756e239953192665ed493b7b2c77acf5e1307b88a51b",
+          "size": 2460996
+        },
+        "vrm": {
+          "sha256": "f5906d50b573e98229ffe06515c761acf7afb3fe68b680cc31c6fb5abaf63151",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "8f88b98b",
+            "download_id": 234,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "87127624",
+            "download_id": 233,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "cursed-trial-roulette"
+}

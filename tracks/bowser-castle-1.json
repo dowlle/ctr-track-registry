@@ -1,0 +1,85 @@
+{
+  "ap_name": "Bowser Castle 1",
+  "block_index": 10,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Bowser Castle 1",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 65,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "92d481d56fcc6b9c06e541b8a9a089f54c768950012f4c233f9b1fbdc248c0ba",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "e94f7fbc",
+          "sca": "e2120f71",
+          "vrm": "2cb77fae"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "0b59b54ac3d902d43ee7b798d45dd4979aa5859520460282d22fb6bc85dcbcd9",
+          "size": 1339928
+        },
+        "sca": {
+          "sha256": "6b0f779d2dae4de6d42eeccfe05d8fc8b7a67d633a092cc06d5a95ebc895aa41",
+          "size": 342236
+        },
+        "vrm": {
+          "sha256": "4b8db492fd0fde869d1d705379fe5623f0b2ed47047f83b2f3dc08c2db73ee12",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "e2120f71",
+            "download_id": 609,
+            "kind": "sca"
+          },
+          {
+            "crc32": "2cb77fae",
+            "download_id": 562,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "e94f7fbc",
+            "download_id": 561,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "bowser-castle-1"
+}

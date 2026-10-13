@@ -1,0 +1,85 @@
+{
+  "ap_name": "The Dairy Track",
+  "block_index": 72,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "The Dairy Track",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 60,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "efe7900a9c4905ce6e91b0d72e72b52966b621ce060155f7a8098f91720cf0ad",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "77bba8fe",
+          "sca": "cba43fe0",
+          "vrm": "bdf6a946"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "ffdd944c6fc721d59aefdf23c2f90a9f7e4bf341bf952b501286b1354718fc50",
+          "size": 1145868
+        },
+        "sca": {
+          "sha256": "c93706cfc5aa4b0904a562429fb7f9dd966837735705ee0dfde2d27ac68017f0",
+          "size": 319696
+        },
+        "vrm": {
+          "sha256": "0d5822b4ea8ce5279cbdc7c470db757ee0d2968207348469f35a7d3c682006fb",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "cba43fe0",
+            "download_id": 531,
+            "kind": "sca"
+          },
+          {
+            "crc32": "bdf6a946",
+            "download_id": 530,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "77bba8fe",
+            "download_id": 529,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "the-dairy-track"
+}

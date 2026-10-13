@@ -1,0 +1,165 @@
+{
+  "ap_name": "Country Speedway",
+  "block_index": 17,
+  "credits": [
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Country Speedway",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 24,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "c87e79818be537c261f0d223fe75443c9a728b4675233a5432bf69e287622cd2",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "8e8f1ec2",
+          "vrm": "b60362fb"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "58d3f92a33e6ac0bc7ad9d176a09e87af011ba0493b63349164af0371351ee9e",
+          "size": 780804
+        },
+        "vrm": {
+          "sha256": "596054d784cca70c52136b6999706efad59fe0e939759aa5cb0bbe8a7867f383",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "8e8f1ec2",
+            "download_id": 140,
+            "kind": "lev"
+          },
+          {
+            "crc32": "b60362fb",
+            "download_id": 141,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.2.1"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "15416baffd043b0d6386899de2343791ab7d9083ddd92d849d7733a1d6572a70",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "7fe7de32",
+          "vrm": "b60362fb"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "e088948ad5e3ca41e67505a24ec1f58be4b6199ab62c6166bc978e9e99096564",
+          "size": 780804
+        },
+        "vrm": {
+          "sha256": "596054d784cca70c52136b6999706efad59fe0e939759aa5cb0bbe8a7867f383",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "b60362fb",
+            "download_id": 124,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "7fe7de32",
+            "download_id": 123,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.2.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "07a627e0d2163470935a74d638e1fd530c12dfb3fd1d6a590f59d9a312d81095",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "319491c0",
+          "vrm": "4c285c01"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "454ec5e80701a2d8945749e0f5268ab83c707a8351d07464af3b53ed23001862",
+          "size": 667992
+        },
+        "vrm": {
+          "sha256": "fcb008db3ea645148f1c406dfa8eca37400ecc5c3d7aaacdde8e971c8a4e1c86",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "4c285c01",
+            "download_id": 91,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "319491c0",
+            "download_id": 90,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "country-speedway"
+}

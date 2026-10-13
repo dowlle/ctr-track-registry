@@ -1,0 +1,75 @@
+{
+  "ap_name": "Papu's SG Temple",
+  "block_index": 56,
+  "credits": [
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Papu's SG Temple",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 13,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "9618524d4288be7bac2d9bb1f28c3600bcb862b038f00f858e433ea5f84593f7",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "08371abe",
+          "vrm": "b147eaba"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "9ddff5eac7ea132aa47c9dbc22f5a5fcc18cc3a1a10d6546a10312b13a6d0c6d",
+          "size": 558564
+        },
+        "vrm": {
+          "sha256": "81d549f574db9a117f35b3ea116772e965639e9927d98b04c83a59bcb8107431",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "08371abe",
+            "download_id": 54,
+            "kind": "lev"
+          },
+          {
+            "crc32": "b147eaba",
+            "download_id": 55,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "papu-s-sg-temple"
+}

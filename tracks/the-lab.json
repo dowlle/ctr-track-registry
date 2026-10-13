@@ -1,0 +1,75 @@
+{
+  "ap_name": "The Lab",
+  "block_index": 73,
+  "credits": [
+    {
+      "name": "Tramadolls",
+      "role": "track"
+    }
+  ],
+  "display_title": "The Lab",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 40,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "88d9cd71c8b030c46404c59c0cca50ce0e5d899433d4446aa30a96df3bcb2e29",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "30e29b78",
+          "vrm": "28f82917"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "178cfc70ad88c344b74745de1dcd6c56f14474e1686d2a3d5056c47017357c41",
+          "size": 2312632
+        },
+        "vrm": {
+          "sha256": "63c94b3cf401e39676c4eb44b4fe243c71631e2b9b07ee3101e8f83b1dbe9ab2",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "28f82917",
+            "download_id": 264,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "30e29b78",
+            "download_id": 263,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "the-lab"
+}

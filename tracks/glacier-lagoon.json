@@ -1,0 +1,75 @@
+{
+  "ap_name": "Glacier Lagoon",
+  "block_index": 33,
+  "credits": [
+    {
+      "name": "EarlGrey",
+      "role": "track"
+    }
+  ],
+  "display_title": "Glacier Lagoon",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 118,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "5e47c1023081c76f90ec2aaefcd60f3498d97d5c5401473d823ce7fcccbdb249",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "88941cdf",
+          "vrm": "05e7b41b"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "45da2efe1e4dc61d3448d84396b407ba0d620e99771b32ca1d4f034ffb296350",
+          "size": 684768
+        },
+        "vrm": {
+          "sha256": "4f72bbb2c788705465fd228fe7548d7069b65208c6d6b53b9c80a5524c4db451",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "05e7b41b",
+            "download_id": 838,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "88941cdf",
+            "download_id": 837,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "glacier-lagoon"
+}

@@ -1,0 +1,75 @@
+{
+  "ap_name": "Arctic Alleyway",
+  "block_index": 6,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Arctic Alleyway",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 38,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "8b0de5a5d54abf0d5cd1703627a01b2bf27f600e00bd5f5842b9ece24d3a891a",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "e5d8e2b9",
+          "vrm": "686bcb04"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "a31f66f5ac7d0fcf1a99cfa4af0d956e655f51a3fbc27b3511e24e23f139dda9",
+          "size": 810528
+        },
+        "vrm": {
+          "sha256": "a04b16efb8de10d96ef7e396cd6518beff43c7992df1a0342e53674d58741da1",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "686bcb04",
+            "download_id": 256,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "e5d8e2b9",
+            "download_id": 255,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "arctic-alleyway"
+}

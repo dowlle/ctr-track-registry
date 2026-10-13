@@ -1,0 +1,85 @@
+{
+  "ap_name": "Vanilla Lake 2",
+  "block_index": 80,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Vanilla Lake 2",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 117,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "94e01d0a794ef232df1eaa10f14ab8364ef0853a4e8dd6dedad751da3da2d445",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "f707a5d1",
+          "sca": "0381a21e",
+          "vrm": "cca9d8cc"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "12f16f986e62958d99e04532e249759e46db80f263e703df50b1f3503a1ce09a",
+          "size": 705920
+        },
+        "sca": {
+          "sha256": "f428b93f21b55739a44227a3fb30ae3c99fa89713010045d98c53fb2ca72e9fd",
+          "size": 334032
+        },
+        "vrm": {
+          "sha256": "b419364881835c663360a8125456fa5365fbb16a278d72d19d4aa78782c9c64d",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "0381a21e",
+            "download_id": 833,
+            "kind": "sca"
+          },
+          {
+            "crc32": "cca9d8cc",
+            "download_id": 832,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "f707a5d1",
+            "download_id": 831,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "vanilla-lake-2"
+}

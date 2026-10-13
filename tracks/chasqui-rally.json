@@ -1,0 +1,310 @@
+{
+  "ap_name": "Chasqui Rally",
+  "block_index": 12,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Chasqui Rally",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 41,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "7269c65fa238d1dad1f3b24490312d3d02c33bc452e5eaa19b488937506ca328",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "2d217a2a",
+          "vrm": "140ddb3e"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "421c54ae016fce4592804f122ee8d9ac35318ec98f04bec7377e3f4b39d97cc2",
+          "size": 1284196
+        },
+        "vrm": {
+          "sha256": "30ae02b8700532b24ff50ec1cd83214a8ca63f39ac637b2d3547acebfce6e1c8",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "140ddb3e",
+            "download_id": 854,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "2d217a2a",
+            "download_id": 853,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "2.2.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "19b7ef809ae4924a8521f1572c19b659a6b3b2c51ff0be5a37b63994329debff",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "e4d104de",
+          "vrm": "140ddb3e"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "cbb60edfa5910d4414020e2399fe64ea0a912b253b050fcee01600ed40bc748f",
+          "size": 1284196
+        },
+        "vrm": {
+          "sha256": "30ae02b8700532b24ff50ec1cd83214a8ca63f39ac637b2d3547acebfce6e1c8",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "140ddb3e",
+            "download_id": 852,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "e4d104de",
+            "download_id": 851,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "2.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "9bbaa6e074b407f1ad15199ef6aecdfe8ff60721b1d4bc9d420792a19a076b54",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "52b01f70",
+          "sca": "98f735a2",
+          "vrm": "97c2b183"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "67461ac69b99e849e9cb5fe7deba710d7837ab136f669947e2f58cc7a0bb6766",
+          "size": 630916
+        },
+        "sca": {
+          "sha256": "213eac359360d37ab5e8d9f5df84531a0191cfe285ade27fd6f1b6d7117e51d1",
+          "size": 307412
+        },
+        "vrm": {
+          "sha256": "c2ea4576d8f72f329e7cae3f9087280c8f98f06c10a491b38d469852dd9eb104",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "98f735a2",
+            "download_id": 817,
+            "kind": "sca"
+          },
+          {
+            "crc32": "97c2b183",
+            "download_id": 319,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "52b01f70",
+            "download_id": 318,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "fbcb6b051f367cca5aa3061843ba4613aadfb8f45fe28aec2851bf7d9709c847",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "d8e47c85",
+          "vrm": "294d7f66"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "54d6546d8690c9fe3f3026727fa7af647e4f1736a65637b14337ada0964a5ff9",
+          "size": 633488
+        },
+        "vrm": {
+          "sha256": "a2128741845101380c15aa9c4d90e55ccd4e7a9954eb54efa02ce61e93d227a8",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "294d7f66",
+            "download_id": 380,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "d8e47c85",
+            "download_id": 379,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "2.0.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "bcb582f29e65d9bdcb895dd5810522a27a15447324bfea6296b4468db7475056",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "92bbd228",
+          "vrm": "97c2b183"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "6514b11ca8d450f488a4c332a2d530457eff2089702c90cc576133ed7ca578ea",
+          "size": 637472
+        },
+        "vrm": {
+          "sha256": "c2ea4576d8f72f329e7cae3f9087280c8f98f06c10a491b38d469852dd9eb104",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "97c2b183",
+            "download_id": 327,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "92bbd228",
+            "download_id": 326,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.2.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "5671c3d5bf2b20bd99bf29268fc461eca306559e6b072a34837b058d97865254",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "0636b540",
+          "vrm": "97c2b183"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "54e44bab1642ab1e0819613c4eaf8622abee6242bd0eadb3f0626730598b1cf5",
+          "size": 635300
+        },
+        "vrm": {
+          "sha256": "c2ea4576d8f72f329e7cae3f9087280c8f98f06c10a491b38d469852dd9eb104",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "97c2b183",
+            "download_id": 323,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "0636b540",
+            "download_id": 322,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "chasqui-rally"
+}

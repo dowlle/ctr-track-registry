@@ -1,0 +1,175 @@
+{
+  "ap_name": "Ursa Glacier",
+  "block_index": 79,
+  "credits": [
+    {
+      "name": "N.Hanced Team",
+      "role": "track"
+    }
+  ],
+  "display_title": "Ursa Glacier",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 18,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "f2c43cafdb0a2b121285b94ff562a3c5b71f1d0a30c6d66635ef67566c7406bc",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "5454cf53",
+          "vrm": "2e551e9b"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "6d083e82a46192284efd23c823fd637e8302d8bb3c4e8356193111566aa313c1",
+          "size": 767852
+        },
+        "vrm": {
+          "sha256": "9ddd37be4f2e6179f0c1e867a261031cfb375b3a112dd25d63eec133c546036a",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "5454cf53",
+            "download_id": 637,
+            "kind": "lev"
+          },
+          {
+            "crc32": "2e551e9b",
+            "download_id": 638,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.2.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "29dc79ec3d194813205b9f543b35e13e1aa9a9a6dc88a6f25fb93e46d12f3339",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "f6fd1163",
+          "vrm": "ed04fdfc"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "483d6c4c2962f878c32f32b080472b364a754f0401b0911c084f6211bbf927e9",
+          "size": 778648
+        },
+        "vrm": {
+          "sha256": "b7530b09a413be11b4515437e1b8f9f98154b9f107c4eebf9dc8a5e8c280709b",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "f6fd1163",
+            "download_id": 447,
+            "kind": "lev"
+          },
+          {
+            "crc32": "ed04fdfc",
+            "download_id": 435,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "96387bbd0d826af72a46d48b6db5a9ebc2fc8c276e9b87e2f6e5439b31e7c6c1",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "7100274a",
+          "sca": "20f8d36e",
+          "vrm": "ed04fdfc"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "f9a6793b176557af3244a8f5c3544b2efcfe9d3663201938fa679145ed1f6a7c",
+          "size": 875276
+        },
+        "sca": {
+          "sha256": "89bc5fe3446d5cb03617c71226fa5a8ccac91c40efbfacca1a7df4cbeed94cf9",
+          "size": 344268
+        },
+        "vrm": {
+          "sha256": "b7530b09a413be11b4515437e1b8f9f98154b9f107c4eebf9dc8a5e8c280709b",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "20f8d36e",
+            "download_id": 347,
+            "kind": "sca"
+          },
+          {
+            "crc32": "ed04fdfc",
+            "download_id": 46,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "7100274a",
+            "download_id": 45,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "ursa-glacier"
+}

@@ -1,0 +1,75 @@
+{
+  "ap_name": "Christmas Hub",
+  "block_index": 14,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Christmas Hub",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "reserved",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 112,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "fc7ac429969d9de4d94fbcdfa6294524c22f35c059a7985180c9e672bc57523d",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "ab5f799b",
+          "vrm": "7dc0d38b"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "88d448c48b473965cd330149a8f9f1d7bf85474986adfaa6d812476ef20376d0",
+          "size": 1267480
+        },
+        "vrm": {
+          "sha256": "82f2cb0ebf3871f3ecf26f2e883bb1e000263c573d1517103607d2e19793845f",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "7dc0d38b",
+            "download_id": 805,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "ab5f799b",
+            "download_id": 804,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "christmas-hub"
+}

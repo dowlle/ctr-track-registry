@@ -1,0 +1,85 @@
+{
+  "ap_name": "Big Forest",
+  "block_index": 9,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Big Forest",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 49,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "04e2f20a78bb78b4ce440632ece8e38174ac805329a7393188fa5b0238340dc6",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "c36d1af8",
+          "sca": "2423753e",
+          "vrm": "c2357dda"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "9553863255f8b9a72cf2b8fbe0e3f1f3195e0e502c604ccf0c3f06ff0c3ea535",
+          "size": 1555704
+        },
+        "sca": {
+          "sha256": "ccf5b964c4af30d3461f6c7ab8393ff556de8654b7474ee77cd3a8a0d9bd0428",
+          "size": 370908
+        },
+        "vrm": {
+          "sha256": "937bac3d3e633ceb0245dce3abe761c980e5708841e811b4d95e16c49be95abf",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "2423753e",
+            "download_id": 606,
+            "kind": "sca"
+          },
+          {
+            "crc32": "c2357dda",
+            "download_id": 455,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "c36d1af8",
+            "download_id": 454,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "big-forest"
+}

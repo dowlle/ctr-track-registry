@@ -1,0 +1,75 @@
+{
+  "ap_name": "Lights Out",
+  "block_index": 45,
+  "credits": [
+    {
+      "name": "Tramadolls",
+      "role": "track"
+    }
+  ],
+  "display_title": "Lights Out",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 28,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "e34c7463d722189990a29abbd4be8b957c760f61779cfe0c0a2233cb9ee1b6fe",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "5f5cf851",
+          "vrm": "335c41b9"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "5ebdb9f235ba0c07ba5c72b715c949afdd6062fcf3208f45a1c13936ffb529c6",
+          "size": 909644
+        },
+        "vrm": {
+          "sha256": "bdf347843a7b3560e9b3dc7b555f0d639accf9af1e5bf6348961184bb2016d4b",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "335c41b9",
+            "download_id": 161,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "5f5cf851",
+            "download_id": 160,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "lights-out"
+}

@@ -1,0 +1,75 @@
+{
+  "ap_name": "Mario Raceway N64",
+  "block_index": 48,
+  "credits": [
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Mario Raceway N64",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 36,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "e10705d47aee0ccda25df30280deada7c4f0a6610900c59397ae546ac5323c87",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "94e599ab",
+          "vrm": "4baa5034"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "d30c47c13da5b3592891397327b41ce398ecbea3a81df7ead8d76ed9d11d6bf4",
+          "size": 534612
+        },
+        "vrm": {
+          "sha256": "91ca4c79a4d3201c75ac4141d33cf8c2e2f459cb233b3314d341cad6b878c179",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "4baa5034",
+            "download_id": 246,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "94e599ab",
+            "download_id": 245,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "mario-raceway-n64"
+}

@@ -1,0 +1,130 @@
+{
+  "ap_name": "Tribal Trials",
+  "block_index": 77,
+  "credits": [
+    {
+      "name": "N.Hanced Team",
+      "role": "track"
+    }
+  ],
+  "display_title": "Tribal Trials",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 16,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "c5b9ab490c3238d63873c9efb2e2127d683f423b7a7c5d34e9261cb0d65f973a",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "bfcf20d5",
+          "vrm": "9c8a8363"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "e2cc24322951d621c33ce00c976f5da22e6da0f143d5fd0b4ca0f560c130efb9",
+          "size": 522584
+        },
+        "vrm": {
+          "sha256": "d575c0723b74271730fcc28396e706785bf9e80b5dc02665b796c607d0e0c948",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "bfcf20d5",
+            "download_id": 635,
+            "kind": "lev"
+          },
+          {
+            "crc32": "9c8a8363",
+            "download_id": 636,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "cfb3b940516aedf3ab6e57c686cda023dd11a55204700b008829c7071e884bf9",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "6d07f7b9",
+          "sca": "f1ad70ca",
+          "vrm": "82f06f09"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "a7b4aef448047524863c032d8121f65f74012f741d64a6ad80f2b07456fcbfcd",
+          "size": 576188
+        },
+        "sca": {
+          "sha256": "a9e21e1f27efcfbcea3a48c0e3889fab752ee18abd45dc726cce346e75a80c27",
+          "size": 420048
+        },
+        "vrm": {
+          "sha256": "686c5a9bc1b48c7b5d46a9b05c05f3b0a1069a3a661e916a256fe829c7e73705",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "f1ad70ca",
+            "download_id": 345,
+            "kind": "sca"
+          },
+          {
+            "crc32": "82f06f09",
+            "download_id": 40,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "6d07f7b9",
+            "download_id": 39,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "tribal-trials"
+}

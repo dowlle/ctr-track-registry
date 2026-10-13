@@ -1,0 +1,85 @@
+{
+  "ap_name": "Wumpa World",
+  "block_index": 82,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Wumpa World",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 114,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "3d0f8d6fa00a4a936990590975bc389f0299ed1ea7b6a98d0d29e9cbdb7207f9",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "d50091e1",
+          "sca": "8bbfa4f0",
+          "vrm": "8fee9eec"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "bbab52f2c65c9c1ad7b697e168013fd849d7fe6ae8f0911ae361999f7c37a132",
+          "size": 1027048
+        },
+        "sca": {
+          "sha256": "07a38eb438f60f478a0c3f30ecaa26e1ab6d5831ce2c1e68fb3a267ba48d449e",
+          "size": 340160
+        },
+        "vrm": {
+          "sha256": "27fe7959a7798c42ead15015a78c9a38f3212507a154f66bec9bc79b79c11ca9",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "8bbfa4f0",
+            "download_id": 816,
+            "kind": "sca"
+          },
+          {
+            "crc32": "8fee9eec",
+            "download_id": 815,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "d50091e1",
+            "download_id": 814,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "wumpa-world"
+}

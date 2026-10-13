@@ -1,0 +1,130 @@
+{
+  "ap_name": "Neon Paradise",
+  "block_index": 51,
+  "credits": [
+    {
+      "name": "Boxic",
+      "role": "track"
+    }
+  ],
+  "display_title": "Neon Paradise",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 5,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "a77e490b9b34df4dfc6b146d77da68c30a9e9601946d5e0081131559497fcfc8",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "76d5981b",
+          "vrm": "5d22213f"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "639434d84fe6de4ba88a31a1dd5a11291d640617ab25af9c7bfbd5d383b53d5d",
+          "size": 522788
+        },
+        "vrm": {
+          "sha256": "f99f4668b0c89366c20e62d2e529cb725b27acce0112a8091362c9413f7ba9a0",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "76d5981b",
+            "download_id": 621,
+            "kind": "lev"
+          },
+          {
+            "crc32": "5d22213f",
+            "download_id": 622,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "3360946215b627decb6b7802fa3af61eb404bdb040a5156ec215b3733010a1d1",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "018dee0e",
+          "sca": "13ba317a",
+          "vrm": "ef2b9683"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "665d19819c437ab9ab6cbccac7c0202979405f16e1af39e06d9ea1d3286be9d0",
+          "size": 614104
+        },
+        "sca": {
+          "sha256": "a0f3bef661d0020d839e50f26c2e83dc4b0b7f9832ae96f4102858572622c7c0",
+          "size": 298736
+        },
+        "vrm": {
+          "sha256": "428c2ed8ab397cfcc8b625b2441efe3eeee0ab911454d66e5d7b9cec7c694ccf",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "13ba317a",
+            "download_id": 539,
+            "kind": "sca"
+          },
+          {
+            "crc32": "ef2b9683",
+            "download_id": 26,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "018dee0e",
+            "download_id": 25,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "neon-paradise"
+}

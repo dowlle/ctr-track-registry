@@ -1,0 +1,85 @@
+{
+  "ap_name": "Royal Raceway",
+  "block_index": 59,
+  "credits": [
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Royal Raceway",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 120,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "ed4f1aeb2f31e004e95c72bad2bc3284ac91e87ce617ff9579abd652d6b650a7",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "f40ae577",
+          "sca": "6c3f4e28",
+          "vrm": "e8e1119e"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "fca9e96a57c850e68e0226382645b4d6df5b4e7ebeb61459269ec2427ffab96b",
+          "size": 825384
+        },
+        "sca": {
+          "sha256": "9a09573cade5aada3561b54e910185ef7de474736da29a7a7d41de6356136b75",
+          "size": 340172
+        },
+        "vrm": {
+          "sha256": "1b3afef3926f7c486ab90706992dba54f0b72dac2b1464c1bff61d6a4ba1051f",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "6c3f4e28",
+            "download_id": 850,
+            "kind": "sca"
+          },
+          {
+            "crc32": "e8e1119e",
+            "download_id": 849,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "f40ae577",
+            "download_id": 848,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "royal-raceway"
+}

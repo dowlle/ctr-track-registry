@@ -1,0 +1,85 @@
+{
+  "ap_name": "Arabian Heights Day",
+  "block_index": 3,
+  "credits": [
+    {
+      "name": "Lockheart",
+      "role": "track"
+    }
+  ],
+  "display_title": "Arabian Heights Day",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 46,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "1e115de66a9096f8e24c75b4a0ab9fed5fa38726b884567e34146dbd2ad70eca",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "77f920fa",
+          "sca": "88dd3673",
+          "vrm": "272f2831"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "a84dcf7132574b3b2cdd3d51ac4511cd68bbdd38e77ea31208be2029bbb72900",
+          "size": 2363952
+        },
+        "sca": {
+          "sha256": "3b027604040bb9f80c0d15d45ea9fb337ac57d94c6294eb6f74c46aacd989708",
+          "size": 378976
+        },
+        "vrm": {
+          "sha256": "0f8113d3e98d472b938bac0ed8d83327714e5a0260d143c5115c383dc5392366",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "88dd3673",
+            "download_id": 449,
+            "kind": "sca"
+          },
+          {
+            "crc32": "272f2831",
+            "download_id": 410,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "77f920fa",
+            "download_id": 409,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "arabian-heights-day"
+}

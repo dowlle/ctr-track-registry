@@ -1,0 +1,85 @@
+{
+  "ap_name": "Pepsi City",
+  "block_index": 57,
+  "credits": [
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Pepsi City",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 58,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "c5a26630efd1106a8796817e3dc982b06f4f0274fbe44a902a0cc277eaf9c4c9",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "33e9cc85",
+          "sca": "27c13a29",
+          "vrm": "06a42969"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "ca4f7c33f1004afe0678b69eb025f546ce0e2b8fc5d16f20b773cebc635465b6",
+          "size": 809832
+        },
+        "sca": {
+          "sha256": "017d82d451fd85ec93cfaa2e6dcd82fdd15ec2d9e9815c99e854e49902514013",
+          "size": 340172
+        },
+        "vrm": {
+          "sha256": "3962fcf486f84f692905e465d396a9abda43d0fbefbd9c31a8036f4b0ccd4fcf",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "33e9cc85",
+            "download_id": 520,
+            "kind": "lev"
+          },
+          {
+            "crc32": "27c13a29",
+            "download_id": 522,
+            "kind": "sca"
+          },
+          {
+            "crc32": "06a42969",
+            "download_id": 521,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "pepsi-city"
+}

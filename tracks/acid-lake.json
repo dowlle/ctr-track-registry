@@ -1,0 +1,85 @@
+{
+  "ap_name": "Acid Lake",
+  "block_index": 0,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Acid Lake",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 121,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "8542c8ef94dfa0b1c1dc353aad8d0c4c92c8b8cadd9ae54cd734df8fad502254",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "cac75eca",
+          "sca": "befd5aec",
+          "vrm": "fdf5f3df"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "e2a9e1daaf89ebd499d657462d19ae9c0be488f18c04d1e391d4abb6e5e791a6",
+          "size": 810876
+        },
+        "sca": {
+          "sha256": "18c6396055d45e15fc106f2ae1fc318ea0f9539661d25cad2a5a81f7e4ded880",
+          "size": 327892
+        },
+        "vrm": {
+          "sha256": "0d75e1e0da02092c09728b3c38aef8eff0d5170fb626b7db48fa7a885a9429af",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "befd5aec",
+            "download_id": 874,
+            "kind": "sca"
+          },
+          {
+            "crc32": "fdf5f3df",
+            "download_id": 873,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "cac75eca",
+            "download_id": 872,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "acid-lake"
+}

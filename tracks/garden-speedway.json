@@ -1,0 +1,75 @@
+{
+  "ap_name": "Garden Speedway",
+  "block_index": 32,
+  "credits": [
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Garden Speedway",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 103,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "7326d1d16438d0fff5d80573ebbc15c277fd5e97ce7e28952bc64534abd8717c",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "bf0d20f9",
+          "vrm": "bf5f74ec"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "a04e15057ee83c80d98f0e88eb513eb51286e123b11e82155203b7ef9a43b23e",
+          "size": 357748
+        },
+        "vrm": {
+          "sha256": "8177051cc8f2ecafb95de2466e0341c8962bd34e071d49aa8aab205ece40cdf0",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "bf5f74ec",
+            "download_id": 750,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "bf0d20f9",
+            "download_id": 749,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "garden-speedway"
+}

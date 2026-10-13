@@ -1,0 +1,75 @@
+{
+  "ap_name": "Haven Stadium - Reverse",
+  "block_index": 39,
+  "credits": [
+    {
+      "name": "Lockheart",
+      "role": "track"
+    }
+  ],
+  "display_title": "Haven Stadium - Reverse",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 29,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "ce2106607f869817413d5ce6adcf3c7928340e93319698f0505e9d4ed4127e6e",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "fc175375",
+          "vrm": "1154a2a4"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "3e4c33ae6ca595bb642da2a1e9fbe9cbe4e27dd8a578dd4d833af2c39c58cd3d",
+          "size": 1660296
+        },
+        "vrm": {
+          "sha256": "3f8da4d52c8452c0a78d1efbee3151460abdf314a0f96e9ec5eccddc550465a1",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "1154a2a4",
+            "download_id": 165,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "fc175375",
+            "download_id": 164,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "haven-stadium-reverse"
+}

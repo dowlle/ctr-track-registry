@@ -1,0 +1,75 @@
+{
+  "ap_name": "St Patricks Day Hub World",
+  "block_index": 68,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "St Patricks Day Hub World",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "reserved",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 111,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "9814dfaf8d9597f01d8de6bcc14a9ed91d7c769dbaa313efcd3f4b2626815b2f",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "9aca8993",
+          "vrm": "8f3c7653"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "0bd34704d9c86f628560f5153eb8a1e8cef4d449f4e0ca24fad1977b8eab57f7",
+          "size": 1237504
+        },
+        "vrm": {
+          "sha256": "ce208f90dd7cbb7282acd62d10c584d8262d0733e3712798897a341c4da37fd2",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "8f3c7653",
+            "download_id": 801,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "9aca8993",
+            "download_id": 800,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "st-patricks-day-hub-world"
+}

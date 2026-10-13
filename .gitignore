@@ -1,0 +1,9 @@
+# Track assets never belong in this repository.
+*.lev
+*.vrm
+*.sca
+*.zip
+*.7z
+*.rar
+*.bin
+*.vram

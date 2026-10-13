@@ -1,0 +1,85 @@
+{
+  "ap_name": "Android Alley N-Gage",
+  "block_index": 2,
+  "credits": [
+    {
+      "name": "Anfrost",
+      "role": "track"
+    }
+  ],
+  "display_title": "Android Alley N-Gage",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 11,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "fc6b7aeea79a2beadd89283d13056805b7a954aac855e74a0badce3f754fc8e5",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "fee11d5c",
+          "sca": "baa4aa27",
+          "vrm": "06651ebd"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "75d743ea3243f8be162e32d99e839a2db6991cec77ff09f0aef82e5edaf3c334",
+          "size": 1107516
+        },
+        "sca": {
+          "sha256": "e5a59ce5ab93529fa3967bd2734486f903da306b0b0f3d0757b0740160823120",
+          "size": 387276
+        },
+        "vrm": {
+          "sha256": "1e2407fc666d2cf2c3500d7b2f5592f4ea9e2215553a052458cf2417d246d46e",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "fee11d5c",
+            "download_id": 20,
+            "kind": "lev"
+          },
+          {
+            "crc32": "baa4aa27",
+            "download_id": 359,
+            "kind": "sca"
+          },
+          {
+            "crc32": "06651ebd",
+            "download_id": 19,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "android-alley-n-gage"
+}

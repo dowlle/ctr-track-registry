@@ -1,0 +1,120 @@
+{
+  "ap_name": "Yoshi Circuit Legacy",
+  "block_index": 84,
+  "credits": [
+    {
+      "name": "Boxic",
+      "role": "track"
+    }
+  ],
+  "display_title": "Yoshi Circuit Legacy",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 7,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "2cce90d7738f25438319b1ec25e54071bf2ba2580fabcec0839bf4f561afe5e3",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "0938dac3",
+          "vrm": "cd9643c2"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "ab3e0f8d0abbae1b0aa64efe50de0d5d1cbd0b3ab27967b4132f76b99f557970",
+          "size": 447660
+        },
+        "vrm": {
+          "sha256": "5bc962c7d319ed51b47ec9f22df2b4c417124806dd8088b383cd347485ba6443",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "0938dac3",
+            "download_id": 623,
+            "kind": "lev"
+          },
+          {
+            "crc32": "cd9643c2",
+            "download_id": 624,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "671ab316cbdfb509699924218718761fd5b56cd995fd8eff497d8694d81b6bb6",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "fe19c816",
+          "vrm": "d132c792"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "6c499514deb97c4de780076ab62e2a422a5f834672a1f793aa5a6d1b93114b30",
+          "size": 506944
+        },
+        "vrm": {
+          "sha256": "1adc2977370ddb1c216da5a053d688d4b9d0eaddd7880fd3c85dfef7d1a763bf",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "d132c792",
+            "download_id": 30,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "fe19c816",
+            "download_id": 29,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "yoshi-circuit-legacy"
+}

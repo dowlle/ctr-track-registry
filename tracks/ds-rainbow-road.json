@@ -1,0 +1,75 @@
+{
+  "ap_name": "DS Rainbow Road",
+  "block_index": 29,
+  "credits": [
+    {
+      "name": "Anfrost",
+      "role": "track"
+    }
+  ],
+  "display_title": "DS Rainbow Road",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 32,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "2951edccd2d335c058fa4f98a999285b9fbb162f63b00c656ef6dccd899831c8",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "66e7c383",
+          "vrm": "88f849e8"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "a0d13ac14427cfb9cb30b2564a034757977082f34e08fb05cc1bcd98757f5b17",
+          "size": 464556
+        },
+        "vrm": {
+          "sha256": "1f52f6db43b40c9e51c375a67f325092dca91dc1f18dbfec690aafb4627f2da3",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "88f849e8",
+            "download_id": 197,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "66e7c383",
+            "download_id": 196,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "ds-rainbow-road"
+}

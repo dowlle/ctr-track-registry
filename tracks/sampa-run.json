@@ -1,0 +1,75 @@
+{
+  "ap_name": "Sampa Run",
+  "block_index": 60,
+  "credits": [
+    {
+      "name": "Lockheart",
+      "role": "track"
+    }
+  ],
+  "display_title": "Sampa Run",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 31,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "f7c6ec87d7b378da3d4a5cb565cc4396cbabc6f01a624d6e6e7fbba2f9683e6d",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "8011fd7f",
+          "vrm": "9b18e07d"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "e2c6eaa5687a6b323011c74f0858baaa0228275aeabd279dc7c47c2ec3696a6f",
+          "size": 1496664
+        },
+        "vrm": {
+          "sha256": "871ed1079a7dcf4fee16528c84a29fd027219421d2c747c279e36fe9664959b5",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "9b18e07d",
+            "download_id": 173,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "8011fd7f",
+            "download_id": 172,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "sampa-run"
+}

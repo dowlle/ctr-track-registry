@@ -1,0 +1,130 @@
+{
+  "ap_name": "Frozen Depths",
+  "block_index": 31,
+  "credits": [
+    {
+      "name": "Boxic",
+      "role": "track"
+    }
+  ],
+  "display_title": "Frozen Depths",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 4,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "e0a349e37cbd900c4ecd152a575ad0616ff1fcb9d0665d97754d874b7caed44b",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "02f1e27d",
+          "vrm": "1327d25b"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "5b3223248a481a2f856bebf7c4eda22e5147723470ec247bf1751eb377c41981",
+          "size": 330416
+        },
+        "vrm": {
+          "sha256": "2ab73e2b5b61601bc9ef700a9ca72e7416fcc6e915d4d967c3ba5d6f43cd984a",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "02f1e27d",
+            "download_id": 631,
+            "kind": "lev"
+          },
+          {
+            "crc32": "1327d25b",
+            "download_id": 632,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "e1832c62b0d58c16aca0c2f5d7f81aed2dbed1485b7b2555816bf5b82ee2b92d",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "0361ce73",
+          "sca": "c3f47b67",
+          "vrm": "26bb22b0"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "8fd4b25ef2a5615ebe845285009244c8e492b4670db8162b5b5db8dc0b669062",
+          "size": 372952
+        },
+        "sca": {
+          "sha256": "0cec86340406309a8ba8739d90a81ec346fe73a83ca42520fedf0432058b9b0d",
+          "size": 311492
+        },
+        "vrm": {
+          "sha256": "92ab63600749567878bac311f756fa7a54630163ec8442ed972c41d4c294cf75",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "c3f47b67",
+            "download_id": 341,
+            "kind": "sca"
+          },
+          {
+            "crc32": "26bb22b0",
+            "download_id": 24,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "0361ce73",
+            "download_id": 23,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "frozen-depths"
+}

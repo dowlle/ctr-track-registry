@@ -1,0 +1,165 @@
+{
+  "ap_name": "Toasty Terrace",
+  "block_index": 74,
+  "credits": [
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Toasty Terrace",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 39,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "0bb48a836098d2b38409ab8f1bcf7931cb309bea0028e7caf514a6ff0e61ba23",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "cfa8b21d",
+          "vrm": "ce08e158"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "c62b6b949ab505a1f579ebe0124b1d0d291edfa2b9b6a2367c156cc637cdf4cc",
+          "size": 1046760
+        },
+        "vrm": {
+          "sha256": "1b63009099af915b6f7a0f1a0afbab54754caed515a64f336897c87b458cecaf",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "cfa8b21d",
+            "download_id": 355,
+            "kind": "lev"
+          },
+          {
+            "crc32": "ce08e158",
+            "download_id": 356,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.2.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "8c7e3fddba0173d4bf7b01560594279f0181d3bb04598ca5b2494b644cf8ac65",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "73d21bc9",
+          "vrm": "ce08e158"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "fcda4022f54a8c70686848f18d6d20f62ab1ba9abb72c783ea92beb21d399502",
+          "size": 1046760
+        },
+        "vrm": {
+          "sha256": "1b63009099af915b6f7a0f1a0afbab54754caed515a64f336897c87b458cecaf",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "ce08e158",
+            "download_id": 354,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "73d21bc9",
+            "download_id": 353,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "6958bbfc0c810bdb26f2d717b0d54cfb9333a2a8d347f42a89971bf8cf2c1ab4",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "4272b5dd",
+          "vrm": "ce08e158"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "2afae9c7380253cbe60a649174883a87bbbe07172ef358df21bf733b74e1b5b1",
+          "size": 1009024
+        },
+        "vrm": {
+          "sha256": "1b63009099af915b6f7a0f1a0afbab54754caed515a64f336897c87b458cecaf",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "ce08e158",
+            "download_id": 260,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "4272b5dd",
+            "download_id": 259,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "toasty-terrace"
+}

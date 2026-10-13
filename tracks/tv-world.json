@@ -1,0 +1,130 @@
+{
+  "ap_name": "TV World",
+  "block_index": 78,
+  "credits": [
+    {
+      "name": "Boxic",
+      "role": "track"
+    }
+  ],
+  "display_title": "TV World",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 100,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "5b02a6e67d04e5668b916a3497198108d4eeae88ed827933031a83c32f42b668",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "2a02c72d",
+          "vrm": "a31006d8"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "e3d765e824a2de96d06d1f34951b6d2ab51c027fb3353c62d8e7086b8ce1e33a",
+          "size": 913816
+        },
+        "vrm": {
+          "sha256": "b78491bf70e067e5149814c32a658e8e7ec99932d6c97ed0d5820f6403f456cc",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "2a02c72d",
+            "download_id": 715,
+            "kind": "lev"
+          },
+          {
+            "crc32": "a31006d8",
+            "download_id": 716,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "dcbe95233c733a43384c6586a587a048a64301cf52c2cdd9a35c728565d95636",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "fd8a94ff",
+          "sca": "a3766c0b",
+          "vrm": "4c4cd594"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "e55a14baab68d763d78c09b50237a0e28f90183288f4551ddf62f583c59f8eab",
+          "size": 854192
+        },
+        "sca": {
+          "sha256": "723209f10ac54e48d29a8579c210b29280484f50f9c590ce53ff949e4e28751c",
+          "size": 303248
+        },
+        "vrm": {
+          "sha256": "0a28cedd46647efee53be25baa6b4b09caf322200f45773254db873b0e35387c",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "a3766c0b",
+            "download_id": 664,
+            "kind": "sca"
+          },
+          {
+            "crc32": "4c4cd594",
+            "download_id": 663,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "fd8a94ff",
+            "download_id": 662,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "tv-world"
+}

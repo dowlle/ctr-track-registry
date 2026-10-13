@@ -1,0 +1,75 @@
+{
+  "ap_name": "Snowfall Keep",
+  "block_index": 65,
+  "credits": [
+    {
+      "name": "Late_One",
+      "role": "track"
+    }
+  ],
+  "display_title": "Snowfall Keep",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 54,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "782354b65bdd87a32d191a470d7e2b046e71fac4bc13f9046cb415900576ae9f",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "f9d574ca",
+          "vrm": "533f8a47"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "80130ec6bc90bc8eb5a1f379a0a2f1666fd3dc180e3c3e84d7eeb6e28f9b2757",
+          "size": 615508
+        },
+        "vrm": {
+          "sha256": "d25acdcff97e0f0f726c223216d51ba537d962e788e92e021353c5513bcc1a4f",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "533f8a47",
+            "download_id": 488,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "f9d574ca",
+            "download_id": 487,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "snowfall-keep"
+}

@@ -1,0 +1,75 @@
+{
+  "ap_name": "Haven Stadium",
+  "block_index": 38,
+  "credits": [
+    {
+      "name": "Lockheart",
+      "role": "track"
+    }
+  ],
+  "display_title": "Haven Stadium",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 22,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "016b443cbfc0fcba8ffae4b9c125e2943e58d336a4f4f05018ba343df80c183a",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "bf224d02",
+          "vrm": "4caeb3a8"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "c0667cf7709d0d176dd633f77664dd4d016c785063b6b4be18dc351ae154513d",
+          "size": 1676172
+        },
+        "vrm": {
+          "sha256": "bbaaa354bc2faa235f0800e588bcd3dde6b026fc00e383cf8119c86b1d6076dd",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "4caeb3a8",
+            "download_id": 63,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "bf224d02",
+            "download_id": 62,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "haven-stadium"
+}

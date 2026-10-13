@@ -1,0 +1,75 @@
+{
+  "ap_name": "Mario Circuit 2",
+  "block_index": 47,
+  "credits": [
+    {
+      "name": "Mnesiq",
+      "role": "track"
+    }
+  ],
+  "display_title": "Mario Circuit 2",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 27,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "6d1ba613c97b6a3697e6161d904ae49de09fee6d102689815866b51e222ad789",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "c1154fcf",
+          "vrm": "20567376"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "62ff293e6367d41f2916ebe7e44ecc90ac141003c33cf3e912582bb54cb1e671",
+          "size": 766688
+        },
+        "vrm": {
+          "sha256": "4a945420347403cc0974ccf9ae275bf276c955f1152918214f24905dd6feb519",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "c1154fcf",
+            "download_id": 125,
+            "kind": "lev"
+          },
+          {
+            "crc32": "20567376",
+            "download_id": 126,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "mario-circuit-2"
+}

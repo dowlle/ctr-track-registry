@@ -1,0 +1,85 @@
+{
+  "ap_name": "Neonstadion",
+  "block_index": 52,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Neonstadion",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 61,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "a4421fbb2490ea3f5ce1113ccaa52c9be759305b4c0e94dc2ee2680d93b1793e",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "9a84c04e",
+          "sca": "e4f85de4",
+          "vrm": "32e58d66"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "8c1fde3e60405eb8737e75aa4cfe5cb205cd9d21961eccf4c5d7827ecf484880",
+          "size": 460916
+        },
+        "sca": {
+          "sha256": "d7b5900721ddbe040cccb0ffdc80f190a4a6c61174d0506fc305b413d0c41e50",
+          "size": 381124
+        },
+        "vrm": {
+          "sha256": "4f47b117fcbccb9777a34670832988c0ff7faf91178e7849320171c8fde714a8",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "e4f85de4",
+            "download_id": 538,
+            "kind": "sca"
+          },
+          {
+            "crc32": "32e58d66",
+            "download_id": 537,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "9a84c04e",
+            "download_id": 536,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "neonstadion"
+}

@@ -1,0 +1,85 @@
+{
+  "ap_name": "Diwali",
+  "block_index": 23,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Diwali",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 115,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "5c0c11c7d6f99b05a0e8b8cb2c70789dbc8e135c36d9329ca719bd37faa0352c",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "b6493fe7",
+          "sca": "0a5629b7",
+          "vrm": "14f298ff"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "5d4c5da687c67af1d7baa42f1246b4c4d43e708667f2c5921ce4ec0ebcd5f305",
+          "size": 1122804
+        },
+        "sca": {
+          "sha256": "985d2deaac14ab75a6ba0f4d5dd959a68821413996d6501d910b1319a617e4df",
+          "size": 403664
+        },
+        "vrm": {
+          "sha256": "b19eff725bfd554e022f10a154a98fc3bdf4a427d0cfdd07513ea090069bd2bd",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "0a5629b7",
+            "download_id": 823,
+            "kind": "sca"
+          },
+          {
+            "crc32": "14f298ff",
+            "download_id": 822,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "b6493fe7",
+            "download_id": 821,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "diwali"
+}

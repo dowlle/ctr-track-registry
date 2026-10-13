@@ -1,0 +1,121 @@
+{
+  "ap_name": "Green Hill Raceway",
+  "block_index": 35,
+  "credits": [
+    {
+      "name": "Boxic",
+      "role": "track"
+    }
+  ],
+  "display_title": "Green Hill Raceway",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 6,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": null,
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {},
+      "files": {},
+      "hash_state": "pending",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "54394b44",
+            "download_id": 647,
+            "kind": "lev"
+          },
+          {
+            "crc32": "6ab1d083",
+            "download_id": 648,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "46af577d",
+            "download_id": 644,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "96ff1fbd",
+            "download_id": 643,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "2ac8e63262c9d27f6ca6f0a4a57a2d967f0a84426ce2b3c8718604c705a4cda4",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "96ff1fbd",
+          "sca": "0c27bc2f",
+          "vrm": "46af577d"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "7d1d83e29a5aa06615ba1ef87d60e2f5513d267e76691b7ba2f3b6bce7690415",
+          "size": 683888
+        },
+        "sca": {
+          "sha256": "e72873daa6ac6c5e99ac4c2a3a21ff176c577d8301ae71eb5d0b3202df86cd9c",
+          "size": 356560
+        },
+        "vrm": {
+          "sha256": "ee657e1bfca62dcb94fa8a0a9be97a7653c17c3470144e563d9e1ebcc0e5c887",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "0c27bc2f",
+            "download_id": 342,
+            "kind": "sca"
+          },
+          {
+            "crc32": "46af577d",
+            "download_id": 28,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "96ff1fbd",
+            "download_id": 27,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "green-hill-raceway"
+}

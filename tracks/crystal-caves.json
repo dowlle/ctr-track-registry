@@ -1,0 +1,75 @@
+{
+  "ap_name": "Crystal Caves",
+  "block_index": 18,
+  "credits": [
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Crystal Caves",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 48,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "33fdb99169f99fe1797e4d0fb84c42536059ea00928bc9992af2d8f20c9ccfac",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "8123b4eb",
+          "vrm": "7758b027"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "eddcd303e316e8eb41f885e8ec959a2c2d3db06e21727dfc50c61ab8a8048139",
+          "size": 509876
+        },
+        "vrm": {
+          "sha256": "e613c78c07c24c20bfe4b5935ef82cd97ad60e4c05a21a666d78183be2cbab87",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "7758b027",
+            "download_id": 418,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "8123b4eb",
+            "download_id": 417,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "crystal-caves"
+}

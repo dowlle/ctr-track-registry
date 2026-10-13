@@ -1,0 +1,85 @@
+{
+  "ap_name": "Hasty Hedges",
+  "block_index": 37,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Hasty Hedges",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 113,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "0573c4e07019535926fb495b0ca47be81374c015f0cd2020699537dd1c6e4082",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "d73f1a42",
+          "sca": "a2aedecc",
+          "vrm": "13198636"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "35604e3c299ad6dbb8e67eba43a659646a3cefc4ff80ba0005cd2074704edc51",
+          "size": 1086808
+        },
+        "sca": {
+          "sha256": "86410f676531a66e44daf0c44f12ebd500de3d345a35b609a6d98199d0bafc7f",
+          "size": 370900
+        },
+        "vrm": {
+          "sha256": "d58a44cb6e32d7a924ab55767b65006954d87fe0a0264dce2cbe7299c397afb8",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "a2aedecc",
+            "download_id": 811,
+            "kind": "sca"
+          },
+          {
+            "crc32": "13198636",
+            "download_id": 810,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "d73f1a42",
+            "download_id": 809,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "hasty-hedges"
+}

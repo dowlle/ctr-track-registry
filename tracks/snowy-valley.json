@@ -1,0 +1,165 @@
+{
+  "ap_name": "Snowy Valley",
+  "block_index": 66,
+  "credits": [
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Snowy Valley",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 62,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "d9c2e7984702dabcd0e8626b127ebcb1c7462b54b5022fe1f29e17bd0edd1b3b",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "b3109e7a",
+          "vrm": "2d66b250"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "9c4f8fb1248efc0ae00ff9a1c51bf97f12d4c70998a30d21f2c5b87c53cad8d0",
+          "size": 696236
+        },
+        "vrm": {
+          "sha256": "03667ebd048e66ffe8c285219fc3984b4e83211fd5ab67c652bf1309c301c407",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "b3109e7a",
+            "download_id": 875,
+            "kind": "lev"
+          },
+          {
+            "crc32": "2d66b250",
+            "download_id": 876,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.2"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "5b7d1cd6949e648d12769c624abd53d389452261f3b301c51165e20cb2c5860a",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "12eb08fc",
+          "vrm": "e990d37d"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "35dd336d697e6ddc1ef68c3d9b9c921ead7ba400f97a28e47933e7f422b39448",
+          "size": 695756
+        },
+        "vrm": {
+          "sha256": "671d711e856c367206710a5b2523e4b572517c1b0cb501a6196d1a6965fe9111",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "e990d37d",
+            "download_id": 548,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "12eb08fc",
+            "download_id": 547,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.1"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "b8cf7f26a69360e2c20cb26d2d6d1cda90a9ea7d4c2efeaf7b8408fc7b3c7e4c",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "0d3213e1",
+          "vrm": "9212e8ab"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "0cad622228e2713cd0a2b869fe392f10f190ffaacc36c786ee1c867049bb90e3",
+          "size": 705888
+        },
+        "vrm": {
+          "sha256": "b1c39d744df52cf1061fac640249bb62b9a47870b582bddeacaca15ba2ca3e2e",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "9212e8ab",
+            "download_id": 544,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "0d3213e1",
+            "download_id": 543,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "snowy-valley"
+}

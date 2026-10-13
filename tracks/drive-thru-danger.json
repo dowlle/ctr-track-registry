@@ -1,0 +1,85 @@
+{
+  "ap_name": "Drive Thru Danger",
+  "block_index": 28,
+  "credits": [
+    {
+      "name": "Boxic",
+      "role": "track"
+    }
+  ],
+  "display_title": "Drive Thru Danger",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 1,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "c4e64dacb79a4d802a745109d46c463cbab9a10955ea0fb8ea6697ceb92835e8",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "4dee597d",
+          "sca": "f33f6739",
+          "vrm": "56fb1673"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "77706a3b5d46cdd75ffa05e4da316cf5dc400d6e17aad7ccdf0c3f5cd62eee79",
+          "size": 775112
+        },
+        "sca": {
+          "sha256": "caed99b7dc54ab034beaab4027fc953a1920566751bf035633fb13f69055bd62",
+          "size": 385228
+        },
+        "vrm": {
+          "sha256": "d41b8bf89eaaac408744d2742885c4ca2055f1456b7526f8a52b78fcb5ae9a97",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "4dee597d",
+            "download_id": 10,
+            "kind": "lev"
+          },
+          {
+            "crc32": "f33f6739",
+            "download_id": 339,
+            "kind": "sca"
+          },
+          {
+            "crc32": "56fb1673",
+            "download_id": 11,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "drive-thru-danger"
+}

@@ -1,0 +1,85 @@
+{
+  "ap_name": "Jungle Boogie N-Gage",
+  "block_index": 42,
+  "credits": [
+    {
+      "name": "Anfrost",
+      "role": "track"
+    }
+  ],
+  "display_title": "Jungle Boogie N-Gage",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 8,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "587442b13c282354becd5561a59493fe7cc19972219e28c86be9ff4923dd5286",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "b8b9b818",
+          "sca": "099ef2f3",
+          "vrm": "4073d716"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "a76595cd5a72e0b612698f0011b4607bce53567a4b3578c78cad50332412c1b2",
+          "size": 783492
+        },
+        "sca": {
+          "sha256": "58e7b5e1ba20c3f2fed4902b19eac3332661c884b18df4dc419b8a91af3de09b",
+          "size": 377036
+        },
+        "vrm": {
+          "sha256": "73095c1261541884f9046104134c5c0ff2d95b917cfd847cad2cef687b138e0f",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "b8b9b818",
+            "download_id": 21,
+            "kind": "lev"
+          },
+          {
+            "crc32": "099ef2f3",
+            "download_id": 358,
+            "kind": "sca"
+          },
+          {
+            "crc32": "4073d716",
+            "download_id": 22,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "jungle-boogie-n-gage"
+}

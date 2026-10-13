@@ -1,0 +1,85 @@
+{
+  "ap_name": "Holiday Hills",
+  "block_index": 40,
+  "credits": [
+    {
+      "name": "N.Hanced Team",
+      "role": "track"
+    }
+  ],
+  "display_title": "Holiday Hills",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 19,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "088699c3f1ef7e694d93c3f2adc640437449fdf38b1bab28dda25c02d654f225",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "5d4fa509",
+          "sca": "1614f066",
+          "vrm": "2bc98d28"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "f6aa45f60354a29e40a6d2f973ea500cf94da50e831fb38fce039ae7f1abd021",
+          "size": 778716
+        },
+        "sca": {
+          "sha256": "9850c02a36a85d96925d6d05c7a11c98b0efd1a2b5ddd489e43cd44b72ec5b68",
+          "size": 340172
+        },
+        "vrm": {
+          "sha256": "164da0f6bac3993ed7ed78080463cda48c2af1e9d64e3624298ed9e28a611224",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "5d4fa509",
+            "download_id": 48,
+            "kind": "lev"
+          },
+          {
+            "crc32": "1614f066",
+            "download_id": 348,
+            "kind": "sca"
+          },
+          {
+            "crc32": "2bc98d28",
+            "download_id": 49,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "holiday-hills"
+}

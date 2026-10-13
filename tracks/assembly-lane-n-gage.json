@@ -1,0 +1,75 @@
+{
+  "ap_name": "Assembly Lane N-Gage",
+  "block_index": 7,
+  "credits": [
+    {
+      "name": "Anfrost",
+      "role": "track"
+    }
+  ],
+  "display_title": "Assembly Lane N-Gage",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 63,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "7aca4e33a8763c00227ac99b1a18f6176e321bb8fe5913d93e97f518d99a637f",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "f52aa54f",
+          "vrm": "3b6bcbf9"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "4d82f9383ae28b7460581b24302f981e1e125f0109b0cd6804b6f497d61c262b",
+          "size": 1191996
+        },
+        "vrm": {
+          "sha256": "f9fb8d29d1eef0cf840e2a2330cb629e107f2c3fe15120b08877cf13639d75c9",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "3b6bcbf9",
+            "download_id": 554,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "f52aa54f",
+            "download_id": 553,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "assembly-lane-n-gage"
+}

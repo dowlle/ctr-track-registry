@@ -1,0 +1,85 @@
+{
+  "ap_name": "Mario Circuit 1",
+  "block_index": 46,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Mario Circuit 1",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 53,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "6c8b4d876bab45f30d4268b81f869103b7e3cad57da77a59ced21f11c53bb213",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "8e507da2",
+          "sca": "d0d557ee",
+          "vrm": "b86e6261"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "a9c8989b857d547eec29b0728899c8f34a878401c2c6dfb2a4b49b9301ab4e83",
+          "size": 994496
+        },
+        "sca": {
+          "sha256": "48814ec6a621fa62e096df150de44e5081bd2158f9499165afad68c8e7e0714d",
+          "size": 366816
+        },
+        "vrm": {
+          "sha256": "00d303644db627409235df10019b3e7f5ccb14e6db668f0dbb913af7a36330ad",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "d0d557ee",
+            "download_id": 484,
+            "kind": "sca"
+          },
+          {
+            "crc32": "b86e6261",
+            "download_id": 483,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "8e507da2",
+            "download_id": 482,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "mario-circuit-1"
+}

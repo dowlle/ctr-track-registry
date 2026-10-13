@@ -1,0 +1,75 @@
+{
+  "ap_name": "Skull Cave",
+  "block_index": 63,
+  "credits": [
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Skull Cave",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 98,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "1977484b2e0f2ba019ff8f505350746b33b09a2823bfdba872ef5a0a47988b2e",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "ff534aa9",
+          "vrm": "fd5bbdfd"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "04b5cef91ff6e18c14276006458f6b71510a379de8b5c8aa553bfb84ed8fa6a8",
+          "size": 478640
+        },
+        "vrm": {
+          "sha256": "952788bfa0ae4259e0fc98cdfdf6371600ca6bf523b2b4314eed74b39b837d1b",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "fd5bbdfd",
+            "download_id": 628,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "ff534aa9",
+            "download_id": 627,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "skull-cave"
+}

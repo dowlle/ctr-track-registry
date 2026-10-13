@@ -1,0 +1,265 @@
+{
+  "ap_name": "Inferno Island",
+  "block_index": 41,
+  "credits": [
+    {
+      "name": "Boxic",
+      "role": "track"
+    }
+  ],
+  "display_title": "Inferno Island",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 26,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "d0d6520aa5feda1a46ff8538fb3b82568b3d66dffbc99e45fef34ea2fd5e2556",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "79dbcf07",
+          "vrm": "ffe60dfd"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "48508645ad632f483660742208ad9f4005523aad58e2b81600017485d3973fda",
+          "size": 777904
+        },
+        "vrm": {
+          "sha256": "bdc45a1d51fec8c4c0b2effa1923ec680668c5f64a9e15a96d0f487987271fd2",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "79dbcf07",
+            "download_id": 641,
+            "kind": "lev"
+          },
+          {
+            "crc32": "ffe60dfd",
+            "download_id": 642,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.3.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "210f27d55db40060705efad2523d2659f41ca39826215fb683570b589e108329",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "ae4d2b28",
+          "vrm": "8aff71ac"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "e9210c6afd2e87d2891999710e5ab5c9e2ef49fc1d05d000ffd5ff82f61c6676",
+          "size": 776188
+        },
+        "vrm": {
+          "sha256": "bf12536f1c67298ecc36fb35684070d1ca331061a79d95b84a04bd37e3545af2",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "8aff71ac",
+            "download_id": 444,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "ae4d2b28",
+            "download_id": 443,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.2.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "c4c52dd3000c952b1143d4bb01e1e37b90b19d6d5c05cb45eca745a2740c607d",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "ceaadb2f",
+          "sca": "74c2f328",
+          "vrm": "8698d37b"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "f7b3e6d7809196b31b67f7ae1be331ac82d24274b6e2526eddb16b6d02ab5fb7",
+          "size": 1075156
+        },
+        "sca": {
+          "sha256": "b674186b5e6d4d8910cd9a22547fba8487f93437ad7034e4e135a24e70269b77",
+          "size": 407764
+        },
+        "vrm": {
+          "sha256": "8717f26df61bc87623e6a27e10c78b0be0fa81c7e761c580ca53a670a3baf890",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "74c2f328",
+            "download_id": 389,
+            "kind": "sca"
+          },
+          {
+            "crc32": "8698d37b",
+            "download_id": 113,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "ceaadb2f",
+            "download_id": 112,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "73c9fd66879523f6faefb43782c3dcadfa0102661cccf016cc431f77f6efbe8e",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "4f5c5e65",
+          "vrm": "172719c5"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "e193f82800da88fe8c3dabc7b452fe4da5a62dc8bb530546f55b55dfbe58f332",
+          "size": 1079412
+        },
+        "vrm": {
+          "sha256": "a66b8594ae590b3147a408bb786cb3b0d29ffda99c8ddf93f2c3573c8d74c51a",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "172719c5",
+            "download_id": 149,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "4f5c5e65",
+            "download_id": 148,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "5f9c0e5e249c7afb66982c439c501149c356d08eec2d6aff1a60518a638ce483",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "72882f62",
+          "vrm": "8698d37b"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "76e0686d15376b98b7884224a37fd14d76490f56912260dd4279ef61c3f779e0",
+          "size": 1075348
+        },
+        "vrm": {
+          "sha256": "8717f26df61bc87623e6a27e10c78b0be0fa81c7e761c580ca53a670a3baf890",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "8698d37b",
+            "download_id": 115,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "72882f62",
+            "download_id": 114,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.1"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "inferno-island"
+}

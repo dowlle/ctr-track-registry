@@ -1,0 +1,130 @@
+{
+  "ap_name": "Arabian Heights Night",
+  "block_index": 4,
+  "credits": [
+    {
+      "name": "Lockheart",
+      "role": "track"
+    }
+  ],
+  "display_title": "Arabian Heights Night",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 47,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "be84f93f8cfa6ff0c0d5c7321ed00eaeb29057f0e4c12ed51451c349f3af6e38",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "411b526f",
+          "vrm": "a60797e1"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "8093b663855d3fd0096fd2980a85bc6efe334c0aff250e8a33eea11909e5c21c",
+          "size": 2443084
+        },
+        "vrm": {
+          "sha256": "044024f265783dd285a3f9e76ee29d336cb3c34d81274d1a7ff2510d67680da8",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "a60797e1",
+            "download_id": 707,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "411b526f",
+            "download_id": 706,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "b852d44c609d2f4deca290a5ce8f8cb2e61a13a731555fef573730100dbf4b06",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "4f1ff302",
+          "sca": "8bd32cf0",
+          "vrm": "778c2ae8"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "3994b126b595ca961302a9811be450c8d3a8fe5ea5f9d04d308d11913553cd49",
+          "size": 2394056
+        },
+        "sca": {
+          "sha256": "e2a9da83ef7520041f505f054f3eb2d5c2c3f73f90eff6e9f440f9ad0c30a446",
+          "size": 368540
+        },
+        "vrm": {
+          "sha256": "3ea58f3a19f22eb4796eac45e1ea40c2e2423fedfbc7e94f1c67d18ecdd9afe6",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "8bd32cf0",
+            "download_id": 450,
+            "kind": "sca"
+          },
+          {
+            "crc32": "778c2ae8",
+            "download_id": 414,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "4f1ff302",
+            "download_id": 413,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "arabian-heights-night"
+}

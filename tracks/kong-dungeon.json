@@ -1,0 +1,130 @@
+{
+  "ap_name": "Kong Dungeon",
+  "block_index": 43,
+  "credits": [
+    {
+      "name": "N.Hanced Team",
+      "role": "track"
+    }
+  ],
+  "display_title": "Kong Dungeon",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 17,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "065f5bc91613ada1e12d22655b38f9dc4c18fc7ce49e77dc223a02120623d792",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "24b6f15e",
+          "vrm": "aec68371"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "f6c9080c9ff152343631db3047f172e23cdf209e1763f0b510c68cb636f79caf",
+          "size": 930232
+        },
+        "vrm": {
+          "sha256": "7ecb43227e13ae1a6258e0792cb5c7ace6b265da69a293aa04c807d4c358becc",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "24b6f15e",
+            "download_id": 430,
+            "kind": "lev"
+          },
+          {
+            "crc32": "aec68371",
+            "download_id": 431,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "7f28b6f7f8827855b4ddffcbe8c5281e711e7addaa9fdddf78c2e580c5f79bc5",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "2e7b1b56",
+          "sca": "41e91bd0",
+          "vrm": "aec68371"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "fc154717f88063e05de3b6f560714204487b1adf0892e50474efab5846905173",
+          "size": 897616
+        },
+        "sca": {
+          "sha256": "804bd4ba0effec0d5928da1736549d224394cb7d181d8c650c13a75aa2c8df35",
+          "size": 374992
+        },
+        "vrm": {
+          "sha256": "7ecb43227e13ae1a6258e0792cb5c7ace6b265da69a293aa04c807d4c358becc",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "41e91bd0",
+            "download_id": 346,
+            "kind": "sca"
+          },
+          {
+            "crc32": "aec68371",
+            "download_id": 43,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "2e7b1b56",
+            "download_id": 42,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "kong-dungeon"
+}

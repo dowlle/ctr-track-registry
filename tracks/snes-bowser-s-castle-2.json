@@ -1,0 +1,85 @@
+{
+  "ap_name": "SNES Bowser's Castle 2",
+  "block_index": 64,
+  "credits": [
+    {
+      "name": "Boxic",
+      "role": "track"
+    }
+  ],
+  "display_title": "SNES Bowser's Castle 2",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 52,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "73cdb060d90286d24930ce8bd247013eb83b22e0adc197b750aa061495a81ab3",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "c6394eb6",
+          "sca": "e7d9723c",
+          "vrm": "79dd0dbb"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "00913e520398d5408e0214b05cefba3e5ecff1b0e4a922df5009738ad1c91dca",
+          "size": 630284
+        },
+        "sca": {
+          "sha256": "1ccd485ef4f623333f8e44f8772b21aff286a66c06a3e7f5656910f798051f60",
+          "size": 340152
+        },
+        "vrm": {
+          "sha256": "305228685f35c8958640bff6167b35a1826d53a881cd5bbe636f93d5c97c342f",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "e7d9723c",
+            "download_id": 476,
+            "kind": "sca"
+          },
+          {
+            "crc32": "79dd0dbb",
+            "download_id": 475,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "c6394eb6",
+            "download_id": 474,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "snes-bowser-s-castle-2"
+}

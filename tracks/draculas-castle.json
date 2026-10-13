@@ -1,0 +1,85 @@
+{
+  "ap_name": "Draculas Castle",
+  "block_index": 26,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Draculas Castle",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 119,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "ee668f9fbe5aa44c8b3419949b02b8f7143566d0441a05bff2ad3d1f1a27ece8",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "12571008",
+          "sca": "f824556b",
+          "vrm": "e1c0bee7"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "8c343aa6723ee2dec99d54f815e77e9e20798f657d6f4464f312529ffe4698f4",
+          "size": 1792532
+        },
+        "sca": {
+          "sha256": "7897c2163102a8d04f483e40540279c4add543b9abbe6d6ec1467177fea6e875",
+          "size": 338120
+        },
+        "vrm": {
+          "sha256": "f6b4d40dcb280443bba107ea490bd5ad0a501a84623baa86b3b5e6e1ed3fa8da",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "f824556b",
+            "download_id": 845,
+            "kind": "sca"
+          },
+          {
+            "crc32": "e1c0bee7",
+            "download_id": 844,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "12571008",
+            "download_id": 843,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "draculas-castle"
+}

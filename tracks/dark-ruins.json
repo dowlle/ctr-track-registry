@@ -1,0 +1,220 @@
+{
+  "ap_name": "Dark Ruins",
+  "block_index": 21,
+  "credits": [
+    {
+      "name": "Boxic",
+      "role": "track"
+    }
+  ],
+  "display_title": "Dark Ruins",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 23,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "57763c60096ff3acbbdfccb7c2a53a45a544c1cda37dd0bc8af2d33f011544ef",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "e1fdbbaa",
+          "vrm": "1f286241"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "ced2df2e83aef4759e0bb132fbd36f44c51d818b623d7950faec2407b8229589",
+          "size": 319676
+        },
+        "vrm": {
+          "sha256": "7f88f260fc7f5d8d816fba1a6752b5eeee7a70af2c532623e4f77c6106bdc707",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "e1fdbbaa",
+            "download_id": 639,
+            "kind": "lev"
+          },
+          {
+            "crc32": "1f286241",
+            "download_id": 640,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "ccc738f6f867a69966ab20249b3f32fe79dacc43436ba7966ba97d0aec02bcfb",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "8331f0f9",
+          "sca": "c9f03942",
+          "vrm": "b8d73277"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "f0441440fff47c5f112e6d9a5030230f1b724dbd8e174fcc6a71fb2c238794de",
+          "size": 362984
+        },
+        "sca": {
+          "sha256": "7fc320a115eb2865d6bbf7088c747a2b7b5bf89054d2d6f724731513c720258c",
+          "size": 325832
+        },
+        "vrm": {
+          "sha256": "6b85c3e4150e8c0d088d90a4cdb2386ef6daadac45d34a85d6b44eba17a1cbdc",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "c9f03942",
+            "download_id": 343,
+            "kind": "sca"
+          },
+          {
+            "crc32": "b8d73277",
+            "download_id": 87,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "8331f0f9",
+            "download_id": 86,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "66eb9dedb7ea84077a31c7009891aa48c6a8d0f6597f9efb359653b09d977e53",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "cffe6f0e",
+          "vrm": "7ed3d355"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "429abe639478a96635fd61c1d14303276203bfdc05e277b5273d8c69000a04c9",
+          "size": 322392
+        },
+        "vrm": {
+          "sha256": "93f627171bd8da5edea8e84e50dcbe4fbeac7e6c5c201571bf4e99e7704ccb57",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "7ed3d355",
+            "download_id": 143,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "cffe6f0e",
+            "download_id": 142,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.2"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "d0cfad6e41bb3d68ad3bf9cbcf239e00450d96296e547ebd68c4acd142a6dd6b",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "16792191",
+          "vrm": "b8d73277"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "8728705c81dacb2ace83a7ecc54e38ffdedde8696932656d37b9533b8ba7530b",
+          "size": 322440
+        },
+        "vrm": {
+          "sha256": "6b85c3e4150e8c0d088d90a4cdb2386ef6daadac45d34a85d6b44eba17a1cbdc",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "b8d73277",
+            "download_id": 137,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "16792191",
+            "download_id": 136,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.1"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "dark-ruins"
+}

@@ -1,0 +1,85 @@
+{
+  "ap_name": "Namek",
+  "block_index": 50,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Namek",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 66,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "7e14c15f985aac15891c6fbd182ce36afdc98191d35f56e3ccdb028e201c880b",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "f7062d71",
+          "sca": "17bcc9fb",
+          "vrm": "0dedcacd"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "e766b4ac2d57c80b946e930b9ed50eaa8a580e90d410165b4b150cf7f3716fe0",
+          "size": 1573356
+        },
+        "sca": {
+          "sha256": "acb3d16f04f66aa1808bec5d13eeaa0660938a4a04b3df82ebc6456268d4f077",
+          "size": 342220
+        },
+        "vrm": {
+          "sha256": "fa09e8605c37bc8cb793c4b268ecbe5d71b3e4161ded794c505666183e5d7640",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "17bcc9fb",
+            "download_id": 610,
+            "kind": "sca"
+          },
+          {
+            "crc32": "0dedcacd",
+            "download_id": 566,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "f7062d71",
+            "download_id": 565,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "namek"
+}

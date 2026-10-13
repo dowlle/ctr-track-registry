@@ -1,0 +1,120 @@
+{
+  "ap_name": "Super Snocross 2",
+  "block_index": 71,
+  "credits": [
+    {
+      "name": "Lockheart",
+      "role": "track"
+    }
+  ],
+  "display_title": "Super Snocross 2",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 30,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "6fda6d2b5a089df9ec61d4bc60fae2891ed756e19bbebbd5075811a5d649ae7b",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "5362bf01",
+          "vrm": "a0d12357"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "db6f51a7857983771eba923883daafd696eaf0224a2d833528361f187a6d7115",
+          "size": 1193032
+        },
+        "vrm": {
+          "sha256": "f04530b18002ee1807172aba5033c905fb74d30a8fe31a750ff1c843e8596a1f",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "5362bf01",
+            "download_id": 736,
+            "kind": "lev"
+          },
+          {
+            "crc32": "a0d12357",
+            "download_id": 737,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "5dab8d2cbd9e99e6f1c2887b9bf71a0a35064fbe30f1ffcf15b2dc965c1064ed",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "159926b2",
+          "vrm": "e0cd534a"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "64984b2550706246504eee04dd2831e08added5c85d0c8ebe8e444516cb94a23",
+          "size": 1389600
+        },
+        "vrm": {
+          "sha256": "6c5ea566deefc20bededbc392e0a2f7e5287ecba3c5baeca5dac7bd3f9e29f60",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "e0cd534a",
+            "download_id": 169,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "159926b2",
+            "download_id": 168,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "super-snocross-2"
+}

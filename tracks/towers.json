@@ -1,0 +1,75 @@
+{
+  "ap_name": "Towers",
+  "block_index": 76,
+  "credits": [
+    {
+      "name": "LittleHelper",
+      "role": "track"
+    }
+  ],
+  "display_title": "Towers",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 33,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "774cfbbed3f93af60595c38838da03c5f12edea84a4e4fb176964a123215d144",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "9d1d53d5",
+          "vrm": "d132c792"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "04c1f7c37d3a26a3c8ac221d4a69167e578036e7d3f0cab77270ca1541e0f591",
+          "size": 1558776
+        },
+        "vrm": {
+          "sha256": "1adc2977370ddb1c216da5a053d688d4b9d0eaddd7880fd3c85dfef7d1a763bf",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "d132c792",
+            "download_id": 207,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "9d1d53d5",
+            "download_id": 206,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "towers"
+}

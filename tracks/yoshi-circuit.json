@@ -1,0 +1,130 @@
+{
+  "ap_name": "Yoshi Circuit",
+  "block_index": 83,
+  "credits": [
+    {
+      "name": "Boxic",
+      "role": "track"
+    }
+  ],
+  "display_title": "Yoshi Circuit",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 110,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "30464464935c51c033b7e2bcc708995c783655776a741049e30b855db687e076",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "df8a3bc0",
+          "vrm": "019e04ad"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "5728e57919f873d84c84e8372db4b44bc104c9d7472e89be127def6012293ecf",
+          "size": 816804
+        },
+        "vrm": {
+          "sha256": "7e0803a3bbd38f398afaff6ac59e97d35b7346c7d730f5b8833589f2c57969f0",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "019e04ad",
+            "download_id": 792,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "df8a3bc0",
+            "download_id": 791,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "20b6ba105f3c6a2682d368e6239d7fd3c02a2a418cfdf817ea1c7332690154e7",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "67567885",
+          "sca": "1d639710",
+          "vrm": "671dcb0b"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "90120132367204ce293213ffe3d8e46b906d2a96dcc96b2db4a1485b690bdafa",
+          "size": 851328
+        },
+        "sca": {
+          "sha256": "50039300b334a3ef97c4dd24b784d71ba074025704354821c3362347d2160ff9",
+          "size": 390996
+        },
+        "vrm": {
+          "sha256": "1a587709bb60afe5f195693d4a7cda93350426d4c7c4b8bddf5c3bf016c8d4e4",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "1d639710",
+            "download_id": 790,
+            "kind": "sca"
+          },
+          {
+            "crc32": "671dcb0b",
+            "download_id": 789,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "67567885",
+            "download_id": 788,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "yoshi-circuit"
+}

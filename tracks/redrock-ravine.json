@@ -1,0 +1,130 @@
+{
+  "ap_name": "Redrock Ravine",
+  "block_index": 58,
+  "credits": [
+    {
+      "name": "Lockheart",
+      "role": "track"
+    }
+  ],
+  "display_title": "Redrock Ravine",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 9,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "579482fca246169c050114f41102736727fef622dce22eb6ab58f64e8c676054",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "81bd1fe7",
+          "vrm": "56728f62"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "320379a26e12d88fb58eea7c32f349f2e1ff4f1e3907dc746d07cfc7636d1f78",
+          "size": 777676
+        },
+        "vrm": {
+          "sha256": "bd00f2ca55dd5749ca1eb1edd6f032faa7cb6565016e2793c44aacabeffbac76",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "81bd1fe7",
+            "download_id": 445,
+            "kind": "lev"
+          },
+          {
+            "crc32": "56728f62",
+            "download_id": 446,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "c8c6d1cdf6089423d8ccfa0238e930b10dfdbfc9c155d5ca60b48733bf669b96",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "55541243",
+          "sca": "1ac8cf9c",
+          "vrm": "6e27830f"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "af4c2329337997f4655344220932d47f9561e4fce519b92b2f1c14d473a56019",
+          "size": 808700
+        },
+        "sca": {
+          "sha256": "3bf6b3e9cf83858cb1f4fb6cf07b3fa5c306f52368e6b8f41627e4a7917cefa6",
+          "size": 355396
+        },
+        "vrm": {
+          "sha256": "2889d647eaf96ec75292fb2b392362c83777226b3126d3fb21e0e759d7bf4504",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "1ac8cf9c",
+            "download_id": 369,
+            "kind": "sca"
+          },
+          {
+            "crc32": "6e27830f",
+            "download_id": 51,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "55541243",
+            "download_id": 50,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "redrock-ravine"
+}

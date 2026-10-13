@@ -1,0 +1,75 @@
+{
+  "ap_name": "DK Pass",
+  "block_index": 25,
+  "credits": [
+    {
+      "name": "Blounard",
+      "role": "track"
+    }
+  ],
+  "display_title": "DK Pass",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 122,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "f573015405cef0b42e5c26e2cd61e84724b5f5bb0b762bf84e806d5f12f12af1",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "98bd2977",
+          "vrm": "77936022"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "cf29d61f8e7b9a5d210a060ffbc4da22b04483d25d85c6a01bff855f312c09ef",
+          "size": 537464
+        },
+        "vrm": {
+          "sha256": "30993ad9afb782470317b5c256578d5d432094b304e0765c2205a4c16ef1178a",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "77936022",
+            "download_id": 882,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "98bd2977",
+            "download_id": 881,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "dk-pass"
+}

@@ -1,0 +1,130 @@
+{
+  "ap_name": "North Pole",
+  "block_index": 53,
+  "credits": [
+    {
+      "name": "Lockheart",
+      "role": "track"
+    }
+  ],
+  "display_title": "North Pole",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 20,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "dbb9402198c5db3b9a32b6eb87619391670a0210a3f991c3d25d40ea608b9736",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "716af797",
+          "sca": "da46281f",
+          "vrm": "ccebcd49"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "d3566f2ddc5150fea42e7175017fd8b3aba7e6795070802cc9c80d6e3ca5ab8a",
+          "size": 1822520
+        },
+        "sca": {
+          "sha256": "98e78f0155d36310dd5b8c7d73a5fa0e91a8ecbe82036c30e560afd7874827f7",
+          "size": 412844
+        },
+        "vrm": {
+          "sha256": "ad80838bd1e4225d2ceb28a731922bcde73c66d105b5e4726bc69f85ee7b382b",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "716af797",
+            "download_id": 58,
+            "kind": "lev"
+          },
+          {
+            "crc32": "da46281f",
+            "download_id": 818,
+            "kind": "sca"
+          },
+          {
+            "crc32": "ccebcd49",
+            "download_id": 59,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "b9b1b75e369a083a524a99da9cb82d5b0f40bfb0f43cff20c06bda33dbd9b296",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "b4e4d826",
+          "vrm": "120d3693"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "17eafea4884285d2d1b6e684519081955347b96196783d06d984f06d72105e3c",
+          "size": 1636116
+        },
+        "vrm": {
+          "sha256": "fd5741d2b23843b1a868fc85799f5331c407b93c6f05e1529ae5e2f075bd67ea",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "120d3693",
+            "download_id": 714,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "b4e4d826",
+            "download_id": 713,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "north-pole"
+}

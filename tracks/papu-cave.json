@@ -1,0 +1,96 @@
+{
+  "ap_name": "Papu Cave",
+  "block_index": 55,
+  "credits": [
+    {
+      "name": "Papu_persia",
+      "role": "track"
+    }
+  ],
+  "display_title": "Papu Cave",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 99,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": null,
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {},
+      "files": {},
+      "hash_state": "pending",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "3d0b5cf0",
+            "download_id": 659,
+            "kind": "sca"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "4bd2ea1945dda2eaa4932570524416fdef724ebd344ff0a558bf92494bc3a013",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "35c1c136",
+          "vrm": "084d2e1f"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "77cb05cc35040a3eb5a5f8fdef96ddd356e8951eecf1e8e77422b0119b20782e",
+          "size": 1956500
+        },
+        "vrm": {
+          "sha256": "53be893bdd669c6a4db8721274bb4e1df1df08e886c810331102947f4a185e2f",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "084d2e1f",
+            "download_id": 655,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "35c1c136",
+            "download_id": 654,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "papu-cave"
+}

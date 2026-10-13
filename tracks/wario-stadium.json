@@ -1,0 +1,96 @@
+{
+  "ap_name": "Wario Stadium",
+  "block_index": 81,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Wario Stadium",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 55,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": null,
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {},
+      "files": {},
+      "hash_state": "pending",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "6c3f4e28",
+            "download_id": 503,
+            "kind": "sca"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "30bf0115f020e9d3be8c212b0508241eb83076505e37e7b3db340914505e66d4",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "f204063c",
+          "vrm": "ffe814fc"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "8d937cdcc724ebbc1f59a5bc5be6290e9bd22ce5fc02e405351da8b10802d95b",
+          "size": 687504
+        },
+        "vrm": {
+          "sha256": "1b7827bbef726b43fda5236b2bab1c145037cf728e67dccb6c8f64ca88efb61b",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "ffe814fc",
+            "download_id": 502,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "f204063c",
+            "download_id": 501,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "2.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "wario-stadium"
+}

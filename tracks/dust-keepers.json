@@ -1,0 +1,75 @@
+{
+  "ap_name": "Dust Keepers",
+  "block_index": 30,
+  "credits": [
+    {
+      "name": "daviddg",
+      "role": "track"
+    }
+  ],
+  "display_title": "Dust Keepers",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 50,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "25448ef964d4b1a3c4dde25bf7a7b0ebb567203ababb9d311321bd93c4922613",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "88bfe74b",
+          "vrm": "3ab6289c"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "1ea0e1c0013d711083bdf237ee28d52f17cbd831960969fc6a5c5cc835f55972",
+          "size": 503388
+        },
+        "vrm": {
+          "sha256": "85664346d257902618759a05a63c4d6460decc7423f3048d0c23bb04652248f8",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "3ab6289c",
+            "download_id": 459,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "88bfe74b",
+            "download_id": 458,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "dust-keepers"
+}

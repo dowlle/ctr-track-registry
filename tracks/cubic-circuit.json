@@ -1,0 +1,130 @@
+{
+  "ap_name": "Cubic Circuit",
+  "block_index": 19,
+  "credits": [
+    {
+      "name": "MisterM",
+      "role": "track"
+    }
+  ],
+  "display_title": "Cubic Circuit",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "saphi",
+      "track_id": 34,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-10-13",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "9cd3b9648362e8fd4fff7bd71d3b0213949ff18d41391e2cbd200a5eed98a67d",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "bc0513ae",
+          "vrm": "8ec1733f"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "02baa4cfb90f9e3d16ad3e16c52546289935233c3213f85f4ada3a47823d1478",
+          "size": 212396
+        },
+        "vrm": {
+          "sha256": "2a9a651f20c9fb6c46201d7c4ae4c7f9db7646931fd99dd2abab67ccaeb294c4",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "bc0513ae",
+            "download_id": 293,
+            "kind": "lev"
+          },
+          {
+            "crc32": "8ec1733f",
+            "download_id": 294,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "ff85287df16aaeb1660b368dc9ef0713ecbc69d802f0bb42ac01c4a01db1af7c",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "b2c62e3f",
+          "sca": "753804a5",
+          "vrm": "3a65875b"
+        },
+        "hashed_on": "2026-10-13",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "9e05add3f918e15480becd4ce513d11eb07df06ef8fc1bbeef1d1d2c45d219f4",
+          "size": 155088
+        },
+        "sca": {
+          "sha256": "7211a8cc2007cc174c32d57a08cb031877179ce3a5805430f0971694fc02b7ae",
+          "size": 344268
+        },
+        "vrm": {
+          "sha256": "ca76b4f1f78cd9bfb7e4dbc275f284941a281a8a755e561b284126f2e2c591c2",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "753804a5",
+            "download_id": 478,
+            "kind": "sca"
+          },
+          {
+            "crc32": "3a65875b",
+            "download_id": 228,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "b2c62e3f",
+            "download_id": 227,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "cubic-circuit"
+}

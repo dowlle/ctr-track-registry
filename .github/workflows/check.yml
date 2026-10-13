@@ -1,0 +1,59 @@
+name: Registry check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: No track files or unexpected paths
+        run: |
+          base="${{ github.event.pull_request.base.sha || github.event.before }}"
+          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then
+            files=$(git ls-files)
+          else
+            files=$(git diff --name-only --diff-filter=AM "$base" HEAD)
+          fi
+          bad=0
+          for f in $files; do
+            case "$f" in
+              registry.json|named_tracks.json|DIGEST.json|README.md|CONTRIBUTING.md|LICENSE|.gitignore) ;;
+              tracks/*.json|tools/check_registry.py|.github/workflows/*.yml) ;;
+              *) echo "unexpected path: $f"; bad=1 ;;
+            esac
+            if [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 1048576 ]; then
+              echo "file over 1 MiB: $f"; bad=1
+            fi
+          done
+          exit $bad
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Schema, identity and privacy checks
+        run: python tools/check_registry.py .
+
+      - name: Freeze check against the base commit
+        run: |
+          base="${{ github.event.pull_request.base.sha || github.event.before }}"
+          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then
+            echo "No base commit (first push); skipping the freeze comparison."
+            exit 0
+          fi
+          rm -rf /tmp/previous && git worktree add /tmp/previous "$base"
+          if [ -f /tmp/previous/registry.json ]; then
+            python tools/check_registry.py . --previous /tmp/previous
+          else
+            echo "Base commit has no registry.json; skipping the freeze comparison."
+          fi
