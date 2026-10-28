@@ -77,6 +77,70 @@
         ]
       },
       "revision": "1.0.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "afb070ee8e777df0d13d3b81230cf75178a79833e597ad5240f1412c5695b51c",
+      "descriptor": {
+        "content_id": "afb070ee8e777df0d13d3b81230cf75178a79833e597ad5240f1412c5695b51c",
+        "files": {
+          "lev": {
+            "sha256": "29e821ce632c9f483d3e0711e41cc077ab087a8a6044b7a70db826b7b40e71d0",
+            "size": 894748
+          },
+          "vrm": {
+            "sha256": "e12352047f1e890e81a1c73ae9a20e6e9356d77e564b18941f6f76e597925de6",
+            "size": 458808
+          }
+        },
+        "pack": {
+          "authors": [
+            "Lolothesamurai",
+            "PanchoPew"
+          ],
+          "title": "LRG2Pancho custom adventure"
+        },
+        "provenance": {
+          "xdelta": {
+            "base_disc_sha256": "f780bf2331476aabfc00772fa758b12dd95ebfbc907968132cbd3cdd4e2c07c0",
+            "bigfile_index": 65,
+            "cutter_version": 1,
+            "patch_sha256": "52a420e582fc44786210ae65817d7105c7d881c2f0b4387cebde2dce86064526"
+          }
+        },
+        "relic_targets": {
+          "gold": 69120,
+          "laps": 3,
+          "lev_sha256": "29e821ce632c9f483d3e0711e41cc077ab087a8a6044b7a70db826b7b40e71d0",
+          "platinum": 43200,
+          "sapphire": 86400,
+          "schema_version": 1,
+          "ticks_per_second": 960,
+          "vrm_sha256": "e12352047f1e890e81a1c73ae9a20e6e9356d77e564b18941f6f76e597925de6"
+        },
+        "revision": "LRG2Pancho",
+        "schema_version": 1
+      },
+      "descriptor_schema": 1,
+      "evidence": {
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "verifier": "ctr-native xdelta importer, cutter 1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "29e821ce632c9f483d3e0711e41cc077ab087a8a6044b7a70db826b7b40e71d0",
+          "size": 894748
+        },
+        "vrm": {
+          "sha256": "e12352047f1e890e81a1c73ae9a20e6e9356d77e564b18941f6f76e597925de6",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "revision": "LRG2Pancho"
     }
   ],
   "shipped_in": null,

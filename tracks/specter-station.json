@@ -1,0 +1,83 @@
+{
+  "ap_name": null,
+  "block_index": null,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    },
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Specter Station",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {},
+  "review": {
+    "reviewed_at": "2026-10-28",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "5a36eee2d742a91f77d9acdb8331d5b5c11fab7e1ef1be5882a257401bec5f55",
+      "descriptor": {
+        "content_id": "5a36eee2d742a91f77d9acdb8331d5b5c11fab7e1ef1be5882a257401bec5f55",
+        "files": {
+          "lev": {
+            "sha256": "c7cb55dd24a5fdd2a868968a14e1881866e7e97c9cc9cefb208dd394298ebd17",
+            "size": 779256
+          },
+          "vrm": {
+            "sha256": "39d8c0777a076dfc07b480455cdff323e27fe2b8fb7c03e13772482910af0cc9",
+            "size": 458808
+          }
+        },
+        "pack": {
+          "authors": [
+            "Lolothesamurai",
+            "PanchoPew"
+          ],
+          "title": "LRG2Pancho custom adventure"
+        },
+        "provenance": {
+          "xdelta": {
+            "base_disc_sha256": "f780bf2331476aabfc00772fa758b12dd95ebfbc907968132cbd3cdd4e2c07c0",
+            "bigfile_index": 129,
+            "cutter_version": 1,
+            "patch_sha256": "52a420e582fc44786210ae65817d7105c7d881c2f0b4387cebde2dce86064526"
+          }
+        },
+        "relic_targets": null,
+        "revision": "LRG2Pancho",
+        "schema_version": 1
+      },
+      "descriptor_schema": 1,
+      "evidence": {
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "verifier": "ctr-native xdelta importer, cutter 1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "c7cb55dd24a5fdd2a868968a14e1881866e7e97c9cc9cefb208dd394298ebd17",
+          "size": 779256
+        },
+        "vrm": {
+          "sha256": "39d8c0777a076dfc07b480455cdff323e27fe2b8fb7c03e13772482910af0cc9",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "revision": "LRG2Pancho"
+    }
+  ],
+  "shipped_in": null,
+  "state": "approved",
+  "track_key": "specter-station"
+}
