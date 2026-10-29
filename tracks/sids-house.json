@@ -17,7 +17,7 @@
   "mint_status": "mint",
   "provenance": {},
   "review": {
-    "reviewed_at": "2026-10-28",
+    "reviewed_at": "2026-10-29",
     "superseded_by": null
   },
   "revisions": [
@@ -88,5 +88,5 @@
   ],
   "shipped_in": null,
   "state": "approved",
-  "track_key": "sid-s-house"
+  "track_key": "sids-house"
 }
