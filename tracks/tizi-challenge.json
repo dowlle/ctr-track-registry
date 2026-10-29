@@ -1,6 +1,6 @@
 {
-  "ap_name": null,
-  "block_index": null,
+  "ap_name": "Tizi Challenge",
+  "block_index": 88,
   "credits": [
     {
       "name": "Lolothesamurai",
@@ -78,6 +78,6 @@
     }
   ],
   "shipped_in": null,
-  "state": "approved",
+  "state": "named",
   "track_key": "tizi-challenge"
 }

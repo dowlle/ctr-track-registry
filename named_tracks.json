@@ -2,7 +2,7 @@
   "format": 1,
   "registry": {
     "commit": null,
-    "digest": "34223eb765a48a256e9f884895b3c3c8512b76fc4499d159141eda52b3a522c0",
+    "digest": "0ced7b087966941aafdf451244cf4206d6b51238193a85031e1828206ae20ae0",
     "repository": null
   },
   "tracks": [
@@ -811,6 +811,42 @@
       ],
       "shipped_in": null,
       "track_key": "yoshi-circuit-legacy"
+    },
+    {
+      "ap_name": "Sewer Baby Park",
+      "block_index": 85,
+      "revisions": [
+        "07715e7ae62522071f6209adf97b1cdcceaec0791f0dfd24964780140b7125e0"
+      ],
+      "shipped_in": null,
+      "track_key": "sewer-baby-park"
+    },
+    {
+      "ap_name": "Sid's House",
+      "block_index": 86,
+      "revisions": [
+        "5a67fe78e113c89a753015f8550266ac13f15b42d6d6e2e8b31f55d7cf62c830"
+      ],
+      "shipped_in": null,
+      "track_key": "sids-house"
+    },
+    {
+      "ap_name": "Specter Station",
+      "block_index": 87,
+      "revisions": [
+        "5a36eee2d742a91f77d9acdb8331d5b5c11fab7e1ef1be5882a257401bec5f55"
+      ],
+      "shipped_in": null,
+      "track_key": "specter-station"
+    },
+    {
+      "ap_name": "Tizi Challenge",
+      "block_index": 88,
+      "revisions": [
+        "977c2b0b9f7f3e36d6fb97becff20a33df3118a7a9474bd4f16023ad0aa89589"
+      ],
+      "shipped_in": null,
+      "track_key": "tizi-challenge"
     }
   ]
 }

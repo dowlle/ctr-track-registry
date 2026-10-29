@@ -1,6 +1,6 @@
 {
-  "ap_name": null,
-  "block_index": null,
+  "ap_name": "Specter Station",
+  "block_index": 87,
   "credits": [
     {
       "name": "Lolothesamurai",
@@ -78,6 +78,6 @@
     }
   ],
   "shipped_in": null,
-  "state": "approved",
+  "state": "named",
   "track_key": "specter-station"
 }
