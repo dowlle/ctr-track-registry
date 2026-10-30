@@ -1,0 +1,83 @@
+{
+  "ap_name": null,
+  "block_index": null,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    },
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Tizi Challenge",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {},
+  "review": {
+    "reviewed_at": "2026-10-29",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "977c2b0b9f7f3e36d6fb97becff20a33df3118a7a9474bd4f16023ad0aa89589",
+      "descriptor": {
+        "content_id": "977c2b0b9f7f3e36d6fb97becff20a33df3118a7a9474bd4f16023ad0aa89589",
+        "files": {
+          "lev": {
+            "sha256": "e22b87a73009b94251f5216424cf07875a02e076eb8461b902624c2b5277ad45",
+            "size": 385052
+          },
+          "vrm": {
+            "sha256": "5de0e46152d8fdce3e0cbe7cdd860516d98d98105106f5d81c043b39df9f0753",
+            "size": 458808
+          }
+        },
+        "pack": {
+          "authors": [
+            "Lolothesamurai",
+            "PanchoPew"
+          ],
+          "title": "LRG2Pancho custom adventure"
+        },
+        "provenance": {
+          "xdelta": {
+            "base_disc_sha256": "f780bf2331476aabfc00772fa758b12dd95ebfbc907968132cbd3cdd4e2c07c0",
+            "bigfile_index": 137,
+            "cutter_version": 1,
+            "patch_sha256": "52a420e582fc44786210ae65817d7105c7d881c2f0b4387cebde2dce86064526"
+          }
+        },
+        "relic_targets": null,
+        "revision": "LRG2Pancho",
+        "schema_version": 1
+      },
+      "descriptor_schema": 1,
+      "evidence": {
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "verifier": "ctr-native xdelta importer, cutter 1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "e22b87a73009b94251f5216424cf07875a02e076eb8461b902624c2b5277ad45",
+          "size": 385052
+        },
+        "vrm": {
+          "sha256": "5de0e46152d8fdce3e0cbe7cdd860516d98d98105106f5d81c043b39df9f0753",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "revision": "LRG2Pancho"
+    }
+  ],
+  "shipped_in": null,
+  "state": "approved",
+  "track_key": "tizi-challenge"
+}

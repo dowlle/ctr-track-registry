@@ -92,6 +92,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "ad828af1f5d9b13d3cafeb329e03669eaece02d738af55d525a0a8ba053bbdf7",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "abd0f1efa42350fe95727e06bb18c5616d8a9bf41a5cb4fd253effe09b62b1ad",
+              "size": 880856
+            },
+            "vrm": {
+              "sha256": "2701a39203919148aad9b1ce7b3d036f8408b362427b93a90202b46a7eb000df",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -264,6 +288,30 @@
             ]
           },
           "revision": "1.0.1"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "c3297b4b5598d3ea8aff5dd5ebdf76a2351fec860e5e46d5645937a9a78d0cbb",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "256d1ed4597aacd081d2806130c28969681ce35df5a5ba53200545cbd1835eb8",
+              "size": 445556
+            },
+            "vrm": {
+              "sha256": "57c14cc95b6080f0095f303817fbec8ca1cb885a2a254ed0e99d4536294ed0e2",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -1156,6 +1204,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "0f062f09944d956e874f4acc74bdf9ad41cbb94ca105799a0b2174a0fc30fd0e",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "6598755fd3d9b3172bc7a27af250bcf3cb99dd8b709ee5a6e9a2409ee7ef54ec",
+              "size": 1599424
+            },
+            "vrm": {
+              "sha256": "53bbf1926ecb14f2fdb23774cb925455854f783ce34c1f237d138b12b92d395c",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -1716,6 +1788,30 @@
             ]
           },
           "revision": "1.1.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "04a4f55f58c95581fb83faf8d0b9362b0c7a2032e3131a7b61bce3fbc2f62eda",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "9bba2b381dc77f8dbe208ef140446c77f4119b3f9b713916c0e11f5b7ade3d8a",
+              "size": 1347988
+            },
+            "vrm": {
+              "sha256": "77b54645c238160a1aecf2ddab2e3214df7b7b4d78387e121096de7d00ff9c06",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -2610,6 +2706,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "94a58f3526e117412aa2ae136af93c0b2334b45f70e238561bc7dad0ec05b472",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "afe36db1745f65290c551090515bd742d1ecb0e84d97d7267ae330be9d3160e9",
+              "size": 862232
+            },
+            "vrm": {
+              "sha256": "a92d42b78e2e3d4eabf91865f30cc1286628eef239a4c4959f33ad72230e17fa",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -3314,6 +3434,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "9f3f1464b184a66c0fe80d4f7ba27164206c03501657e693286e89d0ba60168e",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "8e040bd120bd964134730cce2a9fa2869922e75bbe71f703b863a16c38b730c4",
+              "size": 1191892
+            },
+            "vrm": {
+              "sha256": "4bcacd50933cfb09463d89c923a6e6b7dbcaa60c7dc2b7f6e4d363619b9de34c",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -3556,6 +3700,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "c6bf6f3a8cfc19689709bfece90d37f48354cc8c7a85d9c4a9e455b402808553",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "72bf846cd1932a058f5a379f577dd50624fa94527150a1d6fc3e29cdd73013f8",
+              "size": 1870796
+            },
+            "vrm": {
+              "sha256": "8abb4293f0551c8b9bfdae5fd88c6802c0c887ae60b43f2e9a86d516ef362fed",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -4162,6 +4330,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "76134af1cb93bc2cef9efd868a7dd31d5cbb1b4df9e81391422f707c8daab8a1",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "a24c255c87d062b907dfd052a5691ff1b13875adac3515764ad8e64234705fd0",
+              "size": 389336
+            },
+            "vrm": {
+              "sha256": "96db0f377eede6d929572a7c1927137b86ec5bab21abe856d60a4ba43b8237e3",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -5787,6 +5979,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "d323eb0f92c37362d49ab22d627712a40528cc0b04ad6e0ef1d40f7c350e5796",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "fb7119f056178beff7b48ca13c63a5893b0146ef527973f71b5fc57b3cf80766",
+              "size": 1050392
+            },
+            "vrm": {
+              "sha256": "7a172456dfdca41284da21fd3f82ba27b5014f773e2a960d6b1bfb76e1b652d0",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -6360,6 +6576,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "190fbe8be4fd87de13f03311e2a088ce0666f4753e1639cb60b9a61d8200726d",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "27e41e0e9c429c500ec9197fb18f66418e395d8d50731c72ba525547a39c59b6",
+              "size": 514216
+            },
+            "vrm": {
+              "sha256": "c5823f9561686e5b04ca99dbdaf72899ded4e90b6e06ddbd9defd385819a5398",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -6824,6 +7064,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "afb070ee8e777df0d13d3b81230cf75178a79833e597ad5240f1412c5695b51c",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "29e821ce632c9f483d3e0711e41cc077ab087a8a6044b7a70db826b7b40e71d0",
+              "size": 894748
+            },
+            "vrm": {
+              "sha256": "e12352047f1e890e81a1c73ae9a20e6e9356d77e564b18941f6f76e597925de6",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -7794,6 +8058,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "b84978b8bcbe66a47411da210313a724c0a9d2c0694fc4f4e33acb5ba945102b",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "83406e87505616994f5b539666f1327597212058506c29d66396aac15448529e",
+              "size": 776612
+            },
+            "vrm": {
+              "sha256": "175e0dafa5e07ab4360daf118be7d9092cafbabaf36c3b910401770afe921a5d",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -8431,6 +8719,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "15f58d2404d4d1383fe3102e70a945cb035428ba8076e55e70022a8f3b23cee8",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "a4cfe29c0e3fc7e309d7cfb7c2eeb1fb38bf9359b343d236b46b0c2aedd709e2",
+              "size": 1910272
+            },
+            "vrm": {
+              "sha256": "ec620333dbec02d61647aca05afded16f7cb968b9a4ba552bbc36db9f91f42b9",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -8667,6 +8979,30 @@
             ]
           },
           "revision": "1.0.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "3721745dc996bc769aef69a7bf46d31024bfde43ed6620b47106fb58455e3e36",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "8403e3f99ff4927accd15d6bb413181883316d2f1902b9e14bf2ab4eb3b1f0fa",
+              "size": 1131504
+            },
+            "vrm": {
+              "sha256": "5d150219cd203f58d0888496d341092ea70a90e9f67f08039dea60c4173556b5",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -8795,6 +9131,30 @@
             ]
           },
           "revision": "1.1.0"
+        },
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "ce15a4325c8a8a9a297d71fc8be41832290cbba9b65eb7b4475c1d9cdc0303e6",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "7dd312574cda7a61b0dc216b9667a29d9a65d09bde64a18b8830d8b895b8b103",
+              "size": 1546368
+            },
+            "vrm": {
+              "sha256": "84f1d85effc1f9199373b87bf9266bc49e0b56dbd5e501ea0b0e04324db75758",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
         }
       ],
       "shipped_in": null,
@@ -9810,6 +10170,214 @@
       "shipped_in": null,
       "state": "named",
       "track_key": "yoshi-circuit-legacy"
+    },
+    {
+      "ap_name": null,
+      "block_index": null,
+      "credits": [
+        {
+          "name": "Lolothesamurai",
+          "role": "track"
+        },
+        {
+          "name": "PanchoPew",
+          "role": "track"
+        }
+      ],
+      "display_title": "Sewer Baby Park",
+      "links": {},
+      "maps_to": null,
+      "mint_status": "mint",
+      "provenance": {},
+      "review": {
+        "reviewed_at": "2026-10-29",
+        "superseded_by": null
+      },
+      "revisions": [
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "07715e7ae62522071f6209adf97b1cdcceaec0791f0dfd24964780140b7125e0",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "4232d4396e59df560678f3d0a370ce874649821ad614139b067250494af8f44c",
+              "size": 165620
+            },
+            "vrm": {
+              "sha256": "ac0782b4e1aab7d5a72b9cc53f745fa095c05fe94c29b2514891b49f75794c2b",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
+        }
+      ],
+      "shipped_in": null,
+      "state": "approved",
+      "track_key": "sewer-baby-park"
+    },
+    {
+      "ap_name": null,
+      "block_index": null,
+      "credits": [
+        {
+          "name": "Lolothesamurai",
+          "role": "track"
+        },
+        {
+          "name": "PanchoPew",
+          "role": "track"
+        }
+      ],
+      "display_title": "Sid's House",
+      "links": {},
+      "maps_to": null,
+      "mint_status": "mint",
+      "provenance": {},
+      "review": {
+        "reviewed_at": "2026-10-29",
+        "superseded_by": null
+      },
+      "revisions": [
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "5a67fe78e113c89a753015f8550266ac13f15b42d6d6e2e8b31f55d7cf62c830",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "985663bf855f45fd8b71fe23ada322effb738c5fcf55cbd6c2710f95c631b112",
+              "size": 733040
+            },
+            "vrm": {
+              "sha256": "cab7eda4763a754cfda17d9b4a94f467df3ed5e01c38fe17ee1f7bc22fe922d6",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
+        }
+      ],
+      "shipped_in": null,
+      "state": "approved",
+      "track_key": "sids-house"
+    },
+    {
+      "ap_name": null,
+      "block_index": null,
+      "credits": [
+        {
+          "name": "Lolothesamurai",
+          "role": "track"
+        },
+        {
+          "name": "PanchoPew",
+          "role": "track"
+        }
+      ],
+      "display_title": "Specter Station",
+      "links": {},
+      "maps_to": null,
+      "mint_status": "mint",
+      "provenance": {},
+      "review": {
+        "reviewed_at": "2026-10-29",
+        "superseded_by": null
+      },
+      "revisions": [
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "5a36eee2d742a91f77d9acdb8331d5b5c11fab7e1ef1be5882a257401bec5f55",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "c7cb55dd24a5fdd2a868968a14e1881866e7e97c9cc9cefb208dd394298ebd17",
+              "size": 779256
+            },
+            "vrm": {
+              "sha256": "39d8c0777a076dfc07b480455cdff323e27fe2b8fb7c03e13772482910af0cc9",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
+        }
+      ],
+      "shipped_in": null,
+      "state": "approved",
+      "track_key": "specter-station"
+    },
+    {
+      "ap_name": null,
+      "block_index": null,
+      "credits": [
+        {
+          "name": "Lolothesamurai",
+          "role": "track"
+        },
+        {
+          "name": "PanchoPew",
+          "role": "track"
+        }
+      ],
+      "display_title": "Tizi Challenge",
+      "links": {},
+      "maps_to": null,
+      "mint_status": "mint",
+      "provenance": {},
+      "review": {
+        "reviewed_at": "2026-10-29",
+        "superseded_by": null
+      },
+      "revisions": [
+        {
+          "apworld_max": null,
+          "apworld_min": null,
+          "content_id": "977c2b0b9f7f3e36d6fb97becff20a33df3118a7a9474bd4f16023ad0aa89589",
+          "descriptor_schema": 1,
+          "evidence": {
+            "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+            "level": "hash-only",
+            "verifier": "ctr-native xdelta importer, cutter 1"
+          },
+          "files": {
+            "lev": {
+              "sha256": "e22b87a73009b94251f5216424cf07875a02e076eb8461b902624c2b5277ad45",
+              "size": 385052
+            },
+            "vrm": {
+              "sha256": "5de0e46152d8fdce3e0cbe7cdd860516d98d98105106f5d81c043b39df9f0753",
+              "size": 458808
+            }
+          },
+          "hash_state": "verified",
+          "modes": [],
+          "revision": "LRG2Pancho"
+        }
+      ],
+      "shipped_in": null,
+      "state": "approved",
+      "track_key": "tizi-challenge"
     }
   ]
 }

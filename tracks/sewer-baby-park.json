@@ -1,0 +1,83 @@
+{
+  "ap_name": null,
+  "block_index": null,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    },
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Sewer Baby Park",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {},
+  "review": {
+    "reviewed_at": "2026-10-29",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "07715e7ae62522071f6209adf97b1cdcceaec0791f0dfd24964780140b7125e0",
+      "descriptor": {
+        "content_id": "07715e7ae62522071f6209adf97b1cdcceaec0791f0dfd24964780140b7125e0",
+        "files": {
+          "lev": {
+            "sha256": "4232d4396e59df560678f3d0a370ce874649821ad614139b067250494af8f44c",
+            "size": 165620
+          },
+          "vrm": {
+            "sha256": "ac0782b4e1aab7d5a72b9cc53f745fa095c05fe94c29b2514891b49f75794c2b",
+            "size": 458808
+          }
+        },
+        "pack": {
+          "authors": [
+            "Lolothesamurai",
+            "PanchoPew"
+          ],
+          "title": "LRG2Pancho custom adventure"
+        },
+        "provenance": {
+          "xdelta": {
+            "base_disc_sha256": "f780bf2331476aabfc00772fa758b12dd95ebfbc907968132cbd3cdd4e2c07c0",
+            "bigfile_index": 145,
+            "cutter_version": 1,
+            "patch_sha256": "52a420e582fc44786210ae65817d7105c7d881c2f0b4387cebde2dce86064526"
+          }
+        },
+        "relic_targets": null,
+        "revision": "LRG2Pancho",
+        "schema_version": 1
+      },
+      "descriptor_schema": 1,
+      "evidence": {
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "verifier": "ctr-native xdelta importer, cutter 1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "4232d4396e59df560678f3d0a370ce874649821ad614139b067250494af8f44c",
+          "size": 165620
+        },
+        "vrm": {
+          "sha256": "ac0782b4e1aab7d5a72b9cc53f745fa095c05fe94c29b2514891b49f75794c2b",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "revision": "LRG2Pancho"
+    }
+  ],
+  "shipped_in": null,
+  "state": "approved",
+  "track_key": "sewer-baby-park"
+}

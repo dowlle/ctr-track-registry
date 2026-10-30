@@ -1,0 +1,92 @@
+{
+  "ap_name": null,
+  "block_index": null,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    },
+    {
+      "name": "PanchoPew",
+      "role": "track"
+    }
+  ],
+  "display_title": "Sid's House",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {},
+  "review": {
+    "reviewed_at": "2026-10-29",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "5a67fe78e113c89a753015f8550266ac13f15b42d6d6e2e8b31f55d7cf62c830",
+      "descriptor": {
+        "content_id": "5a67fe78e113c89a753015f8550266ac13f15b42d6d6e2e8b31f55d7cf62c830",
+        "files": {
+          "lev": {
+            "sha256": "985663bf855f45fd8b71fe23ada322effb738c5fcf55cbd6c2710f95c631b112",
+            "size": 733040
+          },
+          "vrm": {
+            "sha256": "cab7eda4763a754cfda17d9b4a94f467df3ed5e01c38fe17ee1f7bc22fe922d6",
+            "size": 458808
+          }
+        },
+        "pack": {
+          "authors": [
+            "Lolothesamurai",
+            "PanchoPew"
+          ],
+          "title": "LRG2Pancho custom adventure"
+        },
+        "provenance": {
+          "xdelta": {
+            "base_disc_sha256": "f780bf2331476aabfc00772fa758b12dd95ebfbc907968132cbd3cdd4e2c07c0",
+            "bigfile_index": 17,
+            "cutter_version": 1,
+            "patch_sha256": "52a420e582fc44786210ae65817d7105c7d881c2f0b4387cebde2dce86064526"
+          }
+        },
+        "relic_targets": {
+          "gold": 48000,
+          "laps": 3,
+          "lev_sha256": "985663bf855f45fd8b71fe23ada322effb738c5fcf55cbd6c2710f95c631b112",
+          "platinum": 36480,
+          "sapphire": 86400,
+          "schema_version": 1,
+          "ticks_per_second": 960,
+          "vrm_sha256": "cab7eda4763a754cfda17d9b4a94f467df3ed5e01c38fe17ee1f7bc22fe922d6"
+        },
+        "revision": "LRG2Pancho",
+        "schema_version": 1
+      },
+      "descriptor_schema": 1,
+      "evidence": {
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "verifier": "ctr-native xdelta importer, cutter 1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "985663bf855f45fd8b71fe23ada322effb738c5fcf55cbd6c2710f95c631b112",
+          "size": 733040
+        },
+        "vrm": {
+          "sha256": "cab7eda4763a754cfda17d9b4a94f467df3ed5e01c38fe17ee1f7bc22fe922d6",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "revision": "LRG2Pancho"
+    }
+  ],
+  "shipped_in": null,
+  "state": "approved",
+  "track_key": "sids-house"
+}
