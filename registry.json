@@ -10424,8 +10424,8 @@
       "track_key": "tizi-challenge"
     },
     {
-      "ap_name": null,
-      "block_index": null,
+      "ap_name": "Gossamer's Castle",
+      "block_index": 89,
       "credits": [
         {
           "name": "Anfrost",
@@ -10494,7 +10494,7 @@
         }
       ],
       "shipped_in": null,
-      "state": "approved",
+      "state": "named",
       "track_key": "gossamer-s-castle"
     }
   ]

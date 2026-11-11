@@ -2,7 +2,7 @@
   "format": 1,
   "registry": {
     "commit": null,
-    "digest": "88ac59b852163c4c197b21c121d70d44b4043f6dbd7ed6cf321dae1740e2de39",
+    "digest": "eef5668c327a9e716059f6d65a8d6a36ab1f27f4e27d30a3377ec28aa8ba00e4",
     "repository": null
   },
   "tracks": [
@@ -848,6 +848,15 @@
       ],
       "shipped_in": null,
       "track_key": "tizi-challenge"
+    },
+    {
+      "ap_name": "Gossamer's Castle",
+      "block_index": 89,
+      "revisions": [
+        "fcdaaf4adf278c38a347b8442980c4d8444bd2ec7c4217d264c089257c55e7f7"
+      ],
+      "shipped_in": null,
+      "track_key": "gossamer-s-castle"
     }
   ]
 }
