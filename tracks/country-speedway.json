@@ -221,6 +221,51 @@
       "hash_state": "verified",
       "modes": [],
       "revision": "LRG2Pancho"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "9cf03bb8d60c7c675c25bbbc97e269e5cadccb91ab40bfce7072ed7558a045b6",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "8fa71b26",
+          "vrm": "bc96625f"
+        },
+        "hashed_on": "2026-11-11",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "504946fdd87d040cce6dfadcf158759b53962d2a08b41002ad97949051b3d996",
+          "size": 814372
+        },
+        "vrm": {
+          "sha256": "0e99718c43d5c612128f29750f29b1fd9d9399c8ad13026361e5fae24f308d60",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "bc96625f",
+            "download_id": 907,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "8fa71b26",
+            "download_id": 906,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.3.1"
     }
   ],
   "shipped_in": null,

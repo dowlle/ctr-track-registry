@@ -1,0 +1,75 @@
+{
+  "ap_name": "Gossamer's Castle",
+  "block_index": 89,
+  "credits": [
+    {
+      "name": "Anfrost",
+      "role": "track"
+    }
+  ],
+  "display_title": "Gossamer's Castle",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "race",
+      "track_id": 128,
+      "url": null
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-11-11",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "fcdaaf4adf278c38a347b8442980c4d8444bd2ec7c4217d264c089257c55e7f7",
+      "descriptor": null,
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "dd26688c",
+          "vrm": "54ac11bd"
+        },
+        "hashed_on": "2026-11-11",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "ctr-registry-hasher/1"
+      },
+      "files": {
+        "lev": {
+          "sha256": "82a6d81942050ad29370033ccabc111b1731f24cf42e103afab12fd42a79f14c",
+          "size": 1414492
+        },
+        "vrm": {
+          "sha256": "c515e1d6deccf52fa53ac26e6e9c24b1230baa1682272c0e7d9353ea3957a31a",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "54ac11bd",
+            "download_id": 956,
+            "kind": "vrm"
+          },
+          {
+            "crc32": "dd26688c",
+            "download_id": 955,
+            "kind": "lev"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "gossamer-s-castle"
+}
