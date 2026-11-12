@@ -12,7 +12,7 @@ id ranges, name rules, named_tracks.json agreement, no private fields, and with
 --previous the freeze rules: no track, block, shipped name or verified hash
 that was in the older set may change or disappear.
 
-consent.json, when present (track author permission, read live by the
+consent.json, required (track author permission, read live by the
 CTR Archipelago client): format 1, known keys only, one record per Saphi
 author id and per name, one per track key, a track key that registry.json
 lists, the status vocabulary (granted, declined, withdrawn), an author grant
@@ -157,8 +157,11 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
     if named.get("format") != 1 or named.get("tracks") != expected:
         errors.append("named_tracks.json does not match registry.json")
 
+    # Required: without it the client offers no track for download.
     if (root / "consent.json").is_file():
         errors += consent_errors(root / "consent.json", keys)
+    else:
+        errors.append("missing consent.json (the client offers no download without it)")
 
     if previous is not None:
         errors += freeze_errors(previous, keys)
