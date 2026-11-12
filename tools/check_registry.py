@@ -176,10 +176,12 @@ def _listing_errors(listing, where: str, author_level: bool) -> list[str]:
     if extra:
         errors.append(f"{where}: unknown client_listing keys {sorted(extra)}")
     status = listing.get("status")
-    if status not in CONSENT_STATUSES:
+    if not isinstance(status, str) or status not in CONSENT_STATUSES:
         errors.append(f"{where}: status {status!r} is not one of {sorted(CONSENT_STATUSES)}")
     scope = listing.get("scope")
-    if author_level and status == "granted" and scope not in CONSENT_SCOPES:
+    if scope is not None and not isinstance(scope, str):
+        errors.append(f"{where}: scope must be text")
+    elif author_level and status == "granted" and scope not in CONSENT_SCOPES:
         errors.append(f"{where}: an author grant needs scope {sorted(CONSENT_SCOPES)}")
     elif scope is not None and scope not in CONSENT_SCOPES:
         errors.append(f"{where}: unknown scope {scope!r}")
@@ -236,7 +238,7 @@ def consent_errors(path: Path, registry_keys: dict) -> list[str]:
         if not isinstance(name, str) or not name.strip() or len(name.encode("utf-8")) > NAME_MAX \
                 or any(ord(c) < 32 or ord(c) == 127 for c in name):
             errors.append(f"{where}: name must be the public credit name (1 to {NAME_MAX} bytes)")
-        elif name in names:
+        elif name in names:  # name is a str here
             errors.append(f"{where}: name {name!r} listed twice")
         else:
             names.add(name)
@@ -251,7 +253,7 @@ def consent_errors(path: Path, registry_keys: dict) -> list[str]:
         if extra:
             errors.append(f"{where}: unknown keys {sorted(extra)}")
         key = t.get("track_key")
-        if not isinstance(key, str) or key not in registry_keys:
+        if not isinstance(key, str) or key not in registry_keys:  # str check first: a list or object is not hashable
             errors.append(f"{where}: track_key {key!r} is not in registry.json")
         elif key in seen:
             errors.append(f"{where}: track_key {key} listed twice")
