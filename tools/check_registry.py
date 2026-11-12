@@ -203,7 +203,7 @@ def consent_errors(path: Path, registry_keys: dict) -> list[str]:
     if not isinstance(doc, dict):
         return ["consent.json: must be an object"]
     errors = []
-    if doc.get("format") != CONSENT_FORMAT:
+    if type(doc.get("format")) is not int or doc.get("format") != CONSENT_FORMAT:  # true == 1 in Python
         errors.append(f"consent.json: format must be {CONSENT_FORMAT}")
     extra = set(doc) - {"format", "about", "authors", "tracks"}
     if extra:
