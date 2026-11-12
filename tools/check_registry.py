@@ -11,6 +11,14 @@ Checks: file set and digest, mint_status (mint, reserved, builtin), schema versi
 id ranges, name rules, named_tracks.json agreement, no private fields, and with
 --previous the freeze rules: no track, block, shipped name or verified hash
 that was in the older set may change or disappear.
+
+consent.json, when present (track author permission, read live by the
+CTR Archipelago client): format 1, known keys only, one record per Saphi
+author id and per name, one per track key, a track key that registry.json
+lists, the status vocabulary (granted, declined, withdrawn), an author grant
+scoped to all_saphi_tracks, a date, evidence that is a public link or the
+fixed private-receipt wording, and no private fields. consent.json is not in
+the digest and has no freeze rules: answers change, identity does not.
 """
 
 from __future__ import annotations
@@ -32,6 +40,14 @@ PRIVATE_KEYS = {"submitter", "submitter_user_id", "discord_id", "discord_usernam
                 "reviewed_by", "decided_by", "user_id"}
 KEY_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
+CONSENT_FORMAT = 1
+CONSENT_STATUSES = {"granted", "declined", "withdrawn"}
+CONSENT_SCOPES = {"all_saphi_tracks"}
+CONSENT_PRIVATE_EVIDENCE = "private receipt held by the maintainer"
+CONSENT_PRIVATE_KEYS = PRIVATE_KEYS | {"handle", "discord", "dm", "message", "messages", "contact"}
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+AUTHOR_ID_MAX = 100_000_000
+NAME_MAX = 80
 
 
 def _load(path: Path):
@@ -141,9 +157,116 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
     if named.get("format") != 1 or named.get("tracks") != expected:
         errors.append("named_tracks.json does not match registry.json")
 
+    if (root / "consent.json").is_file():
+        errors += consent_errors(root / "consent.json", keys)
+
     if previous is not None:
         errors += freeze_errors(previous, keys)
     return errors
+
+
+def _listing_errors(listing, where: str, author_level: bool) -> list[str]:
+    errors = []
+    if not isinstance(listing, dict):
+        return [f"{where}: client_listing must be an object"]
+    extra = set(listing) - {"status", "scope", "on", "evidence"}
+    if extra:
+        errors.append(f"{where}: unknown client_listing keys {sorted(extra)}")
+    status = listing.get("status")
+    if status not in CONSENT_STATUSES:
+        errors.append(f"{where}: status {status!r} is not one of {sorted(CONSENT_STATUSES)}")
+    scope = listing.get("scope")
+    if author_level and status == "granted" and scope not in CONSENT_SCOPES:
+        errors.append(f"{where}: an author grant needs scope {sorted(CONSENT_SCOPES)}")
+    elif scope is not None and scope not in CONSENT_SCOPES:
+        errors.append(f"{where}: unknown scope {scope!r}")
+    on = listing.get("on")
+    if not isinstance(on, str) or not DATE_RE.match(on):
+        errors.append(f"{where}: on must be a YYYY-MM-DD date")
+    evidence = listing.get("evidence")
+    if not (evidence == CONSENT_PRIVATE_EVIDENCE or (isinstance(evidence, str) and evidence.startswith("https://")
+                                                     and len(evidence) <= 300 and " " not in evidence)):
+        errors.append(f"{where}: evidence must be a public https link or {CONSENT_PRIVATE_EVIDENCE!r}")
+    return errors
+
+
+def consent_errors(path: Path, registry_keys: dict) -> list[str]:
+    try:
+        doc = _load(path)
+    except (ValueError, UnicodeDecodeError) as e:
+        return [f"consent.json: not valid JSON ({e})"]
+    if not isinstance(doc, dict):
+        return ["consent.json: must be an object"]
+    errors = []
+    if doc.get("format") != CONSENT_FORMAT:
+        errors.append(f"consent.json: format must be {CONSENT_FORMAT}")
+    extra = set(doc) - {"format", "about", "authors", "tracks"}
+    if extra:
+        errors.append(f"consent.json: unknown keys {sorted(extra)}")
+    if "about" in doc and not isinstance(doc["about"], str):
+        errors.append("consent.json: about must be text")
+    _walk_private_keys(doc, "consent.json", errors)
+    authors, tracks = doc.get("authors"), doc.get("tracks", [])
+    if not isinstance(authors, list):
+        errors.append("consent.json: authors must be a list")
+        authors = []
+    if not isinstance(tracks, list):
+        errors.append("consent.json: tracks must be a list")
+        tracks = []
+    ids, names = set(), set()
+    for i, a in enumerate(authors):
+        where = f"consent.json authors[{i}]"
+        if not isinstance(a, dict):
+            errors.append(f"{where}: must be an object")
+            continue
+        extra = set(a) - {"saphi_author_id", "name", "client_listing"}
+        if extra:
+            errors.append(f"{where}: unknown keys {sorted(extra)}")
+        aid = a.get("saphi_author_id")
+        if type(aid) is not int or not 0 < aid <= AUTHOR_ID_MAX:
+            errors.append(f"{where}: saphi_author_id must be a positive integer")
+        elif aid in ids:
+            errors.append(f"{where}: saphi_author_id {aid} listed twice")
+        else:
+            ids.add(aid)
+        name = a.get("name")
+        if not isinstance(name, str) or not name.strip() or len(name.encode("utf-8")) > NAME_MAX \
+                or any(ord(c) < 32 or ord(c) == 127 for c in name):
+            errors.append(f"{where}: name must be the public credit name (1 to {NAME_MAX} bytes)")
+        elif name in names:
+            errors.append(f"{where}: name {name!r} listed twice")
+        else:
+            names.add(name)
+        errors += _listing_errors(a.get("client_listing"), where, True)
+    seen = set()
+    for i, t in enumerate(tracks):
+        where = f"consent.json tracks[{i}]"
+        if not isinstance(t, dict):
+            errors.append(f"{where}: must be an object")
+            continue
+        extra = set(t) - {"track_key", "client_listing"}
+        if extra:
+            errors.append(f"{where}: unknown keys {sorted(extra)}")
+        key = t.get("track_key")
+        if not isinstance(key, str) or key not in registry_keys:
+            errors.append(f"{where}: track_key {key!r} is not in registry.json")
+        elif key in seen:
+            errors.append(f"{where}: track_key {key} listed twice")
+        else:
+            seen.add(key)
+        errors += _listing_errors(t.get("client_listing"), where, False)
+    return errors
+
+
+def _walk_private_keys(value, where: str, errors: list) -> None:
+    if isinstance(value, dict):
+        for k, v in value.items():
+            if k in CONSENT_PRIVATE_KEYS:
+                errors.append(f"{where}: private field {k!r}")
+            _walk_private_keys(v, where, errors)
+    elif isinstance(value, list):
+        for v in value:
+            _walk_private_keys(v, where, errors)
 
 
 def freeze_errors(previous: Path, current_by_key: dict) -> list[str]:
