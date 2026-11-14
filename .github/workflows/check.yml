@@ -27,7 +27,7 @@ jobs:
           bad=0
           for f in $files; do
             case "$f" in
-              registry.json|named_tracks.json|DIGEST.json|README.md|CONTRIBUTING.md|LICENSE|.gitignore) ;;
+              registry.json|named_tracks.json|DIGEST.json|consent.json|README.md|CONTRIBUTING.md|LICENSE|.gitignore) ;;
               tracks/*.json|tools/check_registry.py|.github/workflows/*.yml) ;;
               *) echo "unexpected path: $f"; bad=1 ;;
             esac
