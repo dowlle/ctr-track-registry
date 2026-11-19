@@ -28,7 +28,7 @@ jobs:
           for f in $files; do
             case "$f" in
               registry.json|named_tracks.json|DIGEST.json|consent.json|origins.json|README.md|CONTRIBUTING.md|LICENSE|.gitignore) ;;
-              tracks/*.json|tools/check_registry.py|.github/workflows/*.yml) ;;
+              tracks/*.json|tools/check_registry.py|tools/test_check_registry.py|.github/workflows/*.yml) ;;
               *) echo "unexpected path: $f"; bad=1 ;;
             esac
             if [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 1048576 ]; then
@@ -43,6 +43,9 @@ jobs:
 
       - name: Schema, identity and privacy checks
         run: python tools/check_registry.py .
+
+      - name: Malformed registry regression tests
+        run: python -B tools/test_check_registry.py -v
 
       - name: Freeze check against the base commit
         run: |

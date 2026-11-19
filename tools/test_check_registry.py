@@ -1,0 +1,315 @@
+"""Exercise the checker CLI against malformed registry documents."""
+
+import copy
+import io
+import json
+from contextlib import redirect_stdout
+from pathlib import Path
+from tempfile import TemporaryDirectory
+import unittest
+
+from check_registry import digest_of, main
+
+A = "a" * 64
+B = "b" * 64
+TRACK_FILE = "tracks/sample.json"
+REVISION = ("tracks", 0, "revisions", 0)
+AUTHOR_LISTING = ("authors", 0, "client_listing")
+TRACK_LISTING = ("tracks", 0, "client_listing")
+ORIGIN = ("tracks", "sample")
+CITATION = (*ORIGIN, "evidence", 0)
+DELETE = object()
+
+
+def fixture():
+    track = {
+        "track_key": "sample", "display_title": "Circuit Étoile", "block_index": 0,
+        "ap_name": "Circuit Étoile", "state": "named", "mint_status": "mint",
+        "maps_to": None, "shipped_in": None,
+        "revisions": [{
+            "revision": "1.0", "hash_state": "verified", "content_id": A,
+            "modes": ["race", "ctr_challenge"], "files": {"lev": {"sha256": B, "size": 256}},
+        }],
+    }
+    listing = {"status": "granted", "on": "2024-02-29", "evidence": "https://example.org/%C2%9F"}
+    return {
+        "registry.json": {"schema_version": 1, "tracks": [track]},
+        TRACK_FILE: copy.deepcopy(track),
+        "DIGEST.json": {"digest": A},
+        "named_tracks.json": {
+            "format": 1, "registry": {"digest": ""},
+            "tracks": [{
+                "track_key": "sample", "block_index": 0, "ap_name": "Circuit Étoile",
+                "shipped_in": None, "revisions": [A],
+            }],
+        },
+        "origins.json": {
+            "format": 1,
+            "games": {"sample-game": {"title": "Étoile Racing", "racing_game": True, "code": "ETR"}},
+            "tracks": {"sample": {
+                "origin_game": "sample-game", "relation": "remake", "review": "verified",
+                "corrected_by": "author", "own_letter_models": {B: "ETR"},
+                "evidence": [{"url": "https://example.org/race", "note": "Course citation"}],
+            }},
+        },
+        "consent.json": {
+            "format": 1, "about": "Author permissions",
+            "authors": [{"saphi_author_id": 2, "name": "Renée",
+                         "client_listing": {**listing, "scope": "all_saphi_tracks"}}],
+            "tracks": [{"track_key": "sample", "client_listing": dict(listing)}],
+        },
+    }
+
+
+def resolve(data, path):
+    for key in path:
+        data = data[key]
+    return data
+
+
+def mutate(documents, file, path, value):
+    parent = resolve(documents, (file, *path[:-1])) if path else documents
+    key = path[-1] if path else file
+    if value is DELETE:
+        del parent[key]
+    else:
+        parent[key] = value
+
+
+def write_fixture(root, documents, *, keep_digest=False):
+    (root / "tracks").mkdir(exist_ok=True)
+    for file, value in documents.items():
+        (root / file).write_text(json.dumps(value), encoding="utf-8")
+    if not keep_digest:
+        digest = digest_of(root)
+        (root / "DIGEST.json").write_text(json.dumps({"digest": digest}), encoding="utf-8")
+        named = documents["named_tracks.json"]
+        if isinstance(named, dict) and isinstance(named.get("registry"), dict):
+            named["registry"]["digest"] = digest
+            (root / "named_tracks.json").write_text(json.dumps(named), encoding="utf-8")
+
+
+def run(root, previous=None):
+    argv = [str(root)]
+    if previous is not None:
+        argv += ["--previous", str(previous)]
+    output = io.StringIO()
+    with redirect_stdout(output):
+        status = main(argv)
+    return status, output.getvalue()
+
+
+class CheckerTests(unittest.TestCase):
+    def setUp(self):
+        temp = TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        self.root = Path(temp.name) / "current"
+        self.previous = Path(temp.name) / "base"
+        self.root.mkdir()
+        self.previous.mkdir()
+        write_fixture(self.root, fixture())
+        write_fixture(self.previous, fixture())
+
+    def assert_invalid(self, expected):
+        status, output = run(self.root, self.previous)
+        self.assertEqual(status, 1, output)
+        self.assertIn(f"FAIL {expected}", output)
+        self.assertIn("registry check: FAILED", output)
+        self.assertNotIn("Traceback", output)
+
+    def test_valid_registry_and_freeze(self):
+        self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+
+    def test_claimed_revision_without_size_is_valid(self):
+        documents = fixture()
+        claimed = {"revision": "2.0", "hash_state": "claimed", "content_id": B,
+                   "modes": [], "files": {"lev": {"sha256": A}}}
+        documents["registry.json"]["tracks"][0]["revisions"].append(claimed)
+        documents[TRACK_FILE]["revisions"].append(claimed)
+        documents["named_tracks.json"]["tracks"][0]["revisions"].append(B)
+        write_fixture(self.root, documents)
+        self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+
+    def test_wrong_types_nulls_and_missing_fields(self):
+        cases = [
+            ("registry.json", ("schema_version",), True, "registry.json.schema_version"),
+            ("registry.json", ("tracks",), {}, "registry.json.tracks"),
+            ("registry.json", ("tracks", 0), [], "registry.json.tracks[0]"),
+            ("registry.json", ("tracks", 0, "track_key"), [], "registry.json.tracks[0].track_key"),
+            ("registry.json", ("tracks", 0, "state"), [], "registry.json.tracks[0].state"),
+            ("registry.json", ("tracks", 0, "display_title"), 42, "registry.json.tracks[0].display_title"),
+            ("registry.json", ("tracks", 0, "revisions"), {}, "registry.json.tracks[0].revisions"),
+            ("registry.json", REVISION, [], "registry.json.tracks[0].revisions[0]"),
+            ("registry.json", (*REVISION, "revision"), [], "registry.json.tracks[0].revisions[0].revision"),
+            (TRACK_FILE, ("revisions", 0, "files"), [], f"{TRACK_FILE}.revisions[0].files"),
+            (TRACK_FILE, ("revisions", 0, "files", "lev"), [], f"{TRACK_FILE}.revisions[0].files.lev"),
+            (TRACK_FILE, ("revisions", 0, "files", "lev", "sha256"), [], f"{TRACK_FILE}.revisions[0].files.lev.sha256"),
+            (TRACK_FILE, ("revisions", 0, "modes"), {}, f"{TRACK_FILE}.revisions[0].modes"),
+            (TRACK_FILE, ("revisions", 0, "modes", 0), {}, f"{TRACK_FILE}.revisions[0].modes[0]"),
+            ("named_tracks.json", ("format",), True, "named_tracks.json.format"),
+            ("named_tracks.json", ("registry",), [], "named_tracks.json.registry"),
+            ("named_tracks.json", ("tracks", 0), [], "named_tracks.json.tracks[0]"),
+            ("named_tracks.json", ("tracks", 0, "block_index"), False, "named_tracks.json.tracks[0].block_index"),
+            ("named_tracks.json", ("tracks", 0, "revisions", 0), [], "named_tracks.json.tracks[0].revisions"),
+            ("DIGEST.json", ("digest",), [], "DIGEST.json.digest"),
+            ("origins.json", ("games",), [], "origins.json.games"),
+            ("origins.json", ("games", "sample-game"), [], "origins.json.games.sample-game"),
+            ("origins.json", ("games", "sample-game", "racing_game"), 1, "origins.json.games.sample-game.racing_game"),
+            ("origins.json", ORIGIN, [], "origins.json.tracks.sample"),
+            ("origins.json", (*ORIGIN, "origin_game"), [], "origins.json.tracks.sample.origin_game"),
+            ("origins.json", (*ORIGIN, "relation"), [], "origins.json.tracks.sample.relation"),
+            ("origins.json", CITATION, [], "origins.json.tracks.sample.evidence"),
+            ("origins.json", (*CITATION, "note"), [], "origins.json.tracks.sample.evidence[0].note"),
+            ("consent.json", ("authors", 0), [], "consent.json.authors"),
+            ("consent.json", ("authors", 0, "saphi_author_id"), True, "consent.json.authors[0].saphi_author_id"),
+            ("consent.json", AUTHOR_LISTING, [], "consent.json.authors[0].client_listing"),
+            ("consent.json", (*AUTHOR_LISTING, "status"), [], "consent.json.authors[0].client_listing"),
+            ("consent.json", ("tracks", 0), [], "consent.json.tracks"),
+            ("consent.json", ("tracks", 0, "track_key"), [], "consent.json.tracks[0]"),
+            ("consent.json", TRACK_LISTING, [], "consent.json.tracks[0].client_listing"),
+            ("consent.json", (*TRACK_LISTING, "on"), [], "consent.json.tracks[0].client_listing"),
+        ]
+        # Deleting an entry from a collection changes its membership. Only
+        # missing fields of required records are type/schema errors.
+        map_entries = {("games", "sample-game"), ORIGIN, ("revisions", 0, "files", "lev")}
+        for file, path, wrong_type, diagnostic in cases:
+            values = (wrong_type, None)
+            if isinstance(path[-1], str) and path not in map_entries:
+                values += (DELETE,)
+            for value in values:
+                with self.subTest(file=file, path=path, value=value):
+                    documents = fixture()
+                    mutate(documents, file, path, value)
+                    write_fixture(self.root, documents, keep_digest=file == "DIGEST.json")
+                    self.assert_invalid(diagnostic)
+
+    def test_every_document_rejects_a_non_object_root(self):
+        for file in fixture():
+            for value in (None, [], 1, "text"):
+                with self.subTest(file=file, value=value):
+                    documents = fixture()
+                    documents[file] = value
+                    write_fixture(self.root, documents, keep_digest=file == "DIGEST.json")
+                    self.assert_invalid(f"{file}: expected dict")
+
+    def test_text_rules(self):
+        fields = [
+            ("registry.json", ("tracks", 0, "display_title"), "registry.json.tracks[0].display_title"),
+            ("registry.json", ("tracks", 0, "ap_name"), "registry.json.tracks[0].ap_name"),
+            (TRACK_FILE, ("revisions", 0, "revision"), f"{TRACK_FILE}.revisions[0].revision"),
+            ("named_tracks.json", ("tracks", 0, "ap_name"), "named_tracks.json.tracks[0].ap_name"),
+            ("origins.json", ("games", "sample-game", "title"), "origins.json.games.sample-game.title"),
+            ("origins.json", (*CITATION, "note"), "origins.json.tracks.sample.evidence[0].note"),
+            ("origins.json", (*CITATION, "url"), "origins.json.tracks.sample.evidence[0].url"),
+            ("consent.json", ("authors", 0, "name"), "consent.json.authors[0].name"),
+            ("consent.json", (*TRACK_LISTING, "evidence"), "consent.json.tracks[0].client_listing.evidence"),
+        ]
+        for file, path, diagnostic in fields:
+            for bad in ("x\x00y", "x\x1fy", "x\x7fy", "x\x9fy", "x\u2028y", "x\u2029y",
+                        " leading", "trailing ", "trailing\n", "\ud800", "x" * 4097):
+                with self.subTest(file=file, path=path, value=bad[:20]):
+                    documents = fixture()
+                    mutate(documents, file, path, bad)
+                    write_fixture(self.root, documents)
+                    self.assert_invalid(diagnostic)
+
+    def test_strict_consent_dates(self):
+        for value in ("2024-02-29\n", "2024-02-29\x9f", "2025-02-29", "2024-13-01",
+                      "0000-02-29", "２０２４-０２-２９", "2024-2-29", "20240229"):
+            with self.subTest(date=value):
+                documents = fixture()
+                mutate(documents, "consent.json", (*AUTHOR_LISTING, "on"), value)
+                write_fixture(self.root, documents)
+                self.assert_invalid("consent.json.authors[0].client_listing")
+
+    def test_malformed_data_keeps_checking_other_records(self):
+        documents = fixture()
+        documents["registry.json"]["tracks"][0]["revisions"] = [None]
+        documents["consent.json"]["authors"][0]["name"] = "x\x9fy"
+        documents["origins.json"]["games"]["sample-game"]["title"] = "title\n"
+        write_fixture(self.root, documents)
+        for expected in ("registry.json.tracks[0].revisions[0]", "consent.json.authors[0].name",
+                         "origins.json.games.sample-game.title"):
+            self.assert_invalid(expected)
+
+    def test_invalid_or_deep_json_in_previous_snapshot(self):
+        path = self.previous / "registry.json"
+        for bad in ("{", "NaN", "[" * 160 + "0" + "]" * 160, "[" * 1500 + "0" + "]" * 1500):
+            with self.subTest(data=bad[:20]):
+                path.write_text(bad, encoding="utf-8")
+                self.assert_invalid("previous registry.json")
+
+    def test_freeze_still_checks_verified_files(self):
+        documents = fixture()
+        mutate(documents, "registry.json", (*REVISION, "files", "lev", "size"), 512)
+        write_fixture(self.root, documents)
+        self.assert_invalid("frozen: sample verified revision 1.0 changed")
+
+    def test_freeze_allows_corrections_to_unfrozen_fields(self):
+        documents = fixture()
+        mutate(documents, "registry.json", ("tracks", 0, "display_title"), "Old title ")
+        mutate(documents, "registry.json", (*REVISION, "modes"), DELETE)
+        write_fixture(self.previous, documents)
+        self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+
+    def test_freeze_allows_corrections_to_old_unverified_revisions(self):
+        for old_state in (None, [], DELETE):
+            with self.subTest(old_state=old_state):
+                current = fixture()
+                pending = {"revision": "2.0", "hash_state": "pending", "content_id": None,
+                           "modes": [], "files": {}}
+                current["registry.json"]["tracks"][0]["revisions"].append(pending)
+                current[TRACK_FILE]["revisions"].append(pending)
+                previous = copy.deepcopy(current)
+                mutate(previous, "registry.json", ("tracks", 0, "revisions", 1, "hash_state"), old_state)
+                write_fixture(self.root, current)
+                write_fixture(self.previous, previous)
+                self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+
+    def test_verified_hashes_must_be_present(self):
+        documents = fixture()
+        for rev in (resolve(documents["registry.json"], REVISION), documents[TRACK_FILE]["revisions"][0]):
+            rev.update(content_id=None, files={})
+        documents["named_tracks.json"]["tracks"][0]["revisions"] = []
+        write_fixture(self.root, documents)
+        status, output = run(self.root)
+        self.assertEqual(status, 1, output)
+        self.assertIn("verified revisions need a content_id and file hashes", output)
+
+    def test_per_track_identity_matches_registry(self):
+        for path, value, diagnostic in (
+            (("track_key",), "other", "track_key must agree with the file name"),
+            (("revisions", 0, "content_id"), B, "verified revisions must agree with registry.json"),
+        ):
+            with self.subTest(path=path):
+                documents = fixture()
+                mutate(documents, TRACK_FILE, path, value)
+                write_fixture(self.root, documents)
+                self.assert_invalid(f"{TRACK_FILE}: {diagnostic}")
+
+    def test_consent_evidence_preserves_character_limit(self):
+        documents = fixture()
+        prefix = "https://example.org/"
+        valid = prefix + "é" * (300 - len(prefix))
+        mutate(documents, "consent.json", (*TRACK_LISTING, "evidence"), valid)
+        write_fixture(self.root, documents)
+        self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+        mutate(documents, "consent.json", (*TRACK_LISTING, "evidence"), valid + "é")
+        write_fixture(self.root, documents)
+        self.assert_invalid("consent.json.tracks[0].client_listing")
+
+    def test_duplicate_json_members_are_reported(self):
+        consent = self.root / "consent.json"
+        source = consent.read_text(encoding="utf-8")
+        consent.write_text(source.replace('"on":', '"on": null, "on":', 1), encoding="utf-8")
+        self.assert_invalid("consent.json: duplicate JSON field 'on'")
+
+    def test_origin_models_require_both_verified_records(self):
+        documents = fixture()
+        mutate(documents, TRACK_FILE, ("revisions", 0, "modes"), ["race"])
+        write_fixture(self.root, documents)
+        self.assert_invalid("origins.json.tracks.sample: own_letter_models needs verified CTR Challenge LEV hashes")
+
+
+if __name__ == "__main__":
+    unittest.main()
