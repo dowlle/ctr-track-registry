@@ -41,6 +41,7 @@ PRIVATE_KEYS = {"submitter", "submitter_user_id", "discord_id", "discord_usernam
                 "reviewed_by", "decided_by", "user_id"}
 KEY_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
+CONTROL_CHAR = re.compile(r"[\x00-\x1f\x7f-\x9f]")
 DNS_NAME = re.compile(r"(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}")
 CONSENT_FORMAT = 1
 CONSENT_STATUSES = {"granted", "declined", "withdrawn"}
@@ -85,7 +86,8 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
         errors.append(f"registry.json: schema_version must be {SCHEMA_VERSION}")
     if digest_of(root) != digest_doc.get("digest"):
         errors.append("DIGEST.json does not match registry.json and tracks/")
-    if named.get("registry", {}).get("digest") != digest_doc.get("digest"):
+    named_registry = named.get("registry")
+    if not isinstance(named_registry, dict) or named_registry.get("digest") != digest_doc.get("digest"):
         errors.append("named_tracks.json carries a different digest than DIGEST.json")
 
     tracks = registry.get("tracks", [])
@@ -118,7 +120,7 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
                 errors.append(f"{key}: a block needs an ap_name")
             else:
                 if len(name.encode("utf-8")) > NAME_MAX_BYTES or any(c in name for c in "[]{}") \
-                        or any(ord(c) < 32 for c in name):
+                        or CONTROL_CHAR.search(name):
                     errors.append(f"{key}: ap_name {name!r} breaks the name rules")
                 if name.casefold() in names:
                     errors.append(f"{key}: ap_name {name!r} also used by {names[name.casefold()]}")
@@ -183,7 +185,7 @@ def valid_origin_evidence(link) -> bool:
         return False
     try:
         source = link["url"]
-        if any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in source):
+        if CONTROL_CHAR.search(source) or any(c.isspace() for c in source):
             return False
         url = urlsplit(source)
         host = url.hostname or ""
@@ -206,10 +208,13 @@ def verified_ctr_revisions(track) -> set:
         modes = rev.get("modes")
         if not isinstance(modes, list) or not all(isinstance(mode, str) for mode in modes):
             continue
-        if "ctr_challenge" in modes:
-            lev = rev.get("files", {}).get("lev", {}).get("sha256")
-            if isinstance(lev, str) and isinstance(rev.get("revision"), str):
-                revisions.add((rev["revision"], lev, tuple(modes)))
+        if "ctr_challenge" not in modes:
+            continue
+        files = rev.get("files")
+        lev = files.get("lev") if isinstance(files, dict) else None
+        sha256 = lev.get("sha256") if isinstance(lev, dict) else None
+        if isinstance(sha256, str) and isinstance(rev.get("revision"), str):
+            revisions.add((rev["revision"], sha256, tuple(modes)))
     return revisions
 
 
@@ -292,7 +297,8 @@ def _listing_errors(listing, where: str, author_level: bool) -> list[str]:
         errors.append(f"{where}: on must be a YYYY-MM-DD date")
     evidence = listing.get("evidence")
     if not (evidence == CONSENT_PRIVATE_EVIDENCE or (isinstance(evidence, str) and evidence.startswith("https://")
-                                                     and len(evidence) <= 300 and " " not in evidence)):
+                                                     and len(evidence) <= 300 and " " not in evidence
+                                                     and not CONTROL_CHAR.search(evidence))):
         errors.append(f"{where}: evidence must be a public https link or {CONSENT_PRIVATE_EVIDENCE!r}")
     return errors
 
@@ -338,7 +344,7 @@ def consent_errors(path: Path, registry_keys: dict) -> list[str]:
             ids.add(aid)
         name = a.get("name")
         if not isinstance(name, str) or not name.strip() or len(name.encode("utf-8")) > NAME_MAX \
-                or any(ord(c) < 32 or ord(c) == 127 for c in name):
+                or CONTROL_CHAR.search(name):
             errors.append(f"{where}: name must be the public credit name (1 to {NAME_MAX} bytes)")
         elif name in names:  # name is a str here
             errors.append(f"{where}: name {name!r} listed twice")
