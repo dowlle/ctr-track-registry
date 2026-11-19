@@ -183,15 +183,34 @@ def valid_origin_evidence(link) -> bool:
         return False
     try:
         source = link["url"]
+        if any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in source):
+            return False
         url = urlsplit(source)
         host = url.hostname or ""
-        return (url.scheme == "https" and not any(c.isspace() for c in source)
-                and not url.username and not url.password
+        return (url.scheme == "https" and not url.username and not url.password
                 and bool(DNS_NAME.fullmatch(host))
+                and host != "home.arpa" and not host.endswith(".home.arpa")
                 and host.rsplit(".", 1)[-1] not in ("local", "localhost", "internal", "test", "invalid")
                 and (url.port is None or url.port > 0))
     except ValueError:
         return False
+
+
+def verified_ctr_revisions(track) -> set:
+    revisions = set()
+    if not isinstance(track, dict) or not isinstance(track.get("revisions"), list):
+        return revisions
+    for rev in track["revisions"]:
+        if not isinstance(rev, dict) or rev.get("hash_state") != "verified":
+            continue
+        modes = rev.get("modes")
+        if not isinstance(modes, list) or not all(isinstance(mode, str) for mode in modes):
+            continue
+        if "ctr_challenge" in modes:
+            lev = rev.get("files", {}).get("lev", {}).get("sha256")
+            if isinstance(lev, str) and isinstance(rev.get("revision"), str):
+                revisions.add((rev["revision"], lev, tuple(modes)))
+    return revisions
 
 
 def origins_errors(root: Path, registry_keys: dict) -> list[str]:
@@ -233,10 +252,15 @@ def origins_errors(root: Path, registry_keys: dict) -> list[str]:
         if not isinstance(evidence, list) or not evidence or not all(map(valid_origin_evidence, evidence)):
             errors.append(f"{where}: expected public evidence")
         models = row.get("own_letter_models", {})
-        levs = {r.get("files", {}).get("lev", {}).get("sha256")
-                for r in registry_keys[key].get("revisions", [])
-                if r.get("hash_state") == "verified" and isinstance(r.get("modes"), list)
-                and "ctr_challenge" in r["modes"]}
+        levs = set()
+        if models:
+            try:
+                track = _load(root / "tracks" / f"{key}.json")
+            except (OSError, ValueError):
+                errors.append(f"{where}: cannot read the per-track revision file")
+            else:
+                matched = verified_ctr_revisions(registry_keys[key]) & verified_ctr_revisions(track)
+                levs = {lev for _revision, lev, _modes in matched}
         if not isinstance(models, dict) or any(
                 not HEX64.fullmatch(lev) or lev not in levs or not valid_origin_code(glyphs)
                 for lev, glyphs in models.items()):
