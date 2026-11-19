@@ -23,10 +23,13 @@ the digest and has no freeze rules: answers change, identity does not.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import re
 import sys
+from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -41,31 +44,138 @@ PRIVATE_KEYS = {"submitter", "submitter_user_id", "discord_id", "discord_usernam
                 "reviewed_by", "decided_by", "user_id"}
 KEY_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
-CONTROL_CHAR = re.compile(r"[\x00-\x1f\x7f-\x9f]")
+ORIGIN_CODE_RE = re.compile(r"[A-Z0-9]{3}")
+CONTROL_CHAR = re.compile(r"[\x00-\x1f\x7f-\x9f\u2028\u2029]")
 DNS_NAME = re.compile(r"(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}")
 CONSENT_FORMAT = 1
 CONSENT_STATUSES = {"granted", "declined", "withdrawn"}
 CONSENT_SCOPES = {"all_saphi_tracks"}
 CONSENT_PRIVATE_EVIDENCE = "private receipt held by the maintainer"
 CONSENT_PRIVATE_KEYS = PRIVATE_KEYS | {"handle", "discord", "dm", "message", "messages", "contact"}
-DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+DATE_RE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
 AUTHOR_ID_MAX = 100_000_000
 NAME_MAX = 80
+TEXT_MAX_BYTES = 4096
+MISSING = object()
 
 
-def _load(path: Path):
-    return json.loads(path.read_text(encoding="utf-8"))
+def typed(value, kind, where, errors, *, default=MISSING, nullable=False):
+    if value is MISSING:
+        if default is not MISSING:
+            return default
+        errors.append(f"{where}: missing")
+    elif value is None and nullable:
+        return None
+    elif type(value) is kind:  # bool is a subclass of int
+        return value
+    else:
+        errors.append(f"{where}: expected {kind.__name__}, got {type(value).__name__}")
+    return kind() if kind in (dict, list) else None
 
 
-def _walk_private(value, where: str, errors: list) -> None:
-    if isinstance(value, dict):
-        for k, v in value.items():
-            if k in PRIVATE_KEYS:
-                errors.append(f"{where}: private field {k!r}")
-            _walk_private(v, where, errors)
-    elif isinstance(value, list):
-        for v in value:
-            _walk_private(v, where, errors)
+def text_value(value, where, errors, *, limit=TEXT_MAX_BYTES, pattern=None, **options):
+    value = typed(value, str, where, errors, **options)
+    if value is None:
+        return None
+    try:
+        size = len(value.encode("utf-8"))
+    except UnicodeEncodeError:
+        size = 0
+    if not 0 < size <= limit or value != value.strip() or CONTROL_CHAR.search(value):
+        errors.append(f"{where}: expected 1 to {limit} UTF-8 bytes without controls or surrounding whitespace")
+        return None
+    if pattern is not None and not pattern.fullmatch(value):
+        errors.append(f"{where}: invalid format")
+        return None
+    return value
+
+
+class Record:
+    def __init__(self, value, where, errors):
+        self.where = where
+        self.errors = errors
+        self.data = typed(value, dict, where, errors)
+
+    def read(self, key, kind, **options):
+        return typed(self.data.get(key, MISSING), kind, f"{self.where}.{key}", self.errors, **options)
+
+    def text(self, key, **options):
+        return text_value(self.data.get(key, MISSING), f"{self.where}.{key}", self.errors, **options)
+
+    def choices(self, key, choices, **options):
+        value = self.text(key, **options)
+        if value is not None and value not in choices:
+            self.error(f"{key} must be one of {sorted(choices)}")
+            return None
+        return value
+
+    def day(self, key):
+        value = self.text(key, pattern=DATE_RE)
+        if value is not None:
+            try:
+                return date.fromisoformat(value)
+            except ValueError:
+                self.error(f"{key} must be a valid calendar date")
+        return None
+
+    def object(self, key):
+        return self.child(key, self.data.get(key, MISSING))
+
+    def child(self, key, value):
+        where = f"{self.where}.{key}"
+        if type(value) is dict:
+            return Record(value, where, self.errors)
+        typed(value, dict, where, self.errors)
+        return None
+
+    def rows(self, key, **options):
+        for index, value in enumerate(self.read(key, list, **options)):
+            row = self.child(f"{key}[{index}]", value)
+            if row is not None:
+                yield row
+
+    def text_list(self, key, **options):
+        return tuple(
+            text_value(value, f"{self.where}.{key}[{index}]", self.errors, **options)
+            for index, value in enumerate(self.read(key, list))
+        )
+
+    def exact(self, allowed):
+        extra = self.data.keys() - allowed
+        if extra:
+            self.error(f"unknown keys {sorted(extra)!r}")
+
+    def error(self, message):
+        self.errors.append(f"{self.where}: {message}")
+
+
+def reject_constant(value):
+    raise ValueError(f"{value} is not a JSON constant")
+
+
+def load_record(root, rel, errors, *, label=None, private_keys=PRIVATE_KEYS):
+    where = label or rel
+    try:
+        value = json.loads((root / rel).read_text(encoding="utf-8"), parse_constant=reject_constant)
+    except (OSError, ValueError, RecursionError) as exc:
+        errors.append(f"{where}: cannot read JSON ({exc})")
+        return Record({}, where, errors)
+    # Bound nesting before any structural comparisons and check privacy even in
+    # metadata whose schema is owned by the exporter.
+    stack = [(value, 0)]
+    while stack:
+        item, depth = stack.pop()
+        if depth > 128:
+            errors.append(f"{where}: JSON nesting exceeds 128 levels")
+            return Record({}, where, errors)
+        if isinstance(item, dict):
+            for key, child in item.items():
+                if key in private_keys:
+                    errors.append(f"{where}: private field {key!r}")
+                stack.append((child, depth + 1))
+        elif isinstance(item, list):
+            stack.extend((child, depth + 1) for child in item)
+    return Record(value, where, errors)
 
 
 def digest_of(root: Path) -> str:
@@ -76,117 +186,162 @@ def digest_of(root: Path) -> str:
     return h.hexdigest()
 
 
-def check(root: Path, previous: Path | None = None) -> list[str]:
-    errors: list[str] = []
-    for rel in ("registry.json", "named_tracks.json", "DIGEST.json"):
-        if not (root / rel).is_file():
-            return [f"missing {rel}"]
-    registry, named, digest_doc = (_load(root / n) for n in ("registry.json", "named_tracks.json", "DIGEST.json"))
-    if registry.get("schema_version") != SCHEMA_VERSION:
-        errors.append(f"registry.json: schema_version must be {SCHEMA_VERSION}")
-    if digest_of(root) != digest_doc.get("digest"):
-        errors.append("DIGEST.json does not match registry.json and tracks/")
-    named_registry = named.get("registry")
-    if not isinstance(named_registry, dict) or named_registry.get("digest") != digest_doc.get("digest"):
-        errors.append("named_tracks.json carries a different digest than DIGEST.json")
+@dataclass
+class Revision:
+    revision: str | None
+    hash_state: str | None
+    content_id: str | None
+    files: dict
+    lev_hash: str | None
+    modes: tuple
 
-    tracks = registry.get("tracks", [])
-    keys, blocks, names = {}, {}, {}
-    for t in tracks:
-        key = t.get("track_key")
-        if not isinstance(key, str) or not KEY_RE.match(key):
-            errors.append(f"bad track_key {key!r}")
-            continue
-        if key in keys:
-            errors.append(f"duplicate track_key {key}")
-        keys[key] = t
-        if t.get("state") not in STATES:
-            errors.append(f"{key}: bad state {t.get('state')!r}")
-        if not t.get("display_title"):
-            errors.append(f"{key}: missing display_title")
-        _walk_private(t, key, errors)
-        if not (root / "tracks" / f"{key}.json").is_file():
-            errors.append(f"{key}: tracks/{key}.json is missing")
-        bi = t.get("block_index")
-        if bi is not None:
-            if type(bi) is not int or not 0 <= bi < MAX_BLOCKS:
-                errors.append(f"{key}: block_index {bi!r} out of range")
-            elif bi in blocks:
-                errors.append(f"{key}: block_index {bi} also used by {blocks[bi]}")
-            else:
-                blocks[bi] = key
-            name = t.get("ap_name")
-            if not isinstance(name, str) or not name.strip():
-                errors.append(f"{key}: a block needs an ap_name")
-            else:
-                if len(name.encode("utf-8")) > NAME_MAX_BYTES or any(c in name for c in "[]{}") \
-                        or CONTROL_CHAR.search(name):
-                    errors.append(f"{key}: ap_name {name!r} breaks the name rules")
-                if name.casefold() in names:
-                    errors.append(f"{key}: ap_name {name!r} also used by {names[name.casefold()]}")
-                names[name.casefold()] = key
-            ms = t.get("mint_status", "mint")
-            if ms not in MINT_STATUSES:
-                errors.append(f"{key}: bad mint_status {ms!r}")
-            elif ms == "builtin" and not t.get("maps_to"):
-                errors.append(f"{key}: a builtin entry needs maps_to")
-            elif ms == "mint" and t.get("maps_to"):
-                errors.append(f"{key}: maps_to is only for builtin or reserved entries")
-            elif ms != "mint" and t.get("shipped_in"):
-                errors.append(f"{key}: {ms} entries cannot be shipped")
-        elif t.get("state") == "named":
-            errors.append(f"{key}: state named without a block_index")
-        if t.get("shipped_in") and bi is None:
-            errors.append(f"{key}: shipped_in without a block_index")
-        seen_ids = set()
-        for r in t.get("revisions", []):
-            cid = r.get("content_id")
-            if cid is not None:
-                if not HEX64.match(cid):
-                    errors.append(f"{key}: bad content_id {cid!r}")
-                elif cid in seen_ids:
-                    errors.append(f"{key}: duplicate content_id {cid}")
-                seen_ids.add(cid)
-    for p in (root / "tracks").glob("*.json"):
-        if p.stem not in keys:
-            errors.append(f"tracks/{p.name} is not listed in registry.json")
-
-    expected = [
-        {"track_key": t["track_key"], "block_index": t["block_index"], "ap_name": t["ap_name"],
-         "shipped_in": t["shipped_in"],
-         "revisions": [r["content_id"] for r in t["revisions"] if r.get("content_id")]}
-        for t in tracks if t.get("block_index") is not None and t.get("track_key")
-        and t.get("mint_status", "mint") == "mint"
-    ]
-    if named.get("format") != 1 or named.get("tracks") != expected:
-        errors.append("named_tracks.json does not match registry.json")
-
-    # Required: without it the client offers no track for download.
-    if (root / "consent.json").is_file():
-        errors += consent_errors(root / "consent.json", keys)
-    else:
-        errors.append("missing consent.json (the client offers no download without it)")
-
-    errors += origins_errors(root, keys)
-    if previous is not None:
-        errors += freeze_errors(previous, keys)
-    return errors
+    @classmethod
+    def read(cls, row):
+        revision = row.text("revision")
+        state = row.text("hash_state")
+        content = row.text("content_id", pattern=HEX64, nullable=True)
+        files = row.object("files")
+        lev_hash = None
+        if files is not None:
+            for name, value in files.data.items():
+                text_value(name, files.where, row.errors)
+                item = files.child(name, value)
+                if item is not None:
+                    sha = item.text("sha256", pattern=HEX64)
+                    item.read("size", int, default=None)
+                    if name == "lev":
+                        lev_hash = sha
+        return cls(revision, state, content, files.data if files is not None else {},
+                   lev_hash, row.text_list("modes"))
 
 
-def valid_origin_code(code) -> bool:
-    return isinstance(code, str) and bool(re.fullmatch(r"[A-Z0-9]{3}", code)) and len(set(code)) == 3
+@dataclass
+class Track:
+    key: str | None
+    block: int | None
+    name: str | None
+    mint: str | None
+    mapping: str | None
+    shipped: str | None
+    revisions: list[Revision]
+
+    @classmethod
+    def read(cls, row):
+        key = row.text("track_key", pattern=KEY_RE, limit=250)
+        state = row.choices("state", STATES)
+        row.text("display_title")
+        block = row.read("block_index", int, nullable=True, default=None)
+        name = row.text("ap_name", limit=NAME_MAX_BYTES, nullable=True, default=None)
+        mint = row.choices("mint_status", MINT_STATUSES, default="mint")
+        mapping = row.text("maps_to", nullable=True, default=None)
+        shipped = row.text("shipped_in", nullable=True,
+                           default=MISSING if block is not None and mint == "mint" else None)
+        revisions = [Revision.read(rev) for rev in row.rows("revisions")]
+        if block is None:
+            if state == "named":
+                row.error("state named without a block_index")
+            if shipped is not None:
+                row.error("shipped_in without a block_index")
+        else:
+            if not 0 <= block < MAX_BLOCKS:
+                row.error(f"block_index {block} out of range")
+            if name is None:
+                row.error("a block needs an ap_name")
+            elif any(c in name for c in "[]{}"):
+                row.error("ap_name breaks the name rules")
+            if mint == "builtin" and mapping is None:
+                row.error("a builtin entry needs maps_to")
+            if mint == "mint" and mapping is not None:
+                row.error("maps_to is only for builtin or reserved entries")
+            if mint in ("builtin", "reserved") and shipped is not None:
+                row.error(f"{mint} entries cannot be shipped")
+        seen = set()
+        for rev in revisions:
+            if rev.content_id is not None:
+                if rev.content_id in seen:
+                    row.error(f"duplicate content_id {rev.content_id}")
+                seen.add(rev.content_id)
+        return cls(key, block, name, mint, mapping, shipped, revisions)
+
+    def named_row(self):
+        return {"track_key": self.key, "block_index": self.block, "ap_name": self.name,
+                "shipped_in": self.shipped,
+                "revisions": [rev.content_id for rev in self.revisions if rev.content_id is not None]}
+
+    def verified_ctr_revisions(self):
+        return {
+            (rev.revision, rev.lev_hash, rev.modes) for rev in self.revisions
+            if rev.hash_state == "verified" and rev.revision is not None and rev.lev_hash is not None
+            and "ctr_challenge" in rev.modes and None not in rev.modes
+        }
 
 
-def valid_origin_evidence(link) -> bool:
-    if not isinstance(link, dict) or not isinstance(link.get("url"), str):
-        return False
-    note = link.get("note")
-    if not isinstance(note, str) or not note.strip():
+def registry_tracks(root, errors, *, previous=False):
+    doc = load_record(root, "registry.json", errors, label="previous registry.json" if previous else None)
+    if doc.read("schema_version", int) != SCHEMA_VERSION:
+        doc.error(f"schema_version must be {SCHEMA_VERSION}")
+    tracks, blocks, names = {}, {}, {}
+    for row in doc.rows("tracks"):
+        track = Track.read(row)
+        if track.key is not None:
+            if track.key in tracks:
+                row.error(f"duplicate track_key {track.key}")
+            tracks[track.key] = track
+        if track.block is not None:
+            if track.block in blocks:
+                row.error(f"block_index {track.block} also used by {blocks[track.block]}")
+            blocks[track.block] = row.where
+            if track.name is not None:
+                folded = track.name.casefold()
+                if folded in names:
+                    row.error(f"ap_name {track.name!r} also used by {names[folded]}")
+                names[folded] = row.where
+    return tracks
+
+
+def per_track_records(root, registry, errors):
+    paths = {path.stem: f"tracks/{path.name}" for path in (root / "tracks").glob("*.json")}
+    for key in registry.keys() - paths.keys():
+        errors.append(f"{key}: tracks/{key}.json is missing")
+    records = {}
+    for key, path in paths.items():
+        if key not in registry:
+            errors.append(f"{path} is not listed in registry.json")
+        records[key] = Track.read(load_record(root, path, errors))
+    return records
+
+
+def check_named(root, registry, digest, errors):
+    doc = load_record(root, "named_tracks.json", errors)
+    if doc.read("format", int) != 1:
+        doc.error("format must be 1")
+    source = doc.object("registry")
+    if source is not None and source.text("digest", pattern=HEX64) != digest:
+        doc.error("carries a different digest than DIGEST.json")
+    for row in doc.rows("tracks"):
+        row.text("track_key", pattern=KEY_RE, limit=250)
+        row.read("block_index", int)
+        row.text("ap_name", limit=NAME_MAX_BYTES)
+        row.text("shipped_in", nullable=True)
+        row.text_list("revisions", pattern=HEX64)
+    expected = [track.named_row() for track in registry.values()
+                if track.block is not None and track.mint == "mint"]
+    if doc.read("tracks", list) != expected:
+        doc.error("tracks do not match registry.json")
+
+
+def origin_code(value, where, errors):
+    code = text_value(value, where, errors, limit=3, pattern=ORIGIN_CODE_RE)
+    if code is not None and len(set(code)) != 3:
+        errors.append(f"{where}: code must have three distinct characters")
+        return None
+    return code
+
+
+def public_origin_url(source):
+    if any(c.isspace() for c in source):
         return False
     try:
-        source = link["url"]
-        if CONTROL_CHAR.search(source) or any(c.isspace() for c in source):
-            return False
         url = urlsplit(source)
         host = url.hostname or ""
         return (url.scheme == "https" and not url.username and not url.password
@@ -198,235 +353,175 @@ def valid_origin_evidence(link) -> bool:
         return False
 
 
-def verified_ctr_revisions(track) -> set:
-    revisions = set()
-    if not isinstance(track, dict) or not isinstance(track.get("revisions"), list):
-        return revisions
-    for rev in track["revisions"]:
-        if not isinstance(rev, dict) or rev.get("hash_state") != "verified":
-            continue
-        modes = rev.get("modes")
-        if not isinstance(modes, list) or not all(isinstance(mode, str) for mode in modes):
-            continue
-        if "ctr_challenge" not in modes:
-            continue
-        files = rev.get("files")
-        lev = files.get("lev") if isinstance(files, dict) else None
-        sha256 = lev.get("sha256") if isinstance(lev, dict) else None
-        if isinstance(sha256, str) and isinstance(rev.get("revision"), str):
-            revisions.add((rev["revision"], sha256, tuple(modes)))
-    return revisions
-
-
-def origins_errors(root: Path, registry_keys: dict) -> list[str]:
-    path = root / "origins.json"
-    try:
-        doc = _load(path)
-    except (OSError, ValueError) as e:
-        return [f"origins.json: {e}"]
-    if not isinstance(doc, dict) or type(doc.get("format")) is not int or doc["format"] != 1:
-        return ["origins.json: expected format 1 object"]
-    games, tracks = doc.get("games"), doc.get("tracks")
-    if not isinstance(games, dict) or not isinstance(tracks, dict):
-        return ["origins.json: games and tracks must be objects"]
-    errors: list[str] = []
-    _walk_private(doc, "origins.json", errors)
-    for key, game in games.items():
-        if not KEY_RE.fullmatch(key) or not isinstance(game, dict) \
-                or not isinstance(game.get("title"), str) or not game["title"].strip() \
-                or not valid_origin_code(game.get("code")) or type(game.get("racing_game")) is not bool:
-            errors.append(f"origins.json games/{key}: invalid title, code or racing_game")
+def check_origins(root, registry, per_track, errors):
+    doc = load_record(root, "origins.json", errors)
+    if doc.read("format", int) != 1:
+        doc.error("format must be 1")
+    games = {}
+    game_rows = doc.object("games")
+    if game_rows is not None:
+        for key, value in game_rows.data.items():
+            text_value(key, game_rows.where, errors, pattern=KEY_RE)
+            game = game_rows.child(key, value)
+            if game is not None:
+                game.text("title")
+                origin_code(game.data.get("code", MISSING), f"{game.where}.code", errors)
+                games[key] = game.read("racing_game", bool)
+    tracks = doc.object("tracks")
+    if tracks is None:
+        return
     relations = {"port", "remake", "reimagined", "mashup", "inspired", "level", "original"}
-    for key, row in tracks.items():
-        where = f"origins.json tracks/{key}"
-        if key not in registry_keys or not isinstance(row, dict):
-            errors.append(f"{where}: expected a registry track and origin object")
+    for key, value in tracks.data.items():
+        text_value(key, tracks.where, errors, pattern=KEY_RE, limit=250)
+        row = tracks.child(key, value)
+        if row is None:
             continue
-        game = next((game for name, game in games.items() if name == row.get("origin_game")), None)
-        relation, review = row.get("relation"), row.get("review")
-        if not isinstance(game, dict) or not isinstance(relation, str) or relation not in relations \
-                or review not in ("unverified", "disputed", "verified"):
-            errors.append(f"{where}: invalid origin_game, relation or review")
+        if key not in registry:
+            row.error("track is missing from registry.json")
+        origin = row.text("origin_game", pattern=KEY_RE)
+        if origin is not None and origin not in games:
+            row.error("origin_game is missing from games")
+        relation = row.choices("relation", relations)
+        review = row.choices("review", {"unverified", "disputed", "verified"})
+        if "code_override" in row.data:
+            origin_code(row.data["code_override"], f"{row.where}.code_override", errors)
+            if relation != "mashup":
+                row.error("code_override requires a mashup")
+        row.choices("corrected_by", {"maintainer", "author"}, default=None)
+        citations = list(row.rows("evidence"))
+        if not citations:
+            row.error("expected public evidence")
+        for citation in citations:
+            url = citation.text("url")
+            citation.text("note")
+            if url is not None and not public_origin_url(url):
+                citation.error("expected a public https URL")
+        models = row.read("own_letter_models", dict, default={})
+        if not models:
             continue
-        code = row.get("code_override", game.get("code"))
-        if not valid_origin_code(code) or ("code_override" in row and relation != "mashup"):
-            errors.append(f"{where}: invalid code_override")
-        if "corrected_by" in row and row["corrected_by"] not in ("maintainer", "author"):
-            errors.append(f"{where}: invalid corrected_by")
-        evidence = row.get("evidence")
-        if not isinstance(evidence, list) or not evidence or not all(map(valid_origin_evidence, evidence)):
-            errors.append(f"{where}: expected public evidence")
-        models = row.get("own_letter_models", {})
-        levs = set()
-        if models:
-            try:
-                track = _load(root / "tracks" / f"{key}.json")
-            except (OSError, ValueError):
-                errors.append(f"{where}: cannot read the per-track revision file")
-            else:
-                matched = verified_ctr_revisions(registry_keys[key]) & verified_ctr_revisions(track)
-                levs = {lev for _revision, lev, _modes in matched}
-        if not isinstance(models, dict) or any(
-                not HEX64.fullmatch(lev) or lev not in levs or not valid_origin_code(glyphs)
-                for lev, glyphs in models.items()):
-            errors.append(f"{where}: own_letter_models needs verified CTR Challenge LEV hashes and valid codes")
-        if models and not (review == "verified" and relation in ("port", "remake") and game.get("racing_game")):
-            errors.append(f"{where}: stage 1 models require a verified racing game port or remake")
-    return errors
+        matched = set()
+        if key in registry and key in per_track:
+            matched = registry[key].verified_ctr_revisions() & per_track[key].verified_ctr_revisions()
+        levs = {lev for _revision, lev, _modes in matched}
+        for lev, glyphs in models.items():
+            where = f"{row.where}.own_letter_models"
+            if text_value(lev, where, errors, pattern=HEX64) is not None and lev not in levs:
+                row.error("own_letter_models needs verified CTR Challenge LEV hashes")
+            origin_code(glyphs, f"{where}.{lev!r}", errors)
+        if not (review == "verified" and relation in ("port", "remake") and games.get(origin)):
+            row.error("stage 1 models require a verified racing game port or remake")
 
 
-def _listing_errors(listing, where: str, author_level: bool) -> list[str]:
-    errors = []
-    if not isinstance(listing, dict):
-        return [f"{where}: client_listing must be an object"]
-    extra = set(listing) - {"status", "scope", "on", "evidence"}
-    if extra:
-        errors.append(f"{where}: unknown client_listing keys {sorted(extra)}")
-    status = listing.get("status")
-    if not isinstance(status, str) or status not in CONSENT_STATUSES:
-        errors.append(f"{where}: status {status!r} is not one of {sorted(CONSENT_STATUSES)}")
-    scope = listing.get("scope")
-    if scope is not None and not isinstance(scope, str):
-        errors.append(f"{where}: scope must be text")
-    elif author_level and status == "granted" and scope not in CONSENT_SCOPES:
-        errors.append(f"{where}: an author grant needs scope {sorted(CONSENT_SCOPES)}")
-    elif scope is not None and scope not in CONSENT_SCOPES:
-        errors.append(f"{where}: unknown scope {scope!r}")
-    on = listing.get("on")
-    if not isinstance(on, str) or not DATE_RE.match(on):
-        errors.append(f"{where}: on must be a YYYY-MM-DD date")
-    evidence = listing.get("evidence")
-    if not (evidence == CONSENT_PRIVATE_EVIDENCE or (isinstance(evidence, str) and evidence.startswith("https://")
-                                                     and len(evidence) <= 300 and " " not in evidence
-                                                     and not CONTROL_CHAR.search(evidence))):
-        errors.append(f"{where}: evidence must be a public https link or {CONSENT_PRIVATE_EVIDENCE!r}")
-    return errors
+def check_listing(record, *, author_level):
+    listing = record.object("client_listing")
+    if listing is None:
+        return
+    listing.exact({"status", "scope", "on", "evidence"})
+    status = listing.choices("status", CONSENT_STATUSES)
+    scope = listing.choices("scope", CONSENT_SCOPES, default=None, nullable=True)
+    if author_level and status == "granted" and scope is None:
+        listing.error(f"an author grant needs scope {sorted(CONSENT_SCOPES)}")
+    listing.day("on")
+    evidence = listing.text("evidence", limit=300)
+    if evidence is not None and evidence != CONSENT_PRIVATE_EVIDENCE and (
+            not evidence.startswith("https://") or any(c.isspace() for c in evidence)):
+        listing.error(f"evidence must be a public https link or {CONSENT_PRIVATE_EVIDENCE!r}")
 
 
-def consent_errors(path: Path, registry_keys: dict) -> list[str]:
-    try:
-        doc = _load(path)
-    except (ValueError, UnicodeDecodeError) as e:
-        return [f"consent.json: not valid JSON ({e})"]
-    if not isinstance(doc, dict):
-        return ["consent.json: must be an object"]
-    errors = []
-    if type(doc.get("format")) is not int or doc.get("format") != CONSENT_FORMAT:  # true == 1 in Python
-        errors.append(f"consent.json: format must be {CONSENT_FORMAT}")
-    extra = set(doc) - {"format", "about", "authors", "tracks"}
-    if extra:
-        errors.append(f"consent.json: unknown keys {sorted(extra)}")
-    if "about" in doc and not isinstance(doc["about"], str):
-        errors.append("consent.json: about must be text")
-    _walk_private_keys(doc, "consent.json", errors)
-    authors, tracks = doc.get("authors"), doc.get("tracks", [])
-    if not isinstance(authors, list):
-        errors.append("consent.json: authors must be a list")
-        authors = []
-    if not isinstance(tracks, list):
-        errors.append("consent.json: tracks must be a list")
-        tracks = []
+def check_consent(root, registry, errors):
+    doc = load_record(root, "consent.json", errors, private_keys=CONSENT_PRIVATE_KEYS)
+    if doc.read("format", int) != CONSENT_FORMAT:
+        doc.error(f"format must be {CONSENT_FORMAT}")
+    doc.exact({"format", "about", "authors", "tracks"})
+    doc.text("about", default=None)
     ids, names = set(), set()
-    for i, a in enumerate(authors):
-        where = f"consent.json authors[{i}]"
-        if not isinstance(a, dict):
-            errors.append(f"{where}: must be an object")
-            continue
-        extra = set(a) - {"saphi_author_id", "name", "client_listing"}
-        if extra:
-            errors.append(f"{where}: unknown keys {sorted(extra)}")
-        aid = a.get("saphi_author_id")
-        if type(aid) is not int or not 0 < aid <= AUTHOR_ID_MAX:
-            errors.append(f"{where}: saphi_author_id must be a positive integer")
-        elif aid in ids:
-            errors.append(f"{where}: saphi_author_id {aid} listed twice")
-        else:
+    for row in doc.rows("authors"):
+        row.exact({"saphi_author_id", "name", "client_listing"})
+        aid = row.read("saphi_author_id", int)
+        if aid is not None:
+            if not 0 < aid <= AUTHOR_ID_MAX:
+                row.error("saphi_author_id must be a positive integer in range")
+            elif aid in ids:
+                row.error(f"saphi_author_id {aid} listed twice")
             ids.add(aid)
-        name = a.get("name")
-        if not isinstance(name, str) or not name.strip() or len(name.encode("utf-8")) > NAME_MAX \
-                or CONTROL_CHAR.search(name):
-            errors.append(f"{where}: name must be the public credit name (1 to {NAME_MAX} bytes)")
-        elif name in names:  # name is a str here
-            errors.append(f"{where}: name {name!r} listed twice")
-        else:
+        name = row.text("name", limit=NAME_MAX)
+        if name is not None:
+            if name in names:
+                row.error(f"name {name!r} listed twice")
             names.add(name)
-        errors += _listing_errors(a.get("client_listing"), where, True)
+        check_listing(row, author_level=True)
     seen = set()
-    for i, t in enumerate(tracks):
-        where = f"consent.json tracks[{i}]"
-        if not isinstance(t, dict):
-            errors.append(f"{where}: must be an object")
-            continue
-        extra = set(t) - {"track_key", "client_listing"}
-        if extra:
-            errors.append(f"{where}: unknown keys {sorted(extra)}")
-        key = t.get("track_key")
-        if not isinstance(key, str) or key not in registry_keys:  # str check first: a list or object is not hashable
-            errors.append(f"{where}: track_key {key!r} is not in registry.json")
-        elif key in seen:
-            errors.append(f"{where}: track_key {key} listed twice")
-        else:
+    for row in doc.rows("tracks", default=[]):
+        row.exact({"track_key", "client_listing"})
+        key = row.text("track_key", pattern=KEY_RE, limit=250)
+        if key is not None:
+            if key not in registry:
+                row.error(f"track_key {key!r} is not in registry.json")
+            elif key in seen:
+                row.error(f"track_key {key} listed twice")
             seen.add(key)
-        errors += _listing_errors(t.get("client_listing"), where, False)
-    return errors
+        check_listing(row, author_level=False)
 
 
-def _walk_private_keys(value, where: str, errors: list) -> None:
-    if isinstance(value, dict):
-        for k, v in value.items():
-            if k in CONSENT_PRIVATE_KEYS:
-                errors.append(f"{where}: private field {k!r}")
-            _walk_private_keys(v, where, errors)
-    elif isinstance(value, list):
-        for v in value:
-            _walk_private_keys(v, where, errors)
-
-
-def freeze_errors(previous: Path, current_by_key: dict) -> list[str]:
-    errors = []
-    if not (previous / "registry.json").is_file():
-        return [f"--previous {previous}: no registry.json"]
-    old = _load(previous / "registry.json")
-    for t in old.get("tracks", []):
-        key = t["track_key"]
-        now = current_by_key.get(key)
+def check_freeze(previous, current, errors):
+    for key, old in previous.items():
+        now = current.get(key)
         if now is None:
             errors.append(f"frozen: {key} disappeared")
             continue
-        if t.get("block_index") is not None and now.get("block_index") != t["block_index"]:
+        if old.block is not None and now.block != old.block:
             errors.append(f"frozen: {key} block_index changed")
-        if t.get("mint_status") == "builtin" and (now.get("mint_status") != "builtin"
-                                                   or now.get("maps_to") != t.get("maps_to")):
+        if old.mint == "builtin" and (now.mint != "builtin" or now.mapping != old.mapping):
             errors.append(f"frozen: {key} builtin mapping changed")
-        if t.get("shipped_in"):
-            if now.get("mint_status", "mint") != t.get("mint_status", "mint"):
-                errors.append(f"frozen: {key} mint_status changed after shipping")
-            if now.get("shipped_in") != t["shipped_in"]:
-                errors.append(f"frozen: {key} shipped_in changed")
-            if now.get("ap_name") != t.get("ap_name"):
-                errors.append(f"frozen: {key} shipped ap_name changed")
-        now_revs = {r.get("revision"): r for r in now.get("revisions", [])}
-        for r in t.get("revisions", []):
-            if r.get("hash_state") != "verified":
+        if old.shipped is not None:
+            for field, before, after in (("mint_status", old.mint, now.mint),
+                                         ("shipped_in", old.shipped, now.shipped),
+                                         ("ap_name", old.name, now.name)):
+                if before != after:
+                    errors.append(f"frozen: {key} {field} changed after shipping")
+        now_revs = {rev.revision: rev for rev in now.revisions if rev.revision is not None}
+        for rev in old.revisions:
+            if rev.hash_state != "verified" or rev.revision is None:
                 continue
-            cur = now_revs.get(r["revision"])
-            if (cur is None or cur.get("hash_state") != "verified"
-                    or cur.get("content_id") != r.get("content_id") or cur.get("files") != r.get("files")):
-                errors.append(f"frozen: {key} verified revision {r['revision']} changed")
+            cur = now_revs.get(rev.revision)
+            if (cur is None or cur.hash_state != "verified"
+                    or cur.content_id != rev.content_id or cur.files != rev.files):
+                errors.append(f"frozen: {key} verified revision {rev.revision} changed")
+
+
+def check(root: Path, previous: Path | None = None) -> list[str]:
+    errors: list[str] = []
+    registry = registry_tracks(root, errors)
+    per_track = per_track_records(root, registry, errors)
+    digest_doc = load_record(root, "DIGEST.json", errors)
+    digest = digest_doc.text("digest", pattern=HEX64)
+    try:
+        actual_digest = digest_of(root)
+    except (OSError, UnicodeError) as exc:
+        digest_doc.error(f"cannot compute registry digest ({exc})")
+    else:
+        if digest != actual_digest:
+            digest_doc.error("digest does not match registry.json and tracks/")
+    check_named(root, registry, digest, errors)
+    check_consent(root, registry, errors)
+    check_origins(root, registry, per_track, errors)
+    if previous is not None:
+        check_freeze(registry_tracks(previous, errors, previous=True), registry, errors)
     return errors
 
 
 def main(argv: list[str]) -> int:
-    args = [a for a in argv if not a.startswith("--")]
-    previous = None
-    if "--previous" in argv:
-        i = argv.index("--previous")
-        previous = Path(argv[i + 1])
-        args = [a for a in args if a != argv[i + 1]]
-    root = Path(args[0]) if args else Path(".")
-    errors = check(root, previous)
-    for e in errors:
-        print("FAIL", e)
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("root", type=Path, nargs="?", default=Path("."))
+    parser.add_argument("--previous", type=Path)
+    args = parser.parse_args(argv)
+    errors = check(args.root, args.previous)
+    for error in errors:
+        # JSON permits escaped lone surrogates. Keep diagnostics printable even
+        # when the process runs with a restrictive stdout encoding.
+        encoding = sys.stdout.encoding or "utf-8"
+        printable = CONTROL_CHAR.sub(lambda match: ascii(match[0])[1:-1], error)
+        print("FAIL", printable.encode(encoding, "backslashreplace").decode(encoding))
     print("registry check:", "FAILED" if errors else "ok", f"({len(errors)} problems)")
     return 1 if errors else 0
 
