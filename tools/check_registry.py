@@ -155,8 +155,18 @@ def reject_constant(value):
 
 def load_record(root, rel, errors, *, label=None, private_keys=PRIVATE_KEYS):
     where = label or rel
+
+    def unique_object(pairs):
+        obj = {}
+        for key, value in pairs:
+            if key in obj:
+                errors.append(f"{where}: duplicate JSON field {key!r}")
+            obj[key] = value
+        return obj
+
     try:
-        value = json.loads((root / rel).read_text(encoding="utf-8"), parse_constant=reject_constant)
+        value = json.loads((root / rel).read_text(encoding="utf-8"),
+                           parse_constant=reject_constant, object_pairs_hook=unique_object)
     except (OSError, ValueError, RecursionError) as exc:
         errors.append(f"{where}: cannot read JSON ({exc})")
         return Record({}, where, errors)
@@ -202,15 +212,19 @@ class Revision:
         content = row.text("content_id", pattern=HEX64, nullable=True)
         files = row.object("files")
         lev_hash = None
+        has_hash = False
         if files is not None:
             for name, value in files.data.items():
                 text_value(name, files.where, row.errors)
                 item = files.child(name, value)
                 if item is not None:
                     sha = item.text("sha256", pattern=HEX64)
+                    has_hash = has_hash or sha is not None
                     item.read("size", int, default=None)
                     if name == "lev":
                         lev_hash = sha
+        if state == "verified" and (content is None or not has_hash):
+            row.error("verified revisions need a content_id and file hashes")
         return cls(revision, state, content, files.data if files is not None else {},
                    lev_hash, row.text_list("modes"))
 
@@ -276,8 +290,8 @@ class Track:
         }
 
 
-def registry_tracks(root, errors, *, previous=False):
-    doc = load_record(root, "registry.json", errors, label="previous registry.json" if previous else None)
+def registry_tracks(root, errors):
+    doc = load_record(root, "registry.json", errors)
     if doc.read("schema_version", int) != SCHEMA_VERSION:
         doc.error(f"schema_version must be {SCHEMA_VERSION}")
     tracks, blocks, names = {}, {}, {}
@@ -305,10 +319,22 @@ def per_track_records(root, registry, errors):
         errors.append(f"{key}: tracks/{key}.json is missing")
     records = {}
     for key, path in paths.items():
-        if key not in registry:
-            errors.append(f"{path} is not listed in registry.json")
-        records[key] = Track.read(load_record(root, path, errors))
+        row = load_record(root, path, errors)
+        track = Track.read(row)
+        if track.key != key:
+            row.error("track_key must agree with the file name")
+        elif key not in registry:
+            row.error("track is not listed in registry.json")
+        else:
+            if verified_hashes(track) != verified_hashes(registry[key]):
+                row.error("verified revisions must agree with registry.json")
+            records[key] = track
     return records
+
+
+def verified_hashes(track):
+    return {rev.content_id: (rev.revision, rev.files) for rev in track.revisions
+            if rev.hash_state == "verified"}
 
 
 def check_named(root, registry, digest, errors):
@@ -422,9 +448,9 @@ def check_listing(record, *, author_level):
     if author_level and status == "granted" and scope is None:
         listing.error(f"an author grant needs scope {sorted(CONSENT_SCOPES)}")
     listing.day("on")
-    evidence = listing.text("evidence", limit=300)
+    evidence = listing.text("evidence")
     if evidence is not None and evidence != CONSENT_PRIVATE_EVIDENCE and (
-            not evidence.startswith("https://") or any(c.isspace() for c in evidence)):
+            len(evidence) > 300 or not evidence.startswith("https://") or any(c.isspace() for c in evidence)):
         listing.error(f"evidence must be a public https link or {CONSENT_PRIVATE_EVIDENCE!r}")
 
 
@@ -464,29 +490,44 @@ def check_consent(root, registry, errors):
 
 
 def check_freeze(previous, current, errors):
-    for key, old in previous.items():
+    # Older snapshots are inputs to the freeze comparison only. In particular,
+    # titles and modes can be corrected without applying current rules to them.
+    doc = load_record(previous, "registry.json", errors, label="previous registry.json", private_keys=set())
+    for old in doc.rows("tracks"):
+        key = old.read("track_key", str)
+        if key is None:
+            continue
         now = current.get(key)
         if now is None:
             errors.append(f"frozen: {key} disappeared")
             continue
-        if old.block is not None and now.block != old.block:
+        block = old.read("block_index", int, default=None, nullable=True)
+        mint = old.read("mint_status", str, default="mint")
+        if block is not None and now.block != block:
             errors.append(f"frozen: {key} block_index changed")
-        if old.mint == "builtin" and (now.mint != "builtin" or now.mapping != old.mapping):
-            errors.append(f"frozen: {key} builtin mapping changed")
-        if old.shipped is not None:
-            for field, before, after in (("mint_status", old.mint, now.mint),
-                                         ("shipped_in", old.shipped, now.shipped),
-                                         ("ap_name", old.name, now.name)):
+        if mint == "builtin":
+            mapping = old.read("maps_to", str, default=None, nullable=True)
+            if now.mint != "builtin" or now.mapping != mapping:
+                errors.append(f"frozen: {key} builtin mapping changed")
+        shipped = old.read("shipped_in", str, default=None, nullable=True)
+        if shipped:
+            name = old.read("ap_name", str, default=None, nullable=True)
+            for field, before, after in (("mint_status", mint, now.mint),
+                                         ("shipped_in", shipped, now.shipped),
+                                         ("ap_name", name, now.name)):
                 if before != after:
                     errors.append(f"frozen: {key} {field} changed after shipping")
         now_revs = {rev.revision: rev for rev in now.revisions if rev.revision is not None}
-        for rev in old.revisions:
-            if rev.hash_state != "verified" or rev.revision is None:
+        for row in old.rows("revisions", default=[]):
+            if row.read("hash_state", str, default=None) != "verified":
                 continue
-            cur = now_revs.get(rev.revision)
+            revision = row.read("revision", str)
+            content = row.read("content_id", str, default=None, nullable=True)
+            files = row.read("files", dict, default=None, nullable=True)
+            cur = now_revs.get(revision)
             if (cur is None or cur.hash_state != "verified"
-                    or cur.content_id != rev.content_id or cur.files != rev.files):
-                errors.append(f"frozen: {key} verified revision {rev.revision} changed")
+                    or cur.content_id != content or cur.files != files):
+                errors.append(f"frozen: {key} verified revision {revision} changed")
 
 
 def check(root: Path, previous: Path | None = None) -> list[str]:
@@ -506,7 +547,7 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
     check_consent(root, registry, errors)
     check_origins(root, registry, per_track, errors)
     if previous is not None:
-        check_freeze(registry_tracks(previous, errors, previous=True), registry, errors)
+        check_freeze(previous, registry, errors)
     return errors
 
 

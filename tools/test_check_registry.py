@@ -245,6 +245,51 @@ class CheckerTests(unittest.TestCase):
         write_fixture(self.root, documents)
         self.assert_invalid("frozen: sample verified revision 1.0 changed")
 
+    def test_freeze_allows_corrections_to_unfrozen_fields(self):
+        documents = fixture()
+        mutate(documents, "registry.json", ("tracks", 0, "display_title"), "Old title ")
+        mutate(documents, "registry.json", (*REVISION, "modes"), DELETE)
+        write_fixture(self.previous, documents)
+        self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+
+    def test_verified_hashes_must_be_present(self):
+        documents = fixture()
+        for rev in (resolve(documents["registry.json"], REVISION), documents[TRACK_FILE]["revisions"][0]):
+            rev.update(content_id=None, files={})
+        documents["named_tracks.json"]["tracks"][0]["revisions"] = []
+        write_fixture(self.root, documents)
+        status, output = run(self.root)
+        self.assertEqual(status, 1, output)
+        self.assertIn("verified revisions need a content_id and file hashes", output)
+
+    def test_per_track_identity_matches_registry(self):
+        for path, value, diagnostic in (
+            (("track_key",), "other", "track_key must agree with the file name"),
+            (("revisions", 0, "content_id"), B, "verified revisions must agree with registry.json"),
+        ):
+            with self.subTest(path=path):
+                documents = fixture()
+                mutate(documents, TRACK_FILE, path, value)
+                write_fixture(self.root, documents)
+                self.assert_invalid(f"{TRACK_FILE}: {diagnostic}")
+
+    def test_consent_evidence_preserves_character_limit(self):
+        documents = fixture()
+        prefix = "https://example.org/"
+        valid = prefix + "é" * (300 - len(prefix))
+        mutate(documents, "consent.json", (*TRACK_LISTING, "evidence"), valid)
+        write_fixture(self.root, documents)
+        self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+        mutate(documents, "consent.json", (*TRACK_LISTING, "evidence"), valid + "é")
+        write_fixture(self.root, documents)
+        self.assert_invalid("consent.json.tracks[0].client_listing")
+
+    def test_duplicate_json_members_are_reported(self):
+        consent = self.root / "consent.json"
+        source = consent.read_text(encoding="utf-8")
+        consent.write_text(source.replace('"on":', '"on": null, "on":', 1), encoding="utf-8")
+        self.assert_invalid("consent.json: duplicate JSON field 'on'")
+
     def test_origin_models_require_both_verified_records(self):
         documents = fixture()
         mutate(documents, TRACK_FILE, ("revisions", 0, "modes"), ["race"])
