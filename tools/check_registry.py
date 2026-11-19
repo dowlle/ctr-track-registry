@@ -41,6 +41,7 @@ PRIVATE_KEYS = {"submitter", "submitter_user_id", "discord_id", "discord_usernam
                 "reviewed_by", "decided_by", "user_id"}
 KEY_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
+DNS_NAME = re.compile(r"(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}")
 CONSENT_FORMAT = 1
 CONSENT_STATUSES = {"granted", "declined", "withdrawn"}
 CONSENT_SCOPES = {"all_saphi_tracks"}
@@ -181,8 +182,14 @@ def valid_origin_evidence(link) -> bool:
     if not isinstance(note, str) or not note.strip():
         return False
     try:
-        url = urlsplit(link["url"])
-        return url.scheme == "https" and bool(url.hostname) and not url.username and not url.password
+        source = link["url"]
+        url = urlsplit(source)
+        host = url.hostname or ""
+        return (url.scheme == "https" and not any(c.isspace() for c in source)
+                and not url.username and not url.password
+                and bool(DNS_NAME.fullmatch(host))
+                and host.rsplit(".", 1)[-1] not in ("local", "localhost", "internal", "test", "invalid")
+                and (url.port is None or url.port > 0))
     except ValueError:
         return False
 
@@ -193,7 +200,7 @@ def origins_errors(root: Path, registry_keys: dict) -> list[str]:
         doc = _load(path)
     except (OSError, ValueError) as e:
         return [f"origins.json: {e}"]
-    if not isinstance(doc, dict) or doc.get("format") != 1:
+    if not isinstance(doc, dict) or type(doc.get("format")) is not int or doc["format"] != 1:
         return ["origins.json: expected format 1 object"]
     games, tracks = doc.get("games"), doc.get("tracks")
     if not isinstance(games, dict) or not isinstance(tracks, dict):
@@ -201,7 +208,8 @@ def origins_errors(root: Path, registry_keys: dict) -> list[str]:
     errors: list[str] = []
     _walk_private(doc, "origins.json", errors)
     for key, game in games.items():
-        if not KEY_RE.fullmatch(key) or not isinstance(game, dict) or not game.get("title") \
+        if not KEY_RE.fullmatch(key) or not isinstance(game, dict) \
+                or not isinstance(game.get("title"), str) or not game["title"].strip() \
                 or not valid_origin_code(game.get("code")) or type(game.get("racing_game")) is not bool:
             errors.append(f"origins.json games/{key}: invalid title, code or racing_game")
     relations = {"port", "remake", "reimagined", "mashup", "inspired", "level", "original"}
@@ -219,13 +227,16 @@ def origins_errors(root: Path, registry_keys: dict) -> list[str]:
         code = row.get("code_override", game.get("code"))
         if not valid_origin_code(code) or ("code_override" in row and relation != "mashup"):
             errors.append(f"{where}: invalid code_override")
+        if "corrected_by" in row and row["corrected_by"] not in ("maintainer", "author"):
+            errors.append(f"{where}: invalid corrected_by")
         evidence = row.get("evidence")
         if not isinstance(evidence, list) or not evidence or not all(map(valid_origin_evidence, evidence)):
             errors.append(f"{where}: expected public evidence")
         models = row.get("own_letter_models", {})
         levs = {r.get("files", {}).get("lev", {}).get("sha256")
                 for r in registry_keys[key].get("revisions", [])
-                if r.get("hash_state") == "verified" and "ctr_challenge" in r.get("modes", ())}
+                if r.get("hash_state") == "verified" and isinstance(r.get("modes"), list)
+                and "ctr_challenge" in r["modes"]}
         if not isinstance(models, dict) or any(
                 not HEX64.fullmatch(lev) or lev not in levs or not valid_origin_code(glyphs)
                 for lev, glyphs in models.items()):
