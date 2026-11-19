@@ -28,6 +28,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from urllib.parse import urlsplit
 
 SCHEMA_VERSION = 1
 MAX_BLOCKS = 10_000
@@ -40,6 +41,8 @@ PRIVATE_KEYS = {"submitter", "submitter_user_id", "discord_id", "discord_usernam
                 "reviewed_by", "decided_by", "user_id"}
 KEY_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
+CONTROL_CHAR = re.compile(r"[\x00-\x1f\x7f-\x9f]")
+DNS_NAME = re.compile(r"(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}")
 CONSENT_FORMAT = 1
 CONSENT_STATUSES = {"granted", "declined", "withdrawn"}
 CONSENT_SCOPES = {"all_saphi_tracks"}
@@ -83,7 +86,8 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
         errors.append(f"registry.json: schema_version must be {SCHEMA_VERSION}")
     if digest_of(root) != digest_doc.get("digest"):
         errors.append("DIGEST.json does not match registry.json and tracks/")
-    if named.get("registry", {}).get("digest") != digest_doc.get("digest"):
+    named_registry = named.get("registry")
+    if not isinstance(named_registry, dict) or named_registry.get("digest") != digest_doc.get("digest"):
         errors.append("named_tracks.json carries a different digest than DIGEST.json")
 
     tracks = registry.get("tracks", [])
@@ -116,7 +120,7 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
                 errors.append(f"{key}: a block needs an ap_name")
             else:
                 if len(name.encode("utf-8")) > NAME_MAX_BYTES or any(c in name for c in "[]{}") \
-                        or any(ord(c) < 32 for c in name):
+                        or CONTROL_CHAR.search(name):
                     errors.append(f"{key}: ap_name {name!r} breaks the name rules")
                 if name.casefold() in names:
                     errors.append(f"{key}: ap_name {name!r} also used by {names[name.casefold()]}")
@@ -163,8 +167,111 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
     else:
         errors.append("missing consent.json (the client offers no download without it)")
 
+    errors += origins_errors(root, keys)
     if previous is not None:
         errors += freeze_errors(previous, keys)
+    return errors
+
+
+def valid_origin_code(code) -> bool:
+    return isinstance(code, str) and bool(re.fullmatch(r"[A-Z0-9]{3}", code)) and len(set(code)) == 3
+
+
+def valid_origin_evidence(link) -> bool:
+    if not isinstance(link, dict) or not isinstance(link.get("url"), str):
+        return False
+    note = link.get("note")
+    if not isinstance(note, str) or not note.strip():
+        return False
+    try:
+        source = link["url"]
+        if CONTROL_CHAR.search(source) or any(c.isspace() for c in source):
+            return False
+        url = urlsplit(source)
+        host = url.hostname or ""
+        return (url.scheme == "https" and not url.username and not url.password
+                and bool(DNS_NAME.fullmatch(host))
+                and host != "home.arpa" and not host.endswith(".home.arpa")
+                and host.rsplit(".", 1)[-1] not in ("local", "localhost", "internal", "test", "invalid")
+                and (url.port is None or url.port > 0))
+    except ValueError:
+        return False
+
+
+def verified_ctr_revisions(track) -> set:
+    revisions = set()
+    if not isinstance(track, dict) or not isinstance(track.get("revisions"), list):
+        return revisions
+    for rev in track["revisions"]:
+        if not isinstance(rev, dict) or rev.get("hash_state") != "verified":
+            continue
+        modes = rev.get("modes")
+        if not isinstance(modes, list) or not all(isinstance(mode, str) for mode in modes):
+            continue
+        if "ctr_challenge" not in modes:
+            continue
+        files = rev.get("files")
+        lev = files.get("lev") if isinstance(files, dict) else None
+        sha256 = lev.get("sha256") if isinstance(lev, dict) else None
+        if isinstance(sha256, str) and isinstance(rev.get("revision"), str):
+            revisions.add((rev["revision"], sha256, tuple(modes)))
+    return revisions
+
+
+def origins_errors(root: Path, registry_keys: dict) -> list[str]:
+    path = root / "origins.json"
+    try:
+        doc = _load(path)
+    except (OSError, ValueError) as e:
+        return [f"origins.json: {e}"]
+    if not isinstance(doc, dict) or type(doc.get("format")) is not int or doc["format"] != 1:
+        return ["origins.json: expected format 1 object"]
+    games, tracks = doc.get("games"), doc.get("tracks")
+    if not isinstance(games, dict) or not isinstance(tracks, dict):
+        return ["origins.json: games and tracks must be objects"]
+    errors: list[str] = []
+    _walk_private(doc, "origins.json", errors)
+    for key, game in games.items():
+        if not KEY_RE.fullmatch(key) or not isinstance(game, dict) \
+                or not isinstance(game.get("title"), str) or not game["title"].strip() \
+                or not valid_origin_code(game.get("code")) or type(game.get("racing_game")) is not bool:
+            errors.append(f"origins.json games/{key}: invalid title, code or racing_game")
+    relations = {"port", "remake", "reimagined", "mashup", "inspired", "level", "original"}
+    for key, row in tracks.items():
+        where = f"origins.json tracks/{key}"
+        if key not in registry_keys or not isinstance(row, dict):
+            errors.append(f"{where}: expected a registry track and origin object")
+            continue
+        game = next((game for name, game in games.items() if name == row.get("origin_game")), None)
+        relation, review = row.get("relation"), row.get("review")
+        if not isinstance(game, dict) or not isinstance(relation, str) or relation not in relations \
+                or review not in ("unverified", "disputed", "verified"):
+            errors.append(f"{where}: invalid origin_game, relation or review")
+            continue
+        code = row.get("code_override", game.get("code"))
+        if not valid_origin_code(code) or ("code_override" in row and relation != "mashup"):
+            errors.append(f"{where}: invalid code_override")
+        if "corrected_by" in row and row["corrected_by"] not in ("maintainer", "author"):
+            errors.append(f"{where}: invalid corrected_by")
+        evidence = row.get("evidence")
+        if not isinstance(evidence, list) or not evidence or not all(map(valid_origin_evidence, evidence)):
+            errors.append(f"{where}: expected public evidence")
+        models = row.get("own_letter_models", {})
+        levs = set()
+        if models:
+            try:
+                track = _load(root / "tracks" / f"{key}.json")
+            except (OSError, ValueError):
+                errors.append(f"{where}: cannot read the per-track revision file")
+            else:
+                matched = verified_ctr_revisions(registry_keys[key]) & verified_ctr_revisions(track)
+                levs = {lev for _revision, lev, _modes in matched}
+        if not isinstance(models, dict) or any(
+                not HEX64.fullmatch(lev) or lev not in levs or not valid_origin_code(glyphs)
+                for lev, glyphs in models.items()):
+            errors.append(f"{where}: own_letter_models needs verified CTR Challenge LEV hashes and valid codes")
+        if models and not (review == "verified" and relation in ("port", "remake") and game.get("racing_game")):
+            errors.append(f"{where}: stage 1 models require a verified racing game port or remake")
     return errors
 
 
@@ -190,7 +297,8 @@ def _listing_errors(listing, where: str, author_level: bool) -> list[str]:
         errors.append(f"{where}: on must be a YYYY-MM-DD date")
     evidence = listing.get("evidence")
     if not (evidence == CONSENT_PRIVATE_EVIDENCE or (isinstance(evidence, str) and evidence.startswith("https://")
-                                                     and len(evidence) <= 300 and " " not in evidence)):
+                                                     and len(evidence) <= 300 and " " not in evidence
+                                                     and not CONTROL_CHAR.search(evidence))):
         errors.append(f"{where}: evidence must be a public https link or {CONSENT_PRIVATE_EVIDENCE!r}")
     return errors
 
@@ -236,7 +344,7 @@ def consent_errors(path: Path, registry_keys: dict) -> list[str]:
             ids.add(aid)
         name = a.get("name")
         if not isinstance(name, str) or not name.strip() or len(name.encode("utf-8")) > NAME_MAX \
-                or any(ord(c) < 32 or ord(c) == 127 for c in name):
+                or CONTROL_CHAR.search(name):
             errors.append(f"{where}: name must be the public credit name (1 to {NAME_MAX} bytes)")
         elif name in names:  # name is a str here
             errors.append(f"{where}: name {name!r} listed twice")
@@ -302,7 +410,8 @@ def freeze_errors(previous: Path, current_by_key: dict) -> list[str]:
             if r.get("hash_state") != "verified":
                 continue
             cur = now_revs.get(r["revision"])
-            if cur is None or cur.get("content_id") != r.get("content_id") or cur.get("files") != r.get("files"):
+            if (cur is None or cur.get("hash_state") != "verified"
+                    or cur.get("content_id") != r.get("content_id") or cur.get("files") != r.get("files")):
                 errors.append(f"frozen: {key} verified revision {r['revision']} changed")
     return errors
 
