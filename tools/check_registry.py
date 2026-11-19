@@ -163,8 +163,62 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
     else:
         errors.append("missing consent.json (the client offers no download without it)")
 
+    errors += origins_errors(root, keys)
     if previous is not None:
         errors += freeze_errors(previous, keys)
+    return errors
+
+
+def valid_origin_code(code) -> bool:
+    return isinstance(code, str) and bool(re.fullmatch(r"[A-Z0-9]{3}", code)) and len(set(code)) == 3
+
+
+def origins_errors(root: Path, registry_keys: dict) -> list[str]:
+    path = root / "origins.json"
+    try:
+        doc = _load(path)
+    except (OSError, ValueError) as e:
+        return [f"origins.json: {e}"]
+    if not isinstance(doc, dict) or doc.get("format") != 1:
+        return ["origins.json: expected format 1 object"]
+    games, tracks = doc.get("games"), doc.get("tracks")
+    if not isinstance(games, dict) or not isinstance(tracks, dict):
+        return ["origins.json: games and tracks must be objects"]
+    errors: list[str] = []
+    _walk_private(doc, "origins.json", errors)
+    for key, game in games.items():
+        if not KEY_RE.fullmatch(key) or not isinstance(game, dict) or not game.get("title") \
+                or not valid_origin_code(game.get("code")) or type(game.get("racing_game")) is not bool:
+            errors.append(f"origins.json games/{key}: invalid title, code or racing_game")
+    relations = {"port", "remake", "reimagined", "mashup", "inspired", "level", "original"}
+    for key, row in tracks.items():
+        where = f"origins.json tracks/{key}"
+        if key not in registry_keys or not isinstance(row, dict):
+            errors.append(f"{where}: expected a registry track and origin object")
+            continue
+        game = next((game for name, game in games.items() if name == row.get("origin_game")), None)
+        relation, review = row.get("relation"), row.get("review")
+        if not isinstance(game, dict) or not isinstance(relation, str) or relation not in relations \
+                or review not in ("unverified", "disputed", "verified"):
+            errors.append(f"{where}: invalid origin_game, relation or review")
+            continue
+        code = row.get("code_override", game.get("code"))
+        if not valid_origin_code(code) or ("code_override" in row and relation != "mashup"):
+            errors.append(f"{where}: invalid code_override")
+        evidence = row.get("evidence")
+        if not isinstance(evidence, list) or not evidence or any(
+                not isinstance(link, dict) or not isinstance(link.get("url"), str)
+                or not link["url"].startswith("https://") or not link.get("note") for link in evidence):
+            errors.append(f"{where}: expected public evidence")
+        models = row.get("own_letter_models", {})
+        levs = {r.get("files", {}).get("lev", {}).get("sha256")
+                for r in registry_keys[key].get("revisions", []) if r.get("hash_state") == "verified"}
+        if not isinstance(models, dict) or any(
+                not HEX64.fullmatch(lev) or lev not in levs or not valid_origin_code(glyphs)
+                for lev, glyphs in models.items()):
+            errors.append(f"{where}: own_letter_models needs registered verified LEV hashes and valid codes")
+        if models and not (review == "verified" and relation in ("port", "remake") and game.get("racing_game")):
+            errors.append(f"{where}: stage 1 models require a verified racing game port or remake")
     return errors
 
 
