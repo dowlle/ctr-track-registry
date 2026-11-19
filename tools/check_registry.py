@@ -519,7 +519,9 @@ def check_freeze(previous, current, errors):
                     errors.append(f"frozen: {key} {field} changed after shipping")
         now_revs = {rev.revision: rev for rev in now.revisions if rev.revision is not None}
         for row in old.rows("revisions", default=[]):
-            if row.read("hash_state", str, default=None) != "verified":
+            # Only an exact verified marker freezes an older revision. Allow
+            # corrections to any historical value that never froze hashes.
+            if row.data.get("hash_state") != "verified":
                 continue
             revision = row.read("revision", str)
             content = row.read("content_id", str, default=None, nullable=True)

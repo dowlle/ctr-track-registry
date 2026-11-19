@@ -252,6 +252,20 @@ class CheckerTests(unittest.TestCase):
         write_fixture(self.previous, documents)
         self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
 
+    def test_freeze_allows_corrections_to_old_unverified_revisions(self):
+        for old_state in (None, [], DELETE):
+            with self.subTest(old_state=old_state):
+                current = fixture()
+                pending = {"revision": "2.0", "hash_state": "pending", "content_id": None,
+                           "modes": [], "files": {}}
+                current["registry.json"]["tracks"][0]["revisions"].append(pending)
+                current[TRACK_FILE]["revisions"].append(pending)
+                previous = copy.deepcopy(current)
+                mutate(previous, "registry.json", ("tracks", 0, "revisions", 1, "hash_state"), old_state)
+                write_fixture(self.root, current)
+                write_fixture(self.previous, previous)
+                self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+
     def test_verified_hashes_must_be_present(self):
         documents = fixture()
         for rev in (resolve(documents["registry.json"], REVISION), documents[TRACK_FILE]["revisions"][0]):
