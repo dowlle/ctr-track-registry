@@ -28,6 +28,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from urllib.parse import urlsplit
 
 SCHEMA_VERSION = 1
 MAX_BLOCKS = 10_000
@@ -173,6 +174,19 @@ def valid_origin_code(code) -> bool:
     return isinstance(code, str) and bool(re.fullmatch(r"[A-Z0-9]{3}", code)) and len(set(code)) == 3
 
 
+def valid_origin_evidence(link) -> bool:
+    if not isinstance(link, dict) or not isinstance(link.get("url"), str):
+        return False
+    note = link.get("note")
+    if not isinstance(note, str) or not note.strip():
+        return False
+    try:
+        url = urlsplit(link["url"])
+        return url.scheme == "https" and bool(url.hostname) and not url.username and not url.password
+    except ValueError:
+        return False
+
+
 def origins_errors(root: Path, registry_keys: dict) -> list[str]:
     path = root / "origins.json"
     try:
@@ -206,17 +220,16 @@ def origins_errors(root: Path, registry_keys: dict) -> list[str]:
         if not valid_origin_code(code) or ("code_override" in row and relation != "mashup"):
             errors.append(f"{where}: invalid code_override")
         evidence = row.get("evidence")
-        if not isinstance(evidence, list) or not evidence or any(
-                not isinstance(link, dict) or not isinstance(link.get("url"), str)
-                or not link["url"].startswith("https://") or not link.get("note") for link in evidence):
+        if not isinstance(evidence, list) or not evidence or not all(map(valid_origin_evidence, evidence)):
             errors.append(f"{where}: expected public evidence")
         models = row.get("own_letter_models", {})
         levs = {r.get("files", {}).get("lev", {}).get("sha256")
-                for r in registry_keys[key].get("revisions", []) if r.get("hash_state") == "verified"}
+                for r in registry_keys[key].get("revisions", [])
+                if r.get("hash_state") == "verified" and "ctr_challenge" in r.get("modes", ())}
         if not isinstance(models, dict) or any(
                 not HEX64.fullmatch(lev) or lev not in levs or not valid_origin_code(glyphs)
                 for lev, glyphs in models.items()):
-            errors.append(f"{where}: own_letter_models needs registered verified LEV hashes and valid codes")
+            errors.append(f"{where}: own_letter_models needs verified CTR Challenge LEV hashes and valid codes")
         if models and not (review == "verified" and relation in ("port", "remake") and game.get("racing_game")):
             errors.append(f"{where}: stage 1 models require a verified racing game port or remake")
     return errors
@@ -356,7 +369,8 @@ def freeze_errors(previous: Path, current_by_key: dict) -> list[str]:
             if r.get("hash_state") != "verified":
                 continue
             cur = now_revs.get(r["revision"])
-            if cur is None or cur.get("content_id") != r.get("content_id") or cur.get("files") != r.get("files"):
+            if (cur is None or cur.get("hash_state") != "verified"
+                    or cur.get("content_id") != r.get("content_id") or cur.get("files") != r.get("files")):
                 errors.append(f"frozen: {key} verified revision {r['revision']} changed")
     return errors
 
