@@ -379,9 +379,10 @@ def check_named(root, registry, digest, aliases, errors):
     if doc.read("tracks", list) != expected:
         doc.error("tracks do not match registry.json")
     keys = {row["track_key"] for row in expected}
+    keys.update(track.key for track in registry.values() if track.mint == "builtin")
     if doc.read("track_key_aliases", dict, default={}) != {
             key: target for key, target in aliases.items() if isinstance(target, str) and target in keys}:
-        doc.error("track_key_aliases do not match the mint entries in registry.json")
+        doc.error("track_key_aliases do not match the mint and builtin entries in registry.json")
 
 
 def origin_code(value, where, errors):
