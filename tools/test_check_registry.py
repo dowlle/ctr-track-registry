@@ -100,6 +100,24 @@ def run(root, previous=None):
 
 
 class CheckerTests(unittest.TestCase):
+    def test_partial_track_identity_fails(self):
+        docs = fixture()
+        docs["registry.json"]["road_sha256"] = {}
+        write_fixture(self.root, docs)
+        status, output = run(self.root)
+        self.assertEqual(status, 1)
+        self.assertIn("track identity fields must be supplied together", output)
+
+    def test_historical_alias_cannot_disappear(self):
+        docs = fixture()
+        docs["registry.json"].update(track_key_aliases={"former-name": "sample"},
+                                     road_sha256={}, patch_lev_keys={})
+        docs["named_tracks.json"]["track_key_aliases"] = {"former-name": "sample"}
+        write_fixture(self.previous, docs)
+        status, output = run(self.root, self.previous)
+        self.assertEqual(status, 1)
+        self.assertIn("frozen: track alias former-name changed or disappeared", output)
+
     def test_track_identity_uses_canonical_keys(self):
         docs = fixture()
         registry = docs["registry.json"]

@@ -339,9 +339,13 @@ def verified_hashes(track):
 
 def check_identity(root, registry, errors):
     doc = load_record(root, "registry.json", errors)
+    fields = (("track_key_aliases", KEY_RE), ("road_sha256", HEX64), ("patch_lev_keys", HEX64))
+    present = [field for field, _ in fields if field in doc.data]
+    if present and len(present) != len(fields):
+        doc.error("track identity fields must be supplied together")
     pins = {rev.lev_hash for track in registry.values() for rev in track.revisions}
     aliases = {}
-    for field, pattern in (("track_key_aliases", KEY_RE), ("road_sha256", HEX64), ("patch_lev_keys", HEX64)):
+    for field, pattern in fields:
         mapping = doc.read(field, dict, default={})
         if field == "track_key_aliases":
             aliases = mapping or {}
@@ -513,10 +517,13 @@ def check_consent(root, registry, errors):
         check_listing(row, author_level=False)
 
 
-def check_freeze(previous, current, errors):
+def check_freeze(previous, current, aliases, errors):
     # Older snapshots are inputs to the freeze comparison only. In particular,
     # titles and modes can be corrected without applying current rules to them.
     doc = load_record(previous, "registry.json", errors, label="previous registry.json", private_keys=set())
+    for key, target in (doc.read("track_key_aliases", dict, default={}) or {}).items():
+        if aliases.get(key) != target:
+            errors.append(f"frozen: track alias {key} changed or disappeared")
     for old in doc.rows("tracks"):
         key = old.read("track_key", str)
         if key is None:
@@ -574,7 +581,7 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
     check_consent(root, registry, errors)
     check_origins(root, registry, per_track, errors)
     if previous is not None:
-        check_freeze(previous, registry, errors)
+        check_freeze(previous, registry, aliases, errors)
     return errors
 
 
