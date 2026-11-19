@@ -118,6 +118,30 @@ class CheckerTests(unittest.TestCase):
         self.assertEqual(status, 1)
         self.assertIn("frozen: track alias former-name changed or disappeared", output)
 
+    def test_hashes_survive_export_and_exact_lev_can_be_promoted(self):
+        docs = fixture()
+        registry = docs["registry.json"]
+        road, lev = "c" * 64, "d" * 64
+        registry.update(track_key_aliases={}, road_sha256={road: "sample"}, patch_lev_keys={lev: "sample"})
+        write_fixture(self.previous, docs)
+
+        registry["road_sha256"].clear()
+        registry["patch_lev_keys"].clear()
+        write_fixture(self.root, docs)
+        status, output = run(self.root, self.previous)
+        self.assertEqual(status, 1)
+        self.assertIn(f"road hash {road} changed or disappeared", output)
+        self.assertIn(f"supplemental LEV {lev} changed or disappeared", output)
+
+        registry["road_sha256"][road] = "sample"
+        revision = {"revision": "1.1", "hash_state": "verified", "content_id": "e" * 64,
+                    "files": {"lev": {"sha256": lev, "size": 256}}, "modes": ["race"]}
+        registry["tracks"][0]["revisions"].append(revision)
+        docs[TRACK_FILE]["revisions"].append(copy.deepcopy(revision))
+        docs["named_tracks.json"]["tracks"][0]["revisions"].append(revision["content_id"])
+        write_fixture(self.root, docs)
+        self.assertEqual(run(self.root, self.previous)[0], 0)
+
     def test_track_identity_uses_canonical_keys(self):
         docs = fixture()
         registry = docs["registry.json"]

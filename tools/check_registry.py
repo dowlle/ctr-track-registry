@@ -344,11 +344,10 @@ def check_identity(root, registry, errors):
     if present and len(present) != len(fields):
         doc.error("track identity fields must be supplied together")
     pins = {rev.lev_hash for track in registry.values() for rev in track.revisions}
-    aliases = {}
+    identity = {}
     for field, pattern in fields:
         mapping = doc.read(field, dict, default={})
-        if field == "track_key_aliases":
-            aliases = mapping or {}
+        identity[field] = mapping or {}
         for key, target in (mapping or {}).items():
             if len(key) > 64 or not pattern.fullmatch(key):
                 doc.error(f"{field}: invalid key {key!r}")
@@ -358,7 +357,7 @@ def check_identity(root, registry, errors):
                 doc.error(f"{field}: {key} shadows a registered track")
             if field == "patch_lev_keys" and key in pins:
                 doc.error(f"{field}: {key} is already a registry revision pin")
-    return aliases
+    return identity
 
 
 def check_named(root, registry, digest, aliases, errors):
@@ -518,13 +517,22 @@ def check_consent(root, registry, errors):
         check_listing(row, author_level=False)
 
 
-def check_freeze(previous, current, aliases, errors):
+def check_freeze(previous, current, identity, errors):
     # Older snapshots are inputs to the freeze comparison only. In particular,
     # titles and modes can be corrected without applying current rules to them.
     doc = load_record(previous, "registry.json", errors, label="previous registry.json", private_keys=set())
-    for key, target in (doc.read("track_key_aliases", dict, default={}) or {}).items():
-        if aliases.get(key) != target:
-            errors.append(f"frozen: track alias {key} changed or disappeared")
+    for field, label in (("track_key_aliases", "track alias"), ("road_sha256", "road hash")):
+        for key, target in (doc.read(field, dict, default={}) or {}).items():
+            if identity[field].get(key) != target:
+                errors.append(f"frozen: {label} {key} changed or disappeared")
+    for key, target in (doc.read("patch_lev_keys", dict, default={}) or {}).items():
+        if identity["patch_lev_keys"].get(key) == target:
+            continue
+        promoted = current.get(target) if isinstance(target, str) else None
+        owners = {track.key for track in current.values() if any(rev.lev_hash == key for rev in track.revisions)}
+        if not promoted or owners != {target} or not any(
+                rev.hash_state == "verified" and rev.lev_hash == key for rev in promoted.revisions):
+            errors.append(f"frozen: supplemental LEV {key} changed or disappeared without a verified revision on its track")
     for old in doc.rows("tracks"):
         key = old.read("track_key", str)
         if key is None:
@@ -567,7 +575,7 @@ def check_freeze(previous, current, aliases, errors):
 def check(root: Path, previous: Path | None = None) -> list[str]:
     errors: list[str] = []
     registry = registry_tracks(root, errors)
-    aliases = check_identity(root, registry, errors)
+    identity = check_identity(root, registry, errors)
     per_track = per_track_records(root, registry, errors)
     digest_doc = load_record(root, "DIGEST.json", errors)
     digest = digest_doc.text("digest", pattern=HEX64)
@@ -578,11 +586,11 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
     else:
         if digest != actual_digest:
             digest_doc.error("digest does not match registry.json and tracks/")
-    check_named(root, registry, digest, aliases, errors)
+    check_named(root, registry, digest, identity["track_key_aliases"], errors)
     check_consent(root, registry, errors)
     check_origins(root, registry, per_track, errors)
     if previous is not None:
-        check_freeze(previous, registry, aliases, errors)
+        check_freeze(previous, registry, identity, errors)
     return errors
 
 
