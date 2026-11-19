@@ -100,6 +100,26 @@ def run(root, previous=None):
 
 
 class CheckerTests(unittest.TestCase):
+    def test_track_identity_uses_canonical_keys(self):
+        docs = fixture()
+        registry = docs["registry.json"]
+        registry["track_key_aliases"] = {"former-name": "sample"}
+        registry["road_sha256"] = {"c" * 64: "sample"}
+        registry["patch_lev_keys"] = {"d" * 64: "sample"}
+        docs["named_tracks.json"]["track_key_aliases"] = registry["track_key_aliases"].copy()
+        write_fixture(self.root, docs)
+        self.assertEqual(run(self.root)[0], 0)
+        registry["track_key_aliases"]["sample"] = "former-name"
+        registry["road_sha256"]["uppercase"] = "sample"
+        registry["patch_lev_keys"][B] = "sample"
+        write_fixture(self.root, docs)
+        status, output = run(self.root)
+        self.assertEqual(status, 1)
+        self.assertIn("shadows a registered track", output)
+        self.assertIn("must refer directly to a registered track", output)
+        self.assertIn("invalid key 'uppercase'", output)
+        self.assertIn("is already a registry revision pin", output)
+
     def setUp(self):
         temp = TemporaryDirectory()
         self.addCleanup(temp.cleanup)

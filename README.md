@@ -85,3 +85,16 @@ The registry data and the checker are released under
 [CC0 1.0](LICENSE). That covers this repository's compilation and our own
 contributions. It does not claim any rights in the tracks themselves, and
 credits and titles remain attributed to their authors.
+# Track identity
+
+`registry.json` may also list `track_key_aliases`, `road_sha256` and
+`patch_lev_keys`. Each entry maps directly to a registered track key.
+An alias preserves a historical key and never shadows a registry row.
+
+A road hash is SHA-256 over the bytes `CTR road v1` and one zero byte,
+followed by the sorted unique road vertex positions. Each position is
+three signed little-endian 16-bit coordinates in X, Y, Z order. A road
+quad carries flag `0x1000`. Omit ambiguous roads. Exact file pins and
+explicitly identified patched LEVs can distinguish copies on the same road.
+Road and alias matches identify the track. Pickup rulings and downloads
+still require their own exact file pins.
