@@ -64,7 +64,12 @@ def fixture():
 
 
 def add_descriptor(documents):
-    rev = documents[TRACK_FILE]["revisions"][0]
+    track_revision = documents[TRACK_FILE]["revisions"][0]
+    summary_revision = documents["registry.json"]["tracks"][0]["revisions"][0]
+    for rev in (track_revision, summary_revision):
+        rev["descriptor_schema"] = 1
+        rev["files"].setdefault("vrm", {"sha256": A, "size": 256})
+    rev = track_revision
     rev["descriptor"] = {
         "schema_version": 1, "revision": rev["revision"], "content_id": rev["content_id"],
         "files": copy.deepcopy(rev["files"]), "relic_targets": None,
@@ -392,22 +397,43 @@ class CheckerTests(unittest.TestCase):
         docs = fixture()
         docs[TRACK_FILE]["revisions"][0]["descriptor"] = {
             "revision": "Submitted label", "content_id": B, "title": "Manager export",
-            "files": {"lev": {"sha256": A}},
+            "files": {"lev": {"sha256": A, "size": None}, "vrm": {"sha256": B}},
+            "relic_targets": {
+                "schema_version": 1, "laps": 3, "ticks_per_second": 960,
+                "lev_sha256": A, "vrm_sha256": B, "platinum": 105, "gold": 120, "sapphire": 136,
+            },
         }
         write_fixture(self.root, docs)
         self.assertEqual(run(self.root, self.previous)[0], 0)
 
     def test_descriptor_schema_matches_revision(self):
-        docs = fixture()
-        add_descriptor(docs)["schema_version"] = 2
-        docs[TRACK_FILE]["revisions"][0]["descriptor_schema"] = 1
-        resolve(docs["registry.json"], REVISION)["descriptor_schema"] = 1
-        write_fixture(self.root, docs)
-        self.assert_invalid(f"{TRACK_FILE}.revisions[0].descriptor: schema_version must agree")
+        for embedded, declared in ((2, 1), (None, 1), (1, None)):
+            with self.subTest(embedded=embedded, declared=declared):
+                docs = fixture()
+                add_descriptor(docs)["schema_version"] = embedded
+                docs[TRACK_FILE]["revisions"][0]["descriptor_schema"] = declared
+                resolve(docs["registry.json"], REVISION)["descriptor_schema"] = declared
+                write_fixture(self.root, docs)
+                self.assert_invalid(f"{TRACK_FILE}.revisions[0].descriptor: schema_version must agree")
+
+    def test_xdelta_requires_verified_geometry(self):
+        for field, value in (("hash_state", "claimed"), ("files", {"lev": {"sha256": B, "size": 256}})):
+            with self.subTest(field=field):
+                docs = fixture()
+                descriptor = add_descriptor(docs)
+                for rev in (docs[TRACK_FILE]["revisions"][0], resolve(docs["registry.json"], REVISION)):
+                    rev[field] = value
+                if field == "files":
+                    descriptor[field] = value
+                write_fixture(self.root, docs)
+                self.assert_invalid(f"{TRACK_FILE}.revisions[0].descriptor: xdelta requires")
 
     def test_verified_descriptor_can_be_added_but_then_freezes(self):
         docs = fixture()
         descriptor = add_descriptor(docs)
+        previous = copy.deepcopy(docs)
+        del previous[TRACK_FILE]["revisions"][0]["descriptor"]
+        write_fixture(self.previous, previous)
         write_fixture(self.root, docs)
         self.assertEqual(run(self.root, self.previous)[0], 0)
         write_fixture(self.previous, docs)

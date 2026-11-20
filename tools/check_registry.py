@@ -327,14 +327,19 @@ def check_descriptor(revision, descriptor):
     # Generated xdelta descriptors describe the verified files themselves.
     provenance = descriptor.data.get("provenance")
     generated = isinstance(provenance, dict) and "xdelta" in provenance
-    if descriptor.data.get("schema_version") is not None:
-        version = check_integer_bounds(descriptor, "schema_version")
-        declared = revision.data.get("descriptor_schema")
-        if version is not None and declared is not None and not same_json(version, declared):
-            descriptor.error("schema_version must agree with descriptor_schema")
+    version = descriptor.read("schema_version", int, default=None, nullable=True)
+    declared = revision.read("descriptor_schema", int, default=None, nullable=True)
+    if generated and (version != SCHEMA_VERSION or declared != SCHEMA_VERSION):
+        descriptor.error(f"schema_version must agree with descriptor_schema and both must be {SCHEMA_VERSION}")
+    elif version is not None and (version < 1 or (declared is not None and version != declared)):
+        descriptor.error("schema_version must be positive and agree with descriptor_schema when declared")
     descriptor.text("content_id", pattern=HEX64, default=None, nullable=True)
     descriptor.text("revision", default=None, nullable=True)
     if generated:
+        revision_files = revision.data.get("files")
+        if (revision.data.get("hash_state") != "verified" or revision.data.get("content_id") is None
+                or not isinstance(revision_files, dict) or not {"lev", "vrm"} <= revision_files.keys()):
+            descriptor.error("xdelta requires a verified content ID and LEV/VRM files")
         for field in ("content_id", "revision", "files"):
             if field not in descriptor.data or not same_json(descriptor.data[field], revision.data.get(field)):
                 descriptor.error(f"{field} must agree with the revision")
@@ -355,7 +360,7 @@ def check_descriptor(revision, descriptor):
                 claim = files.child(name, value)
                 if claim is not None:
                     claim.text("sha256", pattern=HEX64)
-                    if "size" in claim.data:
+                    if claim.data.get("size") is not None:
                         check_integer_bounds(claim, "size", minimum=0)
     if descriptor.data.get("relic_targets") is None:
         return
@@ -365,12 +370,14 @@ def check_descriptor(revision, descriptor):
                      "platinum", "gold", "sapphire", "ticks_per_second"})
         if relic.read("schema_version", int) != SCHEMA_VERSION:
             relic.error(f"schema_version must be {SCHEMA_VERSION}")
-        files = revision.data.get("files")
+        files = (revision if generated else descriptor).data.get("files")
         for name in ("lev", "vrm"):
             pin = relic.text(f"{name}_sha256", pattern=HEX64)
             entry = files.get(name) if isinstance(files, dict) else None
-            if pin is not None and (not isinstance(entry, dict) or pin != entry.get("sha256")):
-                relic.error(f"{name}_sha256 must agree with the revision files")
+            if pin is not None and (generated or isinstance(entry, dict)):
+                if not isinstance(entry, dict) or pin != entry.get("sha256"):
+                    source = "revision" if generated else "submitted"
+                    relic.error(f"{name}_sha256 must agree with the {source} files")
         check_integer_bounds(relic, "laps", maximum=MAX_RELIC_LAPS)
         tick_rate = relic.read("ticks_per_second", int)
         if tick_rate is not None and tick_rate != RELIC_TICKS_PER_SECOND:
