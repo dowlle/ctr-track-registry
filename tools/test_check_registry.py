@@ -7,7 +7,9 @@ from contextlib import redirect_stdout
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
+from check_change import verify_change
 from check_registry import digest_of, main
 
 A = "a" * 64
@@ -59,6 +61,18 @@ def fixture():
             "tracks": [{"track_key": "sample", "client_listing": dict(listing)}],
         },
     }
+
+
+def add_descriptor(documents):
+    rev = documents[TRACK_FILE]["revisions"][0]
+    rev["descriptor"] = {
+        "schema_version": 1, "revision": rev["revision"], "content_id": rev["content_id"],
+        "files": copy.deepcopy(rev["files"]), "relic_targets": None,
+        "pack": {"authors": ["Renée"], "title": "Sample pack"},
+        "provenance": {"xdelta": {"base_disc_sha256": A, "patch_sha256": B,
+                                  "bigfile_index": 0, "cutter_version": 1}},
+    }
+    return rev["descriptor"]
 
 
 def resolve(data, path):
@@ -348,6 +362,65 @@ class CheckerTests(unittest.TestCase):
                 mutate(documents, TRACK_FILE, path, value)
                 write_fixture(self.root, documents)
                 self.assert_invalid(f"{TRACK_FILE}: {diagnostic}")
+
+    def test_per_track_summary_matches_registry(self):
+        for path, value in (
+            (("display_title",), "Different title"),
+            (("revisions", 0, "modes"), ["race"]),
+            (("review",), {"value": True}),
+        ):
+            with self.subTest(path=path):
+                docs = fixture()
+                mutate(docs, TRACK_FILE, path, value)
+                write_fixture(self.root, docs)
+                self.assert_invalid(f"{TRACK_FILE}: entry must match registry.json")
+
+    def test_descriptor_schema_and_pins(self):
+        for key, value, diagnostic in (
+            ("schema_version", True, ".schema_version: expected int"),
+            ("content_id", B, ": content_id must agree with the revision"),
+            ("files", {}, ": files must agree with the revision"),
+            ("relic_targets", {}, ".relic_targets.schema_version: missing"),
+        ):
+            with self.subTest(key=key):
+                docs = fixture()
+                add_descriptor(docs)[key] = value
+                write_fixture(self.root, docs)
+                self.assert_invalid(f"{TRACK_FILE}.revisions[0].descriptor{diagnostic}")
+
+    def test_verified_descriptor_can_be_added_but_then_freezes(self):
+        docs = fixture()
+        descriptor = add_descriptor(docs)
+        write_fixture(self.root, docs)
+        self.assertEqual(run(self.root, self.previous)[0], 0)
+        write_fixture(self.previous, docs)
+        descriptor["pack"]["title"] = "Different pack"
+        write_fixture(self.root, docs)
+        self.assert_invalid(f"frozen: {TRACK_FILE} verified revision 1.0 descriptor changed")
+        docs[TRACK_FILE]["revisions"][0]["descriptor"] = None
+        write_fixture(self.root, docs)
+        self.assert_invalid(f"frozen: {TRACK_FILE} verified revision 1.0 descriptor changed")
+
+    def test_relic_targets_must_match_revision_files(self):
+        docs = fixture()
+        for rev in (docs[TRACK_FILE]["revisions"][0], resolve(docs["registry.json"], REVISION)):
+            rev["files"]["vrm"] = {"sha256": A, "size": 256}
+        add_descriptor(docs)["relic_targets"] = {
+            "schema_version": 1, "laps": 3, "ticks_per_second": 960,
+            "lev_sha256": A, "vrm_sha256": A, "platinum": 105, "gold": 120, "sapphire": 136,
+        }
+        write_fixture(self.root, docs)
+        self.assert_invalid(f"{TRACK_FILE}.revisions[0].descriptor.relic_targets: lev_sha256")
+
+    def test_policy_changes_are_separate_from_registry_exports(self):
+        with patch("check_change.git") as git:
+            git.return_value = b"registry.json\0tracks/sample.json\0"
+            verify_change("base", "candidate")
+            git.return_value = b"tools/check_registry.py\0"
+            verify_change("base", "candidate")
+            git.return_value = b"registry.json\0tools/check_registry.py\0"
+            with self.assertRaisesRegex(ValueError, "separate pull requests"):
+                verify_change("base", "candidate")
 
     def test_consent_evidence_preserves_character_limit(self):
         documents = fixture()
