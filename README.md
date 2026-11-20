@@ -1,13 +1,48 @@
 # CTR track registry
 
-The public record of custom-track names, credits and content hashes for
-[CTR Archipelago](https://github.com/dowlle/ctr-archipelago-apworld), the Archipelago
-randomizer for Crash Team Racing.
+The public record of custom-track names, credits and file hashes for
+[CTR Archipelago](https://github.com/dowlle/ctr-archipelago-apworld).
+[Archipelago](https://archipelago.gg) mixes several games into one shared
+randomized game; CTR Archipelago adds Crash Team Racing to it, including
+community-made custom tracks.
 
 **This repository holds names, credits, hashes and links. It never holds track
 files.** No `.lev`, `.vrm`, `.sca` or other track asset is stored here, and none
 will be. Downloads stay with the track authors and
 [Project Saphi](https://www.projectsaphi.com).
+
+## What a listing means
+
+Every track listed here was made by its author, not by CTR Archipelago. A
+listing records the track's name, who made it and how to recognise its files.
+It is not a claim of ownership, and it does not mean the author has given
+permission for anything.
+
+We are asking track authors whether CTR Archipelago may offer their tracks for
+download inside the game. [`consent.json`](consent.json) shows what each author
+said. From version 0.3.0-alpha4 on, the game offers a track for download only
+when its author said yes there, or when the track's own Project Saphi setting
+allows it and the author has not said no. Every other track is not offered.
+Players can still add track files themselves.
+
+## Where the record lives
+
+This repository is the record. Other tools read it from here: the CTR
+Archipelago game reads `registry.json` and `consent.json` straight from this
+repository, and each CTR Archipelago release builds from one fixed commit of it.
+
+## For track authors
+
+If your track is listed, you can ask us to correct its title or credit, add
+someone who worked on it, or remove it. Ask on our
+[Discord server](https://discord.com/invite/HxXy4mKQ5E), or open an issue or a
+pull request here.
+
+Removal is done by hand. Once you ask, your track is marked as withdrawn in
+`consent.json` and the game no longer offers it for download. Some values stay
+in this list after removal, because games that were already made depend on
+them: the track key, the block number and the hashes of its files. A hash
+identifies a file; it contains no part of the track.
 
 ## What a registry entry is
 
@@ -17,7 +52,8 @@ One entry is one custom track. It has:
 - a display title and credits for the people who made it
 - one or more revisions, each with the SHA-256 of its files and a `content_id`
   derived from them
-- links to where the track is published
+- where the track comes from: its Project Saphi track number, or the patch
+  it was taken from
 - once the track is given its own block of Archipelago ids: a `block_index` and
   an `ap_name`
 - a `mint_status`: `mint` (the default), `reserved` (the block number is kept
@@ -31,6 +67,8 @@ The files:
 |---|---|
 | `registry.json` | Every recorded track and its revisions, in one file |
 | `tracks/<key>.json` | One track with the full descriptor of each revision |
+| `consent.json` | What each track author said about download in the game |
+| `origins.json` | Which game or level a track is based on, with a source link |
 | `named_tracks.json` | The input an apworld release pins: tracks to mint as named id blocks, in block order |
 | `DIGEST.json` | A digest over `registry.json` and `tracks/`, so a build can pin one commit and one digest |
 | `tools/check_registry.py` | The checker CI runs (Python standard library only) |
@@ -41,10 +79,10 @@ Ids are computed from the block, never stored by hand: location ids are
 
 ## How entries get in
 
-Entries come in through [AP-Pie](https://ap-pie.com). People submit tracks
-there, a maintainer reviews them, and approved entries are exported into this
-repository as a pull request. CI runs the checker, and a green run merges.
-Please do not edit the generated files by hand; see [CONTRIBUTING.md](CONTRIBUTING.md).
+Entries are added and corrected by hand. A maintainer prepares each change as a
+pull request, CI runs the checker, and the change is merged by hand once the
+check is green. Nothing merges by itself. To ask for a new track, a new
+revision or a correction, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Freeze rules
 
@@ -70,14 +108,14 @@ verified hash that moved or disappeared fails the check.
 ## Credits
 
 Every track belongs to its author. The credits in each entry name the people
-who made the track, its music and its Archipelago boxes, as published on the
-track's own page.
+who made the track.
 
-The titles, author credits and version metadata come from
+Titles and author names come from
 [Project Saphi](https://www.projectsaphi.com), the community track library for
-Crash Team Racing, through its public API. Thank you to Project Saphi and to
-every track author. If a title or credit is wrong or you want an entry
-changed, see [CONTRIBUTING.md](CONTRIBUTING.md).
+Crash Team Racing, through its public API. Tracks that are not on Project Saphi
+are credited from the patch they come from. Thank you to Project Saphi and to
+every track author. If a title or credit is wrong, see
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
