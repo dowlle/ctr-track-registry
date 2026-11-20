@@ -33,6 +33,9 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 SCHEMA_VERSION = 1
+RELIC_TICKS_PER_SECOND = 960
+MAX_RELIC_LAPS = 127  # Native stores the lap count in a signed char.
+MAX_RELIC_TICKS = (2**31 - 1) // 100  # The HUD multiplies ticks by 100.
 MAX_BLOCKS = 10_000
 LOCATION_BASE, LOCATIONS_PER_TRACK = 35_200_000, 200
 ITEM_BASE, ITEMS_PER_TRACK = 35_100_000, 5
@@ -319,29 +322,42 @@ def same_json(left, right):
 
 
 def check_descriptor(revision, descriptor):
-    descriptor.exact({"schema_version", "revision", "content_id", "files",
-                      "pack", "provenance", "relic_targets"})
-    if descriptor.read("schema_version", int) != SCHEMA_VERSION:
-        descriptor.error(f"schema_version must be {SCHEMA_VERSION}")
-    for field in ("content_id", "revision", "files"):
-        if field not in descriptor.data or not same_json(descriptor.data[field], revision.data.get(field)):
-            descriptor.error(f"{field} must agree with the revision")
-    pack = descriptor.object("pack")
-    if pack is not None:
-        pack.exact({"authors", "title"})
-        pack.text_list("authors")
-        pack.text("title")
-    provenance = descriptor.object("provenance")
-    if provenance is not None:
-        provenance.exact({"xdelta"})
-        xdelta = provenance.object("xdelta")
+    # AP-Pie preserves the original manager descriptor when a revision label
+    # is supplied separately or the verifier replaces the submitted hashes.
+    # Generated xdelta descriptors describe the verified files themselves.
+    provenance = descriptor.data.get("provenance")
+    generated = isinstance(provenance, dict) and "xdelta" in provenance
+    if descriptor.data.get("schema_version") is not None:
+        version = check_integer_bounds(descriptor, "schema_version")
+        declared = revision.data.get("descriptor_schema")
+        if version is not None and declared is not None and not same_json(version, declared):
+            descriptor.error("schema_version must agree with descriptor_schema")
+    descriptor.text("content_id", pattern=HEX64, default=None, nullable=True)
+    descriptor.text("revision", default=None, nullable=True)
+    if generated:
+        for field in ("content_id", "revision", "files"):
+            if field not in descriptor.data or not same_json(descriptor.data[field], revision.data.get(field)):
+                descriptor.error(f"{field} must agree with the revision")
+        pack = descriptor.object("pack")
+        if pack is not None:
+            pack.text_list("authors")
+            pack.text("title")
+        xdelta = descriptor.object("provenance").object("xdelta")
         if xdelta is not None:
-            xdelta.exact({"base_disc_sha256", "patch_sha256", "bigfile_index", "cutter_version"})
             xdelta.text("base_disc_sha256", pattern=HEX64)
             xdelta.text("patch_sha256", pattern=HEX64)
             check_integer_bounds(xdelta, "bigfile_index", minimum=0)
             check_integer_bounds(xdelta, "cutter_version")
-    if descriptor.data.get("relic_targets", MISSING) is None:
+    if descriptor.data.get("files") is not None:
+        files = descriptor.object("files")
+        if files is not None:
+            for name, value in files.data.items():
+                claim = files.child(name, value)
+                if claim is not None:
+                    claim.text("sha256", pattern=HEX64)
+                    if "size" in claim.data:
+                        check_integer_bounds(claim, "size", minimum=0)
+    if descriptor.data.get("relic_targets") is None:
         return
     relic = descriptor.object("relic_targets")
     if relic is not None:
@@ -355,17 +371,22 @@ def check_descriptor(revision, descriptor):
             entry = files.get(name) if isinstance(files, dict) else None
             if pin is not None and (not isinstance(entry, dict) or pin != entry.get("sha256")):
                 relic.error(f"{name}_sha256 must agree with the revision files")
-        for name in ("laps", "ticks_per_second"):
-            check_integer_bounds(relic, name)
-        times = [check_integer_bounds(relic, tier) for tier in ("platinum", "gold", "sapphire")]
+        check_integer_bounds(relic, "laps", maximum=MAX_RELIC_LAPS)
+        tick_rate = relic.read("ticks_per_second", int)
+        if tick_rate is not None and tick_rate != RELIC_TICKS_PER_SECOND:
+            relic.error(f"ticks_per_second must be {RELIC_TICKS_PER_SECOND}")
+        times = [check_integer_bounds(relic, tier, maximum=MAX_RELIC_TICKS)
+                 for tier in ("platinum", "gold", "sapphire")]
         if None not in times and times != sorted(times):
             relic.error("targets must be in platinum, gold, sapphire order")
 
 
-def check_integer_bounds(row, field, minimum=1):
+def check_integer_bounds(row, field, minimum=1, maximum=None):
     value = row.read(field, int)
     if value is not None and value < minimum:
         row.error(f"{field} must be at least {minimum}")
+    if value is not None and maximum is not None and value > maximum:
+        row.error(f"{field} must be at most {maximum}")
     return value
 
 

@@ -43,6 +43,7 @@ def verify_change(base, candidate):
 
 def snapshot(commit, destination, *, include_checker=False):
     tree = git("ls-tree", "-rlz", commit)
+    policy_paths = set()
     for line in tree.split(b"\0")[:-1]:
         metadata, path = line.decode().split("\t", 1)
         mode, kind, oid, size = metadata.split()
@@ -50,11 +51,15 @@ def snapshot(commit, destination, *, include_checker=False):
             raise ValueError(f"expected a regular file: {path!r}")
         if int(size) > MAX_BYTES:
             raise ValueError(f"file over 1 MiB: {path!r}")
+        if path in POLICY:
+            policy_paths.add(path)
         if not (is_data(path) or (include_checker and path == "tools/check_registry.py")):
             continue
         target = destination / path
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(git("cat-file", "blob", oid))
+    if not include_checker and (missing := POLICY - policy_paths):
+        raise ValueError(f"required policy files missing: {', '.join(sorted(missing))}")
 
 
 def main():

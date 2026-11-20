@@ -9,7 +9,7 @@ from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
 
-from check_change import verify_change
+from check_change import snapshot, verify_change
 from check_registry import digest_of, main
 
 A = "a" * 64
@@ -379,7 +379,7 @@ class CheckerTests(unittest.TestCase):
         for key, value, diagnostic in (
             ("schema_version", True, ".schema_version: expected int"),
             ("content_id", B, ": content_id must agree with the revision"),
-            ("files", {}, ": files must agree with the revision"),
+            ("files", {"lev": {"sha256": A}}, ": files must agree with the revision"),
             ("relic_targets", {}, ".relic_targets.schema_version: missing"),
         ):
             with self.subTest(key=key):
@@ -387,6 +387,23 @@ class CheckerTests(unittest.TestCase):
                 add_descriptor(docs)[key] = value
                 write_fixture(self.root, docs)
                 self.assert_invalid(f"{TRACK_FILE}.revisions[0].descriptor{diagnostic}")
+
+    def test_manager_descriptor_keeps_pre_verification_metadata(self):
+        docs = fixture()
+        docs[TRACK_FILE]["revisions"][0]["descriptor"] = {
+            "revision": "Submitted label", "content_id": B, "title": "Manager export",
+            "files": {"lev": {"sha256": A}},
+        }
+        write_fixture(self.root, docs)
+        self.assertEqual(run(self.root, self.previous)[0], 0)
+
+    def test_descriptor_schema_matches_revision(self):
+        docs = fixture()
+        add_descriptor(docs)["schema_version"] = 2
+        docs[TRACK_FILE]["revisions"][0]["descriptor_schema"] = 1
+        resolve(docs["registry.json"], REVISION)["descriptor_schema"] = 1
+        write_fixture(self.root, docs)
+        self.assert_invalid(f"{TRACK_FILE}.revisions[0].descriptor: schema_version must agree")
 
     def test_verified_descriptor_can_be_added_but_then_freezes(self):
         docs = fixture()
@@ -412,6 +429,21 @@ class CheckerTests(unittest.TestCase):
         write_fixture(self.root, docs)
         self.assert_invalid(f"{TRACK_FILE}.revisions[0].descriptor.relic_targets: lev_sha256")
 
+    def test_relic_targets_use_native_bounds(self):
+        for field, value in (("ticks_per_second", 1000), ("laps", 128), ("sapphire", 21474837)):
+            with self.subTest(field=field):
+                docs = fixture()
+                for rev in (docs[TRACK_FILE]["revisions"][0], resolve(docs["registry.json"], REVISION)):
+                    rev["files"]["vrm"] = {"sha256": A, "size": 256}
+                targets = {
+                    "schema_version": 1, "laps": 3, "ticks_per_second": 960,
+                    "lev_sha256": B, "vrm_sha256": A, "platinum": 105, "gold": 120, "sapphire": 136,
+                }
+                targets[field] = value
+                add_descriptor(docs)["relic_targets"] = targets
+                write_fixture(self.root, docs)
+                self.assert_invalid(f"{TRACK_FILE}.revisions[0].descriptor.relic_targets: {field}")
+
     def test_policy_changes_are_separate_from_registry_exports(self):
         with patch("check_change.git") as git:
             git.return_value = b"registry.json\0tracks/sample.json\0"
@@ -421,6 +453,11 @@ class CheckerTests(unittest.TestCase):
             git.return_value = b"registry.json\0tools/check_registry.py\0"
             with self.assertRaisesRegex(ValueError, "separate pull requests"):
                 verify_change("base", "candidate")
+
+    def test_candidate_snapshot_requires_policy_files(self):
+        with patch("check_change.git", return_value=b""):
+            with self.assertRaisesRegex(ValueError, "required policy files missing:.*registry-policy.yml"):
+                snapshot("candidate", self.root)
 
     def test_consent_evidence_preserves_character_limit(self):
         documents = fixture()
