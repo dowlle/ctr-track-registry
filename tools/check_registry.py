@@ -4,8 +4,7 @@
     python tools/check_registry.py [REGISTRY_DIR] [--previous OLDER_DIR]
 
 Exit status 0 when every check passes, 1 otherwise. This is the file the
-registry repository's CI runs. It is copied from AP-Pie's export, so it holds
-its own copies of the id constants (a test in AP-Pie keeps them in step).
+registry repository's CI runs. The registry owns this checker.
 
 Checks: file set and digest, mint_status (mint, reserved, builtin), schema version, unique keys and block indexes,
 id ranges, name rules, named_tracks.json agreement, no private fields, and with
@@ -34,6 +33,9 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 SCHEMA_VERSION = 1
+RELIC_TICKS_PER_SECOND = 960
+MAX_RELIC_LAPS = 127  # Native stores the lap count in a signed char.
+MAX_RELIC_TICKS = (2**31 - 1) // 100  # The HUD multiplies ticks by 100.
 MAX_BLOCKS = 10_000
 LOCATION_BASE, LOCATIONS_PER_TRACK = 35_200_000, 200
 ITEM_BASE, ITEMS_PER_TRACK = 35_100_000, 5
@@ -294,13 +296,14 @@ def registry_tracks(root, errors):
     doc = load_record(root, "registry.json", errors)
     if doc.read("schema_version", int) != SCHEMA_VERSION:
         doc.error(f"schema_version must be {SCHEMA_VERSION}")
-    tracks, blocks, names = {}, {}, {}
+    tracks, rows, blocks, names = {}, {}, {}, {}
     for row in doc.rows("tracks"):
         track = Track.read(row)
         if track.key is not None:
             if track.key in tracks:
                 row.error(f"duplicate track_key {track.key}")
             tracks[track.key] = track
+            rows[track.key] = row.data
         if track.block is not None:
             if track.block in blocks:
                 row.error(f"block_index {track.block} also used by {blocks[track.block]}")
@@ -310,15 +313,96 @@ def registry_tracks(root, errors):
                 if folded in names:
                     row.error(f"ap_name {track.name!r} also used by {names[folded]}")
                 names[folded] = row.where
-    return tracks
+    return tracks, rows
 
 
-def per_track_records(root, registry, errors):
+def same_json(left, right):
+    # Python considers true, 1 and 1.0 equal. They are distinct in these files.
+    return json.dumps(left, sort_keys=True) == json.dumps(right, sort_keys=True)
+
+
+def check_descriptor(revision, descriptor):
+    # AP-Pie preserves the original manager descriptor when a revision label
+    # is supplied separately or the verifier replaces the submitted hashes.
+    # Generated xdelta descriptors describe the verified files themselves.
+    provenance = descriptor.data.get("provenance")
+    generated = isinstance(provenance, dict) and "xdelta" in provenance
+    version = descriptor.read("schema_version", int, default=None, nullable=True)
+    declared = revision.read("descriptor_schema", int, default=None, nullable=True)
+    if generated and (version != SCHEMA_VERSION or declared != SCHEMA_VERSION):
+        descriptor.error(f"schema_version must agree with descriptor_schema and both must be {SCHEMA_VERSION}")
+    elif version is not None and (version < 1 or (declared is not None and version != declared)):
+        descriptor.error("schema_version must be positive and agree with descriptor_schema when declared")
+    descriptor.text("content_id", pattern=HEX64, default=None, nullable=True)
+    descriptor.read("revision", str, default=None, nullable=True)
+    if generated:
+        revision_files = revision.data.get("files")
+        if (revision.data.get("hash_state") != "verified" or revision.data.get("content_id") is None
+                or not isinstance(revision_files, dict) or not {"lev", "vrm"} <= revision_files.keys()):
+            descriptor.error("xdelta requires a verified content ID and LEV/VRM files")
+        for field in ("content_id", "revision", "files"):
+            if field not in descriptor.data or not same_json(descriptor.data[field], revision.data.get(field)):
+                descriptor.error(f"{field} must agree with the revision")
+        pack = descriptor.object("pack")
+        if pack is not None:
+            pack.text_list("authors")
+            pack.text("title")
+        xdelta = descriptor.object("provenance").object("xdelta")
+        if xdelta is not None:
+            xdelta.text("base_disc_sha256", pattern=HEX64)
+            xdelta.text("patch_sha256", pattern=HEX64)
+            check_integer_bounds(xdelta, "bigfile_index", minimum=0)
+            check_integer_bounds(xdelta, "cutter_version")
+    if descriptor.data.get("files") is not None:
+        files = descriptor.object("files")
+        if files is not None:
+            for name, value in files.data.items():
+                claim = files.child(name, value)
+                if claim is not None:
+                    claim.text("sha256", pattern=HEX64)
+                    if claim.data.get("size") is not None:
+                        check_integer_bounds(claim, "size", minimum=0)
+    if descriptor.data.get("relic_targets") is None:
+        return
+    relic = descriptor.object("relic_targets")
+    if relic is not None:
+        relic.exact({"schema_version", "lev_sha256", "vrm_sha256", "laps",
+                     "platinum", "gold", "sapphire", "ticks_per_second"})
+        if relic.read("schema_version", int) != SCHEMA_VERSION:
+            relic.error(f"schema_version must be {SCHEMA_VERSION}")
+        files = (revision if generated else descriptor).data.get("files")
+        for name in ("lev", "vrm"):
+            pin = relic.text(f"{name}_sha256", pattern=HEX64)
+            entry = files.get(name) if isinstance(files, dict) else None
+            if pin is not None and (generated or isinstance(entry, dict)):
+                if not isinstance(entry, dict) or pin != entry.get("sha256"):
+                    source = "revision" if generated else "submitted"
+                    relic.error(f"{name}_sha256 must agree with the {source} files")
+        check_integer_bounds(relic, "laps", maximum=MAX_RELIC_LAPS)
+        tick_rate = relic.read("ticks_per_second", int)
+        if tick_rate is not None and tick_rate != RELIC_TICKS_PER_SECOND:
+            relic.error(f"ticks_per_second must be {RELIC_TICKS_PER_SECOND}")
+        times = [check_integer_bounds(relic, tier, maximum=MAX_RELIC_TICKS)
+                 for tier in ("platinum", "gold", "sapphire")]
+        if None not in times and times != sorted(times):
+            relic.error("targets must be in platinum, gold, sapphire order")
+
+
+def check_integer_bounds(row, field, minimum=1, maximum=None):
+    value = row.read(field, int)
+    if value is not None and value < minimum:
+        row.error(f"{field} must be at least {minimum}")
+    if value is not None and maximum is not None and value > maximum:
+        row.error(f"{field} must be at most {maximum}")
+    return value
+
+
+def per_track_records(root, registry, registry_rows, errors):
     paths = {path.stem: f"tracks/{path.name}" for path in (root / "tracks").glob("*.json")}
-    for key in registry.keys() - paths.keys():
+    for key in sorted(registry.keys() - paths.keys()):
         errors.append(f"{key}: tracks/{key}.json is missing")
-    records = {}
-    for key, path in paths.items():
+    records, descriptors = {}, {}
+    for key, path in sorted(paths.items()):
         row = load_record(root, path, errors)
         track = Track.read(row)
         if track.key != key:
@@ -328,8 +412,28 @@ def per_track_records(root, registry, errors):
         else:
             if verified_hashes(track) != verified_hashes(registry[key]):
                 row.error("verified revisions must agree with registry.json")
+            summary = dict(row.data)
+            summary["revisions"] = []
+            seen = set()
+            for revision in row.rows("revisions"):
+                fields = dict(revision.data)
+                descriptor = fields.pop("descriptor", None)
+                summary["revisions"].append(fields)
+                version = fields.get("revision")
+                if isinstance(version, str):
+                    if version in seen:
+                        revision.error("duplicate revision label")
+                    seen.add(version)
+                if descriptor is not None:
+                    child = revision.child("descriptor", descriptor)
+                    if child is not None:
+                        check_descriptor(revision, child)
+                        if isinstance(version, str):
+                            descriptors[key, version] = descriptor
+            if not same_json(summary, registry_rows[key]):
+                row.error("entry must match registry.json apart from revision descriptors")
             records[key] = track
-    return records
+    return records, descriptors
 
 
 def verified_hashes(track):
@@ -517,7 +621,7 @@ def check_consent(root, registry, errors):
         check_listing(row, author_level=False)
 
 
-def check_freeze(previous, current, identity, errors):
+def check_freeze(previous, current, identity, descriptors, errors):
     # Older snapshots are inputs to the freeze comparison only. In particular,
     # titles and modes can be corrected without applying current rules to them.
     doc = load_record(previous, "registry.json", errors, label="previous registry.json", private_keys=set())
@@ -558,6 +662,14 @@ def check_freeze(previous, current, identity, errors):
                 if before != after:
                     errors.append(f"frozen: {key} {field} changed after shipping")
         now_revs = {rev.revision: rev for rev in now.revisions if rev.revision is not None}
+        old_descriptors = {}
+        if KEY_RE.fullmatch(key) and (previous / "tracks" / f"{key}.json").is_file():
+            path = f"tracks/{key}.json"
+            detail = load_record(previous, path, errors, label=f"previous {path}", private_keys=set())
+            for rev in detail.rows("revisions", default=[]):
+                version = rev.data.get("revision")
+                if isinstance(version, str):
+                    old_descriptors[version] = rev.data.get("descriptor")
         for row in old.rows("revisions", default=[]):
             # Only an exact verified marker freezes an older revision. Allow
             # corrections to any historical value that never froze hashes.
@@ -570,13 +682,16 @@ def check_freeze(previous, current, identity, errors):
             if (cur is None or cur.hash_state != "verified"
                     or cur.content_id != content or cur.files != files):
                 errors.append(f"frozen: {key} verified revision {revision} changed")
+            descriptor = old_descriptors.get(revision)
+            if descriptor is not None and not same_json(descriptor, descriptors.get((key, revision))):
+                errors.append(f"frozen: tracks/{key}.json verified revision {revision} descriptor changed")
 
 
 def check(root: Path, previous: Path | None = None) -> list[str]:
     errors: list[str] = []
-    registry = registry_tracks(root, errors)
+    registry, registry_rows = registry_tracks(root, errors)
     identity = check_identity(root, registry, errors)
-    per_track = per_track_records(root, registry, errors)
+    per_track, descriptors = per_track_records(root, registry, registry_rows, errors)
     digest_doc = load_record(root, "DIGEST.json", errors)
     digest = digest_doc.text("digest", pattern=HEX64)
     try:
@@ -590,7 +705,7 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
     check_consent(root, registry, errors)
     check_origins(root, registry, per_track, errors)
     if previous is not None:
-        check_freeze(previous, registry, identity, errors)
+        check_freeze(previous, registry, identity, descriptors, errors)
     return errors
 
 
