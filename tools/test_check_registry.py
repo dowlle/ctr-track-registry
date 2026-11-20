@@ -396,7 +396,7 @@ class CheckerTests(unittest.TestCase):
     def test_manager_descriptor_keeps_pre_verification_metadata(self):
         docs = fixture()
         docs[TRACK_FILE]["revisions"][0]["descriptor"] = {
-            "revision": "Submitted label", "content_id": B, "title": "Manager export",
+            "revision": " Submitted label ", "content_id": B, "title": "Manager export",
             "files": {"lev": {"sha256": A, "size": None}, "vrm": {"sha256": B}},
             "relic_targets": {
                 "schema_version": 1, "laps": 3, "ticks_per_second": 960,

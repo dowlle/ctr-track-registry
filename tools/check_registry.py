@@ -334,7 +334,7 @@ def check_descriptor(revision, descriptor):
     elif version is not None and (version < 1 or (declared is not None and version != declared)):
         descriptor.error("schema_version must be positive and agree with descriptor_schema when declared")
     descriptor.text("content_id", pattern=HEX64, default=None, nullable=True)
-    descriptor.text("revision", default=None, nullable=True)
+    descriptor.read("revision", str, default=None, nullable=True)
     if generated:
         revision_files = revision.data.get("files")
         if (revision.data.get("hash_state") != "verified" or revision.data.get("content_id") is None
