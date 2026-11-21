@@ -26,6 +26,7 @@ are these:
 
 - fixes to `tools/check_registry.py` and the workflow
 - documentation improvements
+- reviewed road hashes, supplemental LEV identities and historical aliases
 
 ## Running the checks locally
 
@@ -33,4 +34,18 @@ are these:
     python tools/check_registry.py . --previous ../older-checkout
 
 The second form is the freeze check: it fails if any track, block index,
-shipped name or verified hash from the older checkout changed or is missing.
+shipped name, verified hash, road identity or historical alias from the older checkout
+changed or is missing. CI also runs the base branch's freeze checker.
+
+### Importing an AP-Pie export
+
+Export into a separate directory. Older exporters write a checker and two
+JSON indexes that predate the road hashes. Keep the registry repository's
+checker. Carry `track_key_aliases`, `road_sha256` and `patch_lev_keys` from
+the current `registry.json` into the new export. When a supplemental LEV
+becomes a verified registry revision on the same track, remove its redundant
+supplemental entry.
+Keep the aliases targeting mint and built-in entries in `named_tracks.json`.
+Update `DIGEST.json` and `named_tracks.json` from the new
+`tools.check_registry.digest_of(Path("."))` value, then run the freeze check
+against the previous checkout before opening the export PR.

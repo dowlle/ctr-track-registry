@@ -57,6 +57,9 @@ jobs:
           rm -rf /tmp/previous && git worktree add /tmp/previous "$base"
           if [ -f /tmp/previous/registry.json ]; then
             python tools/check_registry.py . --previous /tmp/previous
+            # An export may write a stale checker as well as stale data.
+            # The base checker owns the identities that have already shipped.
+            python /tmp/previous/tools/check_registry.py . --previous /tmp/previous
           else
             echo "Base commit has no registry.json; skipping the freeze comparison."
           fi

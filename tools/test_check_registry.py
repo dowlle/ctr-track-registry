@@ -100,6 +100,68 @@ def run(root, previous=None):
 
 
 class CheckerTests(unittest.TestCase):
+    def test_partial_track_identity_fails(self):
+        docs = fixture()
+        docs["registry.json"]["road_sha256"] = {}
+        write_fixture(self.root, docs)
+        status, output = run(self.root)
+        self.assertEqual(status, 1)
+        self.assertIn("track identity fields must be supplied together", output)
+
+    def test_historical_alias_cannot_disappear(self):
+        docs = fixture()
+        docs["registry.json"].update(track_key_aliases={"former-name": "sample"},
+                                     road_sha256={}, patch_lev_keys={})
+        docs["named_tracks.json"]["track_key_aliases"] = {"former-name": "sample"}
+        write_fixture(self.previous, docs)
+        status, output = run(self.root, self.previous)
+        self.assertEqual(status, 1)
+        self.assertIn("frozen: track alias former-name changed or disappeared", output)
+
+    def test_hashes_survive_export_and_exact_lev_can_be_promoted(self):
+        docs = fixture()
+        registry = docs["registry.json"]
+        road, lev = "c" * 64, "d" * 64
+        registry.update(track_key_aliases={}, road_sha256={road: "sample"}, patch_lev_keys={lev: "sample"})
+        write_fixture(self.previous, docs)
+
+        registry["road_sha256"].clear()
+        registry["patch_lev_keys"].clear()
+        write_fixture(self.root, docs)
+        status, output = run(self.root, self.previous)
+        self.assertEqual(status, 1)
+        self.assertIn(f"road hash {road} changed or disappeared", output)
+        self.assertIn(f"supplemental LEV {lev} changed or disappeared", output)
+
+        registry["road_sha256"][road] = "sample"
+        revision = {"revision": "1.1", "hash_state": "verified", "content_id": "e" * 64,
+                    "files": {"lev": {"sha256": lev, "size": 256}}, "modes": ["race"]}
+        registry["tracks"][0]["revisions"].append(revision)
+        docs[TRACK_FILE]["revisions"].append(copy.deepcopy(revision))
+        docs["named_tracks.json"]["tracks"][0]["revisions"].append(revision["content_id"])
+        write_fixture(self.root, docs)
+        self.assertEqual(run(self.root, self.previous)[0], 0)
+
+    def test_track_identity_uses_canonical_keys(self):
+        docs = fixture()
+        registry = docs["registry.json"]
+        registry["track_key_aliases"] = {"former-name": "sample"}
+        registry["road_sha256"] = {"c" * 64: "sample"}
+        registry["patch_lev_keys"] = {"d" * 64: "sample"}
+        docs["named_tracks.json"]["track_key_aliases"] = registry["track_key_aliases"].copy()
+        write_fixture(self.root, docs)
+        self.assertEqual(run(self.root)[0], 0)
+        registry["track_key_aliases"]["sample"] = "former-name"
+        registry["road_sha256"]["uppercase"] = "sample"
+        registry["patch_lev_keys"][B] = "sample"
+        write_fixture(self.root, docs)
+        status, output = run(self.root)
+        self.assertEqual(status, 1)
+        self.assertIn("shadows a registered track", output)
+        self.assertIn("must refer directly to a registered track", output)
+        self.assertIn("invalid key 'uppercase'", output)
+        self.assertIn("is already a registry revision pin", output)
+
     def setUp(self):
         temp = TemporaryDirectory()
         self.addCleanup(temp.cleanup)
