@@ -56,7 +56,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {

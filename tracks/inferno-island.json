@@ -51,7 +51,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -96,7 +98,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -146,7 +150,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -196,7 +202,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -241,7 +249,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -290,8 +300,8 @@
         "arcade",
         "ctr_challenge",
         "relic_race",
-        "ring_rally",
-        "time_trial"
+        "time_trial",
+        "wumpa"
       ],
       "provenance": {
         "saphi_downloads": [

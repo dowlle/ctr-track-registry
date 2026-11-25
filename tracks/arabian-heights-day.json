@@ -56,7 +56,10 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {

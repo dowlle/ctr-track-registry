@@ -51,7 +51,13 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "ctr_challenge",
+        "relic_race",
+        "time_trial",
+        "wumpa"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -101,7 +107,11 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "time_trial",
+        "wumpa"
+      ],
       "provenance": {
         "saphi_downloads": [
           {

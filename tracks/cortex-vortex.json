@@ -51,7 +51,12 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "ctr_challenge",
+        "relic_race",
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -96,7 +101,12 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "ctr_challenge",
+        "time_trial",
+        "wumpa"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -186,7 +196,12 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "ctr_challenge",
+        "time_trial",
+        "wumpa"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -231,7 +246,12 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "ctr_challenge",
+        "time_trial",
+        "wumpa"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -276,7 +296,11 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "relic_race",
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -342,7 +366,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -387,7 +413,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -432,7 +460,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -482,7 +512,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
