@@ -18,6 +18,10 @@ lists, the status vocabulary (granted, declined, withdrawn), an author grant
 scoped to all_saphi_tracks, a date, evidence that is a public link or the
 fixed private-receipt wording, and no private fields. consent.json is not in
 the digest and has no freeze rules: answers change, identity does not.
+
+sources.json is optional. It lists patch files, their public publication
+pages when known, and the LEV/VRM hash pair at each known BIGFILE slot.
+Its patch metadata is outside the registry identity digest.
 """
 
 from __future__ import annotations
@@ -30,7 +34,7 @@ import sys
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 
 SCHEMA_VERSION = 1
 RELIC_TICKS_PER_SECOND = 960
@@ -42,6 +46,16 @@ ITEM_BASE, ITEMS_PER_TRACK = 35_100_000, 5
 NAME_MAX_BYTES = 105
 MINT_STATUSES = {"mint", "reserved", "builtin"}
 STATES = {"approved", "named", "withdrawn", "source-unavailable"}
+# Native verifier mode slugs, plus the measured AP Wumpa goal capability.
+MODES = {"time_trial", "arcade", "relic_race", "ctr_challenge", "crystal_challenge", "wumpa",
+         "ring_rally"}  # Existing registry slug, outside the verifier's measured modes.
+PATCH_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._ -]*\.xdelta", re.IGNORECASE)
+MAX_BIGFILE_INDEX = 4095
+DIRECT_SOURCE_FILE = re.compile(
+    r"\.(?:xdelta|bps|ips|zip|7z|rar|tar|gz|bz2|xz|zst|tgz|tbz2|txz|bin|iso|lev|vrm|sca)$",
+    re.IGNORECASE,
+)
+SAPHI_DOWNLOAD = re.compile(r"/tracks/[0-9]+/download/[0-9]+")
 PRIVATE_KEYS = {"submitter", "submitter_user_id", "discord_id", "discord_username", "email",
                 "reviewed_by", "decided_by", "user_id"}
 KEY_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
@@ -227,8 +241,15 @@ class Revision:
                         lev_hash = sha
         if state == "verified" and (content is None or not has_hash):
             row.error("verified revisions need a content_id and file hashes")
-        return cls(revision, state, content, files.data if files is not None else {},
-                   lev_hash, row.text_list("modes"))
+        modes = row.text_list("modes")
+        if unknown := set(modes) - MODES - {None}:
+            row.error(f"modes contains unknown values {sorted(unknown)!r}")
+        valid_modes = [mode for mode in modes if mode is not None]
+        if len(valid_modes) != len(set(valid_modes)):
+            row.error("modes contains duplicates")
+        if modes and (state != "verified" or lev_hash is None):
+            row.error("nonempty modes require a verified LEV")
+        return cls(revision, state, content, files.data if files is not None else {}, lev_hash, modes)
 
 
 @dataclass
@@ -511,6 +532,59 @@ def public_origin_url(source):
         return False
 
 
+def public_patch_page(source):
+    if not public_origin_url(source) or "\\" in source:
+        return False
+    url = urlsplit(source)
+    host = url.hostname
+    blocked = ("discord.com", "discordapp.com", "discord.gg", "discordapp.net", "discord.media")
+    # Require a canonical path without browser-resolved dot segments.
+    segments = unquote(url.path).split("/")
+    if "." in segments or ".." in segments:
+        return False
+    path = "/" + "/".join(filter(None, segments))
+    if any(host == domain or host.endswith("." + domain) for domain in blocked):
+        return False
+    if host in ("projectsaphi.com", "www.projectsaphi.com") and SAPHI_DOWNLOAD.fullmatch(path):
+        return False
+    if host == "github.com" and "/releases/download/" in path:
+        return False
+    return not DIRECT_SOURCE_FILE.search(path)
+
+
+def check_sources(root, errors):
+    if not (root / "sources.json").exists():
+        return
+    doc = load_record(root, "sources.json", errors)
+    doc.exact({"schema_version", "patches"})
+    if doc.read("schema_version", int) != SCHEMA_VERSION:
+        doc.error(f"schema_version must be {SCHEMA_VERSION}")
+    seen_patches = set()
+    for patch in doc.rows("patches"):
+        patch.exact({"patch_sha256", "file_name", "source_url", "slots"})
+        sha = patch.text("patch_sha256", pattern=HEX64)
+        if sha is not None:
+            if sha in seen_patches:
+                patch.error("duplicate patch_sha256")
+            seen_patches.add(sha)
+        patch.text("file_name", pattern=PATCH_NAME, limit=255)
+        source = patch.text("source_url", default=None)
+        if source is not None and not public_patch_page(source):
+            patch.error("source_url must be a public HTTPS publication page")
+        seen_slots = set()
+        for slot in patch.rows("slots"):
+            slot.exact({"bigfile_index", "lev_sha256", "vrm_sha256"})
+            index = check_integer_bounds(slot, "bigfile_index", minimum=0, maximum=MAX_BIGFILE_INDEX)
+            if index is not None:
+                if index in seen_slots:
+                    slot.error("duplicate bigfile_index within this patch")
+                seen_slots.add(index)
+            slot.text("lev_sha256", pattern=HEX64)
+            slot.text("vrm_sha256", pattern=HEX64)
+        if not seen_slots:
+            patch.error("patch needs at least one slot")
+
+
 def check_origins(root, registry, per_track, errors):
     doc = load_record(root, "origins.json", errors)
     if doc.read("format", int) != 1:
@@ -704,6 +778,7 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
     check_named(root, registry, digest, identity["track_key_aliases"], errors)
     check_consent(root, registry, errors)
     check_origins(root, registry, per_track, errors)
+    check_sources(root, errors)
     if previous is not None:
         check_freeze(previous, registry, identity, descriptors, errors)
     return errors
