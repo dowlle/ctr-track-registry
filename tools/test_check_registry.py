@@ -516,7 +516,9 @@ class CheckerTests(unittest.TestCase):
                         "slots": [slot.copy()], "source_url": source}
         documents = fixture()
         documents["sources.json"] = {"schema_version": 1, "patches": [patch_record]}
-        for fields in (patch_record, {k: v for k, v in patch_record.items() if k != "source_url"}):
+        without_page = {k: v for k, v in patch_record.items() if k != "source_url"}
+        without_page["slots"] = [{**slot, "bigfile_index": 4095}]
+        for fields in (patch_record, without_page):
             documents["sources.json"]["patches"] = [fields]
             write_fixture(self.root, documents)
             self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
@@ -531,6 +533,7 @@ class CheckerTests(unittest.TestCase):
             (("patches", 0, "slots"), [], "patch needs at least one slot"),
             (("patches", 0, "slots"), [slot, slot], "duplicate bigfile_index"),
             (("patches", 0, "slots", 0, "bigfile_index"), -1, "bigfile_index must be at least 0"),
+            (("patches", 0, "slots", 0, "bigfile_index"), 4096, "bigfile_index must be at most 4095"),
             (("patches", 0, "slots", 0, "bigfile_index"), False, "bigfile_index: expected int"),
             (("patches", 0, "slots", 0, "lev_sha256"), "bad", "lev_sha256: invalid format"),
             (("patches", 0, "slots", 0, "vrm_sha256"), "bad", "vrm_sha256: invalid format"),
@@ -546,7 +549,15 @@ class CheckerTests(unittest.TestCase):
         for url in ("http://example.org/release", "https://localhost/release",
                     "https://discord.com/channels/1/2/3", "https://discord.gg/invite",
                     "https://cdn.discordapp.com/attachments/1/2/pack",
-                    "https://example.org/pack%2exdelta?download=true", "https://example.org/pack.zip"):
+                    "https://example.org/pack%2exdelta?download=true", "https://example.org/pack.zip",
+                    "https://example.org/pack.tar.gz",
+                    "https://example.org/pack.tar.gz/.",
+                    "https://www.projectsaphi.com/tracks/121/download/872",
+                    "https://www.projectsaphi.com/tracks/121/%2e/download/872",
+                    "https://www.projectsaphi.com/tracks/121//../download/872",
+                    "https://github.com/example/patch/releases/download/v1/pack",
+                    "https://github.com/example/patch/releases/./download/v1/pack",
+                    "https://github.com/example/patch/releases//%2e%2e/download/v1/pack"):
             with self.subTest(url=url):
                 invalid = copy.deepcopy(documents)
                 invalid["sources.json"]["patches"] = [{**patch_record, "source_url": url}]

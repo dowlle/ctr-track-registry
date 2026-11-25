@@ -50,7 +50,12 @@ STATES = {"approved", "named", "withdrawn", "source-unavailable"}
 MODES = {"time_trial", "arcade", "relic_race", "ctr_challenge", "crystal_challenge", "wumpa",
          "ring_rally"}  # Existing registry slug, outside the verifier's measured modes.
 PATCH_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._ -]*\.xdelta", re.IGNORECASE)
-DIRECT_SOURCE_FILE = re.compile(r"\.(?:xdelta|bps|ips|zip|7z|rar|bin|iso|lev|vrm|sca)$", re.IGNORECASE)
+MAX_BIGFILE_INDEX = 4095
+DIRECT_SOURCE_FILE = re.compile(
+    r"\.(?:xdelta|bps|ips|zip|7z|rar|tar|gz|bz2|xz|zst|tgz|tbz2|txz|bin|iso|lev|vrm|sca)$",
+    re.IGNORECASE,
+)
+SAPHI_DOWNLOAD = re.compile(r"/tracks/[0-9]+/download/[0-9]+")
 PRIVATE_KEYS = {"submitter", "submitter_user_id", "discord_id", "discord_username", "email",
                 "reviewed_by", "decided_by", "user_id"}
 KEY_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
@@ -533,9 +538,18 @@ def public_patch_page(source):
     url = urlsplit(source)
     host = url.hostname
     blocked = ("discord.com", "discordapp.com", "discord.gg", "discordapp.net", "discord.media")
-    path = unquote(url.path).rstrip("/")
-    return (not any(host == domain or host.endswith("." + domain) for domain in blocked)
-            and not DIRECT_SOURCE_FILE.search(path))
+    # Require a canonical path without browser-resolved dot segments.
+    segments = unquote(url.path).split("/")
+    if "." in segments or ".." in segments:
+        return False
+    path = "/" + "/".join(filter(None, segments))
+    if any(host == domain or host.endswith("." + domain) for domain in blocked):
+        return False
+    if host in ("projectsaphi.com", "www.projectsaphi.com") and SAPHI_DOWNLOAD.fullmatch(path):
+        return False
+    if host == "github.com" and "/releases/download/" in path:
+        return False
+    return not DIRECT_SOURCE_FILE.search(path)
 
 
 def check_sources(root, errors):
@@ -560,7 +574,7 @@ def check_sources(root, errors):
         seen_slots = set()
         for slot in patch.rows("slots"):
             slot.exact({"bigfile_index", "lev_sha256", "vrm_sha256"})
-            index = check_integer_bounds(slot, "bigfile_index", minimum=0)
+            index = check_integer_bounds(slot, "bigfile_index", minimum=0, maximum=MAX_BIGFILE_INDEX)
             if index is not None:
                 if index in seen_slots:
                     slot.error("duplicate bigfile_index within this patch")
