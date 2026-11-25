@@ -30,7 +30,7 @@ def fixture():
         "maps_to": None, "shipped_in": None,
         "revisions": [{
             "revision": "1.0", "hash_state": "verified", "content_id": A,
-            "modes": ["race", "ctr_challenge"], "files": {"lev": {"sha256": B, "size": 256}},
+            "modes": ["arcade", "ctr_challenge"], "files": {"lev": {"sha256": B, "size": 256}},
         }],
     }
     listing = {"status": "granted", "on": "2024-02-29", "evidence": "https://example.org/%C2%9F"}
@@ -154,7 +154,7 @@ class CheckerTests(unittest.TestCase):
 
         registry["road_sha256"][road] = "sample"
         revision = {"revision": "1.1", "hash_state": "verified", "content_id": "e" * 64,
-                    "files": {"lev": {"sha256": lev, "size": 256}}, "modes": ["race"]}
+                    "files": {"lev": {"sha256": lev, "size": 256}}, "modes": ["arcade"]}
         registry["tracks"][0]["revisions"].append(revision)
         docs[TRACK_FILE]["revisions"].append(copy.deepcopy(revision))
         docs["named_tracks.json"]["tracks"][0]["revisions"].append(revision["content_id"])
@@ -191,10 +191,10 @@ class CheckerTests(unittest.TestCase):
         write_fixture(self.root, fixture())
         write_fixture(self.previous, fixture())
 
-    def assert_invalid(self, expected):
+    def assert_invalid(self, expected, *, fragment=False):
         status, output = run(self.root, self.previous)
         self.assertEqual(status, 1, output)
-        self.assertIn(f"FAIL {expected}", output)
+        self.assertIn(expected if fragment else f"FAIL {expected}", output)
         self.assertIn("registry check: FAILED", output)
         self.assertNotIn("Traceback", output)
 
@@ -479,6 +479,79 @@ class CheckerTests(unittest.TestCase):
             git.return_value = b"registry.json\0tools/check_registry.py\0"
             with self.assertRaisesRegex(ValueError, "separate pull requests"):
                 verify_change("base", "candidate")
+            git.return_value = b"sources.json\0"
+            verify_change("base", "candidate")
+            git.return_value = b"sources.json\0tools/check_registry.py\0"
+            with self.assertRaisesRegex(ValueError, "separate pull requests"):
+                verify_change("base", "candidate")
+
+    def test_revision_mode_vocabulary(self):
+        cases = [
+            (["saphi_only"], "modes contains unknown"),
+            (["arcade", "arcade"], "modes contains duplicates"),
+            ([[]], "modes[0]: expected str"),
+        ]
+        for modes, message in cases:
+            with self.subTest(modes=modes):
+                documents = fixture()
+                mutate(documents, "registry.json", (*REVISION, "modes"), modes)
+                mutate(documents, TRACK_FILE, ("revisions", 0, "modes"), modes)
+                write_fixture(self.root, documents)
+                self.assert_invalid(message, fragment=True)
+
+    def test_modes_require_verified_lev(self):
+        cases = [("hash_state", "pending"), ("files", {"vrm": {"sha256": B}})]
+        for field, value in cases:
+            with self.subTest(field=field):
+                documents = fixture()
+                mutate(documents, "registry.json", (*REVISION, field), value)
+                mutate(documents, TRACK_FILE, ("revisions", 0, field), value)
+                write_fixture(self.root, documents)
+                self.assert_invalid("registry.json.tracks[0].revisions[0]: nonempty modes require a verified LEV")
+
+    def test_patch_sources_schema(self):
+        source = "https://example.org/patch-release"
+        slot = {"bigfile_index": 0, "lev_sha256": A, "vrm_sha256": B}
+        patch_record = {"file_name": "Track Pack.xdelta", "patch_sha256": A,
+                        "slots": [slot.copy()], "source_url": source}
+        documents = fixture()
+        documents["sources.json"] = {"schema_version": 1, "patches": [patch_record]}
+        for fields in (patch_record, {k: v for k, v in patch_record.items() if k != "source_url"}):
+            documents["sources.json"]["patches"] = [fields]
+            write_fixture(self.root, documents)
+            self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+        cases = [
+            (("schema_version",), 2, "schema_version must be 1"),
+            (("patches",), {}, "patches: expected list"),
+            (("patches",), [patch_record, patch_record], "duplicate patch_sha256"),
+            (("patches", 0, "patch_sha256"), "bad", "patch_sha256: invalid format"),
+            (("patches", 0, "file_name"), "../pack.xdelta", "file_name: invalid format"),
+            (("patches", 0, "source_url"), None, "source_url: expected str"),
+            (("patches", 0, "sources"), b"payload".hex(), "unknown keys"),
+            (("patches", 0, "slots"), [], "patch needs at least one slot"),
+            (("patches", 0, "slots"), [slot, slot], "duplicate bigfile_index"),
+            (("patches", 0, "slots", 0, "bigfile_index"), -1, "bigfile_index must be at least 0"),
+            (("patches", 0, "slots", 0, "bigfile_index"), False, "bigfile_index: expected int"),
+            (("patches", 0, "slots", 0, "lev_sha256"), "bad", "lev_sha256: invalid format"),
+            (("patches", 0, "slots", 0, "vrm_sha256"), "bad", "vrm_sha256: invalid format"),
+            (("patches", 0, "slots", 0, "name"), "Extra field", "unknown keys"),
+        ]
+        for path, value, message in cases:
+            with self.subTest(path=path, value=value):
+                invalid = copy.deepcopy(documents)
+                invalid["sources.json"]["patches"] = [copy.deepcopy(patch_record)]
+                mutate(invalid, "sources.json", path, value)
+                write_fixture(self.root, invalid)
+                self.assert_invalid(message, fragment=True)
+        for url in ("http://example.org/release", "https://localhost/release",
+                    "https://discord.com/channels/1/2/3", "https://discord.gg/invite",
+                    "https://cdn.discordapp.com/attachments/1/2/pack",
+                    "https://example.org/pack%2exdelta?download=true", "https://example.org/pack.zip"):
+            with self.subTest(url=url):
+                invalid = copy.deepcopy(documents)
+                invalid["sources.json"]["patches"] = [{**patch_record, "source_url": url}]
+                write_fixture(self.root, invalid)
+                self.assert_invalid("sources.json.patches[0]: source_url must be a public HTTPS publication page")
 
     def test_candidate_snapshot_requires_policy_files(self):
         with patch("check_change.git", return_value=b""):

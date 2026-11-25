@@ -8,7 +8,8 @@ import sys
 from tempfile import TemporaryDirectory
 
 
-DATA = {"registry.json", "named_tracks.json", "DIGEST.json", "consent.json", "origins.json"}
+DATA = {"registry.json", "named_tracks.json", "DIGEST.json", "consent.json", "origins.json",
+        "sources.json"}
 DOCS = {"README.md", "CONTRIBUTING.md", "LICENSE", ".gitignore"}
 POLICY = {
     ".github/CODEOWNERS",
