@@ -56,7 +56,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -139,7 +141,13 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "ctr_challenge",
+        "relic_race",
+        "time_trial",
+        "wumpa"
+      ],
       "revision": "LRG2Pancho"
     }
   ],

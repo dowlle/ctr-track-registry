@@ -51,7 +51,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -101,7 +103,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -151,7 +155,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -196,7 +202,9 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {

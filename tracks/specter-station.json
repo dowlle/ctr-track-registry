@@ -73,7 +73,11 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "time_trial",
+        "wumpa"
+      ],
       "revision": "LRG2Pancho"
     }
   ],

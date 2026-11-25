@@ -56,7 +56,10 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {
@@ -111,7 +114,10 @@
         }
       },
       "hash_state": "verified",
-      "modes": [],
+      "modes": [
+        "arcade",
+        "time_trial"
+      ],
       "provenance": {
         "saphi_downloads": [
           {

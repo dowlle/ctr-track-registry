@@ -1,0 +1,575 @@
+{
+  "schema_version": 1,
+  "patches": [
+    {
+      "patch_sha256": "65c09d2ed48dde05288b06501cd501bfc12b64d92823b0a2897a56766963e00d",
+      "file_name": "acropolis.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 1,
+          "lev_sha256": "4c2c2f15f1130677ab60cc94e180dba37e73d0a271c36bf66e2d6a285cbac537",
+          "vrm_sha256": "02be4386105c01abecec5b3470718fcb6b1e0924b11a2e63e8797376a9a1d8db"
+        }
+      ]
+    },
+    {
+      "patch_sha256": "17e43e108b7f732cb8302636f6984a3b0df59df6af517fffab0e860d00209b54",
+      "file_name": "CocoTeamRacing.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 47,
+          "lev_sha256": "3e80b47339d243db00acc33d6b7eb9efb15eaf946aa830b1766d56f5b1c15e42",
+          "vrm_sha256": "74c00036dd24a34134c76236ae89dba1f3caa4b67bb30ca5717988b8987bf6ce"
+        }
+      ],
+      "source_url": "https://ctrcustomtracks.com/coco-team-racing/"
+    },
+    {
+      "patch_sha256": "92f4ed21e1c4ada25ce095b0fdaf11c2f3a075f160eb8cf7dcefec9627cddca2",
+      "file_name": "Crash-30Anniversary_Adventure.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 7,
+          "lev_sha256": "0b5df6252d67d299eb38c11ecb1ab6e45bf1b1a69a4d0650ebb5db30023bee25",
+          "vrm_sha256": "82f795ecbc05ba2c2cbe7af5ab0d425b6676c292f673b0d587ece582b9253dc8"
+        },
+        {
+          "bigfile_index": 9,
+          "lev_sha256": "abfcaccd1720ef1a5f9634c14e28085aac46dced38d37eb8a97717c96d3395fd",
+          "vrm_sha256": "e7a6a0b82cef9ec3e5c4bb5ab9ce2317b28aab198d7cb5263ef0b883c555e2e6"
+        },
+        {
+          "bigfile_index": 15,
+          "lev_sha256": "a06bbb0a6c171b702166271b1024830b7a12b3c1faf43477b1e28f218585665a",
+          "vrm_sha256": "f13d8a876620f92bc69407f5de3d4b89eee93f9cbda0abc862529608f353c042"
+        },
+        {
+          "bigfile_index": 23,
+          "lev_sha256": "09033b0c11c0ea427ad85099c564d960f4dec74956d873bc0f15adbfc930fa8b",
+          "vrm_sha256": "9091cdc12e4e7f25c9bc56ed30482cc6977b62be0b84b2d3aa74ac20c88f21eb"
+        },
+        {
+          "bigfile_index": 31,
+          "lev_sha256": "309656c6172439ffc6f4321cb3fec914d04110db767c3e3d8e724cacaa5c9ccc",
+          "vrm_sha256": "9c883b1a8e1c8bc3cb090529c19bcfb6e67a1805188874c2c40d9d41c2597f8b"
+        },
+        {
+          "bigfile_index": 39,
+          "lev_sha256": "21f25c671761dc5005438c788669328247d67f41fcfbba26ebc16fd19447a9bc",
+          "vrm_sha256": "1941bb88b30c9b78699fd03e291ed054a05fc70337a400efa96ad7e63993ba37"
+        },
+        {
+          "bigfile_index": 41,
+          "lev_sha256": "407aac46d820282937c76aa826dd47eef75730d6818f83a5613dd86c635c48b8",
+          "vrm_sha256": "b56c06b8f2430c79c21d5586df4c65b6ab98da7e41e65993862c8ebc02de8a3d"
+        },
+        {
+          "bigfile_index": 47,
+          "lev_sha256": "9a94ba597c53d5ca62f9d16a3622f713b1455ab48e9b93a7e22d5dc0b043fed8",
+          "vrm_sha256": "285e03d7b414b98b73711bb08a8e96d1f6a1f1bbbb3e95a418a92c3aee8f88c8"
+        },
+        {
+          "bigfile_index": 49,
+          "lev_sha256": "15b7900d0c277a1d43df29550962bee1b0f9b155c358a8026ad154c26202f087",
+          "vrm_sha256": "82a671fa20758ae6a6e099e75c7465ad4fe22b1e3b8698019a4ebd86cb4bd781"
+        },
+        {
+          "bigfile_index": 57,
+          "lev_sha256": "7a090016795b459c3c5029e160e62108ef3931dce712576cdfae0f221203aaf7",
+          "vrm_sha256": "b9c2355125f262db28da652765dd7a921cbe2800d4950d6d6eba3d58763ca113"
+        },
+        {
+          "bigfile_index": 63,
+          "lev_sha256": "185e0a49a9cd7b0f1ffd84abed1d01195937cac305f9119bf1d4d98cd4a081d4",
+          "vrm_sha256": "39d80a29475891fa9b236fe8483fd775a732788acaf6ab9577caae6e75112e92"
+        },
+        {
+          "bigfile_index": 71,
+          "lev_sha256": "8ed9b411336b882f3960dad554893bcef1297650c4e038df75b79fc3aa8a466e",
+          "vrm_sha256": "39c347b399ffec6e1e2ae6505e1fdb810fd96f735998dee7425a209877e734b8"
+        },
+        {
+          "bigfile_index": 79,
+          "lev_sha256": "0c74562b10dc0566ff4f00be4ea25bcf008ae60ec791ae90214a904276cebd86",
+          "vrm_sha256": "3518f663361efdc606334c97171457578e353cecc074fcd87e27185c286dda44"
+        },
+        {
+          "bigfile_index": 95,
+          "lev_sha256": "60982d262c4a150f0b625495b353795386609217b40837b47bcc395507e66cd1",
+          "vrm_sha256": "c1fa96cd53c917f903148b789779ced7cdca614d3cb5cf62e586f38d28d071dc"
+        },
+        {
+          "bigfile_index": 111,
+          "lev_sha256": "3062f38bf893b8bbf6bf6040d3aedca42544d25a085b3761e365559a534edc2d",
+          "vrm_sha256": "d41b8bf89eaaac408744d2742885c4ca2055f1456b7526f8a52b78fcb5ae9a97"
+        },
+        {
+          "bigfile_index": 119,
+          "lev_sha256": "db0a1f206e3195bcfb647445a3da528ae22ce693ea7a211e1256be32b4e79a45",
+          "vrm_sha256": "f31f3e073b1f7c374af68c57db8a07bc6b5cf40aa34dc8902c5f3c66c97634d0"
+        },
+        {
+          "bigfile_index": 127,
+          "lev_sha256": "b646db4e5564827ca228f08c3f9159593790203ab57b5bf8244bcc909353edae",
+          "vrm_sha256": "2620d0f6b92d23497962ac1dcfa0dd6f283d44057a67918f72aa85db943aa723"
+        },
+        {
+          "bigfile_index": 135,
+          "lev_sha256": "275de2169ef44626e5f9160c4fbdccf7bedacec85ad98bf40d7dbb4120a0d981",
+          "vrm_sha256": "3ba0c84b27ab5fcc0a395456561b7df900f7981652c51e7259cb1ba47a3c7b8e"
+        },
+        {
+          "bigfile_index": 145,
+          "lev_sha256": "87f416ec29a93f16013f7497de35c0832c13712aaf94695b6597d309e37edf80",
+          "vrm_sha256": "154af0cc3faec6b292ae2d92014e3f445636d0c1df3a21ced75038c8a8dec24b"
+        },
+        {
+          "bigfile_index": 169,
+          "lev_sha256": "65ab90d0024aae57ac09f23932f7bf46e5b6b4640a4fb5d16a214a36063a15a8",
+          "vrm_sha256": "6bbc44fbeee75c029fe0b8a150207131cea9d2bd9bbce5592b0b2ba09505082f"
+        }
+      ],
+      "source_url": "https://ctrcustomtracks.com/crash30/"
+    },
+    {
+      "patch_sha256": "34572bac8d05970c0eb6ba4625b7d3913b5594132ec4591a9d7ea86adccb8c65",
+      "file_name": "GameboyHills.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 1,
+          "lev_sha256": "9587aef110973ff0c8fcd81270452946c61387a9b6f1bb1a8ae9ff4d8decdaa8",
+          "vrm_sha256": "c22db78a6b9b80c358edbe51757aaa454d29fe3601c0f527bef64dc9c7adf20f"
+        }
+      ]
+    },
+    {
+      "patch_sha256": "6c0b9e26a980a3e384b2fb4b7345f52dba80e565f7bdc243a32f3496c19408c0",
+      "file_name": "Green_Hill_Raceway_v2.0.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 25,
+          "lev_sha256": "50250966e9b31d13b140aaafa9433ffce19269898a0850edd0a1e8cf1207c760",
+          "vrm_sha256": "3e1d941bc88470fd7b414fb629aba1859f1325ac414f923baa2ddd2fa9001915"
+        }
+      ]
+    },
+    {
+      "patch_sha256": "836d551d5d213d0aa704083f3c75ed8c0cfe58c9a6c01ef81b4d8a15fdf67180",
+      "file_name": "Lockbox_Adventure.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 7,
+          "lev_sha256": "f59b5f953babac7b781916ef8aa0d5e9c1553d6056a8d760d46434c3c3c3ac86",
+          "vrm_sha256": "759df093516ba90ac36565a3529b634cfa77923cbaba7a122153ba027bac29c6"
+        },
+        {
+          "bigfile_index": 9,
+          "lev_sha256": "467f83758d3a0b6aef9f340b144d0d76eb6ca04617aa87d6bc7727fb1d119c96",
+          "vrm_sha256": "2d0b53a6ddeee4753e9e1cf8b2dbe4467d373e04fcfcb361a3686357fa8678c8"
+        },
+        {
+          "bigfile_index": 15,
+          "lev_sha256": "2b638ccb890a035da34b22e5df7ad5a8112787a6360cc82ebe9e5163836b8c00",
+          "vrm_sha256": "2d0b53a6ddeee4753e9e1cf8b2dbe4467d373e04fcfcb361a3686357fa8678c8"
+        },
+        {
+          "bigfile_index": 23,
+          "lev_sha256": "c978c26a86f5c85d37a665f62ba8b3efd11cb93b71e931b2787f7c7e9f105ae2",
+          "vrm_sha256": "8e4ec34558009779ddf58496a91a9d97f697cc2b50063625dcadb2376424b7d2"
+        },
+        {
+          "bigfile_index": 31,
+          "lev_sha256": "97205dce4943bb9dfbbe1e79ad9473763544307c04d7469d6f4cb6dacdabc4f3",
+          "vrm_sha256": "4a96d0538fbc75456e9925d94f6588dc938b73201e735fae60c4e0f98ed61032"
+        },
+        {
+          "bigfile_index": 39,
+          "lev_sha256": "0a27e6be9f8701a1ff1d9249edbcd192ba28e00be911e400e344cec449758433",
+          "vrm_sha256": "3c33124e75850e6dddc74eae0b8aaf356cb52eb5d84c4306eb2e29fa6b3cdcac"
+        },
+        {
+          "bigfile_index": 41,
+          "lev_sha256": "51ac3f1d437fa77357911088d78ccc0a3d0801317019b012b5f61c0c88387ca1",
+          "vrm_sha256": "73fdc9a25472767a2c131030f9b1e8a42aeac0a6b7ee8490afcd7b1c72f3145b"
+        },
+        {
+          "bigfile_index": 47,
+          "lev_sha256": "ec006933975124a78722dc4b29faf1a35db0309ef28b99cfd60c744bc64a9af3",
+          "vrm_sha256": "a67aed14d1b881066c9f29e5b18298903591cb4c2dcac8f2b235fb27fcbe9fa0"
+        },
+        {
+          "bigfile_index": 49,
+          "lev_sha256": "f8a4be227425157940bde28efa199338262300c636691e017b98e8087d0c458c",
+          "vrm_sha256": "576731c851222b0532a9d6f0b92fdb3dac84496cd1aecaca0d1a93cfe9788bb5"
+        },
+        {
+          "bigfile_index": 55,
+          "lev_sha256": "c8baa1236c0b003c6331d2c8e898a3028ccd1f2bd2cebf79a150be14302feb04",
+          "vrm_sha256": "576731c851222b0532a9d6f0b92fdb3dac84496cd1aecaca0d1a93cfe9788bb5"
+        },
+        {
+          "bigfile_index": 57,
+          "lev_sha256": "185e0a49a9cd7b0f1ffd84abed1d01195937cac305f9119bf1d4d98cd4a081d4",
+          "vrm_sha256": "39d80a29475891fa9b236fe8483fd775a732788acaf6ab9577caae6e75112e92"
+        },
+        {
+          "bigfile_index": 63,
+          "lev_sha256": "268064f31236405f384778077e544c69079fb39587ebea60368102fa99ce945a",
+          "vrm_sha256": "3e30e5548c0e86283e69537c2d617b6abdc9ca8c1f30f9d60198ef8a3545c0b4"
+        },
+        {
+          "bigfile_index": 71,
+          "lev_sha256": "563a3aa758d5ac8bb8c92aabfdf0e394e4c2f5f1fa3b1d4418cb9efeb49c76e4",
+          "vrm_sha256": "6e8164d11293f8df7544505bb1d749e4a62e379cddcd7dce8bda5c5878979704"
+        },
+        {
+          "bigfile_index": 79,
+          "lev_sha256": "688af4f35c16f1502e857cf69d04c8ce1ea94256144510d6619f57adececaa98",
+          "vrm_sha256": "826e72a2ca1c4b7f5eefa67378247f0da6896c227fce4c1ef14d8d588124be96"
+        },
+        {
+          "bigfile_index": 87,
+          "lev_sha256": "e9c3b0bb1793809a0bf7e396897ddb54058c94e8dc796b3f587d0921d543857c",
+          "vrm_sha256": "a384ffeca9340444a7a0bad7770d6fa778926d1bd48174f5f654d1d0121f664b"
+        },
+        {
+          "bigfile_index": 95,
+          "lev_sha256": "b1754b2e860f94938de583be6be6e0b66976f843f1aa8805d8dc6c67fcad270d",
+          "vrm_sha256": "08807132d7df60496bf085885d8187b7bba81073d1d77270475f8b1c9ff017ad"
+        },
+        {
+          "bigfile_index": 103,
+          "lev_sha256": "d21c8b2bd55d1fb46324c99d8f6b608bbcc27d05b02967defe2aaa72dc19bb50",
+          "vrm_sha256": "767a5457f86f50bf8fa95fd07c2c0895ec19553c06752d096a2584166c2bca3b"
+        },
+        {
+          "bigfile_index": 111,
+          "lev_sha256": "20576dcd3f777402c3c39e7532ccbd71b2a2f3368d813bfcbb479cd1300810f3",
+          "vrm_sha256": "5213fa17eed09a53e342e6475c0114c05e4abc559aee178ad675669b40bcbb63"
+        },
+        {
+          "bigfile_index": 119,
+          "lev_sha256": "8201641baeabca27d13cf3b13e872a37807571742ddbb83316a3494ee3b3a8d2",
+          "vrm_sha256": "d43918afe743ce3f2dc0ac22b941cc58bae2e64b57556d71ebb124f7759f0a74"
+        },
+        {
+          "bigfile_index": 135,
+          "lev_sha256": "fd87abae2da6dddd41edabcfd965b81918414b257d0659ab29e4cbc459f285c7",
+          "vrm_sha256": "9a94f81cfa0a83d87692df14c1aff3a1375e8c319db0fc7857da0207249b2dec"
+        },
+        {
+          "bigfile_index": 145,
+          "lev_sha256": "87f416ec29a93f16013f7497de35c0832c13712aaf94695b6597d309e37edf80",
+          "vrm_sha256": "154af0cc3faec6b292ae2d92014e3f445636d0c1df3a21ced75038c8a8dec24b"
+        },
+        {
+          "bigfile_index": 169,
+          "lev_sha256": "662cbdd208142aec4d775f4c8218a98631a8938beccf47a7eb264de6bb41d0a2",
+          "vrm_sha256": "d337a02c15a58007587aa498250817e0e87a495e1d79382532f6f1f5ea32e56b"
+        },
+        {
+          "bigfile_index": 185,
+          "lev_sha256": "7a090016795b459c3c5029e160e62108ef3931dce712576cdfae0f221203aaf7",
+          "vrm_sha256": "b9c2355125f262db28da652765dd7a921cbe2800d4950d6d6eba3d58763ca113"
+        }
+      ],
+      "source_url": "https://ctrcustomtracks.com/lockbox-adventure/"
+    },
+    {
+      "patch_sha256": "52a420e582fc44786210ae65817d7105c7d881c2f0b4387cebde2dce86064526",
+      "file_name": "LRG2Pancho.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 1,
+          "lev_sha256": "83406e87505616994f5b539666f1327597212058506c29d66396aac15448529e",
+          "vrm_sha256": "175e0dafa5e07ab4360daf118be7d9092cafbabaf36c3b910401770afe921a5d"
+        },
+        {
+          "bigfile_index": 9,
+          "lev_sha256": "fb7119f056178beff7b48ca13c63a5893b0146ef527973f71b5fc57b3cf80766",
+          "vrm_sha256": "7a172456dfdca41284da21fd3f82ba27b5014f773e2a960d6b1bfb76e1b652d0"
+        },
+        {
+          "bigfile_index": 17,
+          "lev_sha256": "985663bf855f45fd8b71fe23ada322effb738c5fcf55cbd6c2710f95c631b112",
+          "vrm_sha256": "cab7eda4763a754cfda17d9b4a94f467df3ed5e01c38fe17ee1f7bc22fe922d6"
+        },
+        {
+          "bigfile_index": 25,
+          "lev_sha256": "9bba2b381dc77f8dbe208ef140446c77f4119b3f9b713916c0e11f5b7ade3d8a",
+          "vrm_sha256": "77b54645c238160a1aecf2ddab2e3214df7b7b4d78387e121096de7d00ff9c06"
+        },
+        {
+          "bigfile_index": 33,
+          "lev_sha256": "8e040bd120bd964134730cce2a9fa2869922e75bbe71f703b863a16c38b730c4",
+          "vrm_sha256": "4bcacd50933cfb09463d89c923a6e6b7dbcaa60c7dc2b7f6e4d363619b9de34c"
+        },
+        {
+          "bigfile_index": 41,
+          "lev_sha256": "8403e3f99ff4927accd15d6bb413181883316d2f1902b9e14bf2ab4eb3b1f0fa",
+          "vrm_sha256": "5d150219cd203f58d0888496d341092ea70a90e9f67f08039dea60c4173556b5"
+        },
+        {
+          "bigfile_index": 49,
+          "lev_sha256": "256d1ed4597aacd081d2806130c28969681ce35df5a5ba53200545cbd1835eb8",
+          "vrm_sha256": "57c14cc95b6080f0095f303817fbec8ca1cb885a2a254ed0e99d4536294ed0e2"
+        },
+        {
+          "bigfile_index": 57,
+          "lev_sha256": "27e41e0e9c429c500ec9197fb18f66418e395d8d50731c72ba525547a39c59b6",
+          "vrm_sha256": "c5823f9561686e5b04ca99dbdaf72899ded4e90b6e06ddbd9defd385819a5398"
+        },
+        {
+          "bigfile_index": 65,
+          "lev_sha256": "29e821ce632c9f483d3e0711e41cc077ab087a8a6044b7a70db826b7b40e71d0",
+          "vrm_sha256": "e12352047f1e890e81a1c73ae9a20e6e9356d77e564b18941f6f76e597925de6"
+        },
+        {
+          "bigfile_index": 73,
+          "lev_sha256": "6598755fd3d9b3172bc7a27af250bcf3cb99dd8b709ee5a6e9a2409ee7ef54ec",
+          "vrm_sha256": "53bbf1926ecb14f2fdb23774cb925455854f783ce34c1f237d138b12b92d395c"
+        },
+        {
+          "bigfile_index": 81,
+          "lev_sha256": "afe36db1745f65290c551090515bd742d1ecb0e84d97d7267ae330be9d3160e9",
+          "vrm_sha256": "a92d42b78e2e3d4eabf91865f30cc1286628eef239a4c4959f33ad72230e17fa"
+        },
+        {
+          "bigfile_index": 89,
+          "lev_sha256": "a4cfe29c0e3fc7e309d7cfb7c2eeb1fb38bf9359b343d236b46b0c2aedd709e2",
+          "vrm_sha256": "ec620333dbec02d61647aca05afded16f7cb968b9a4ba552bbc36db9f91f42b9"
+        },
+        {
+          "bigfile_index": 97,
+          "lev_sha256": "abd0f1efa42350fe95727e06bb18c5616d8a9bf41a5cb4fd253effe09b62b1ad",
+          "vrm_sha256": "2701a39203919148aad9b1ce7b3d036f8408b362427b93a90202b46a7eb000df"
+        },
+        {
+          "bigfile_index": 105,
+          "lev_sha256": "7dd312574cda7a61b0dc216b9667a29d9a65d09bde64a18b8830d8b895b8b103",
+          "vrm_sha256": "84f1d85effc1f9199373b87bf9266bc49e0b56dbd5e501ea0b0e04324db75758"
+        },
+        {
+          "bigfile_index": 113,
+          "lev_sha256": "a24c255c87d062b907dfd052a5691ff1b13875adac3515764ad8e64234705fd0",
+          "vrm_sha256": "96db0f377eede6d929572a7c1927137b86ec5bab21abe856d60a4ba43b8237e3"
+        },
+        {
+          "bigfile_index": 121,
+          "lev_sha256": "72bf846cd1932a058f5a379f577dd50624fa94527150a1d6fc3e29cdd73013f8",
+          "vrm_sha256": "8abb4293f0551c8b9bfdae5fd88c6802c0c887ae60b43f2e9a86d516ef362fed"
+        },
+        {
+          "bigfile_index": 129,
+          "lev_sha256": "c7cb55dd24a5fdd2a868968a14e1881866e7e97c9cc9cefb208dd394298ebd17",
+          "vrm_sha256": "39d8c0777a076dfc07b480455cdff323e27fe2b8fb7c03e13772482910af0cc9"
+        },
+        {
+          "bigfile_index": 137,
+          "lev_sha256": "e22b87a73009b94251f5216424cf07875a02e076eb8461b902624c2b5277ad45",
+          "vrm_sha256": "5de0e46152d8fdce3e0cbe7cdd860516d98d98105106f5d81c043b39df9f0753"
+        },
+        {
+          "bigfile_index": 145,
+          "lev_sha256": "4232d4396e59df560678f3d0a370ce874649821ad614139b067250494af8f44c",
+          "vrm_sha256": "ac0782b4e1aab7d5a72b9cc53f745fa095c05fe94c29b2514891b49f75794c2b"
+        }
+      ],
+      "source_url": "https://www.youtube.com/watch?v=lPvk6BG0iPI"
+    },
+    {
+      "patch_sha256": "1e8a796f019c23f7de70c21a00d9fb20ba4c7be0d819c21de3bd84ffcd8397a1",
+      "file_name": "nightmarefueled.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 7,
+          "lev_sha256": "407d6c9b388d96017bd3e45ee0c713a2319cc8103b1bdd6249cebe5c141b6d11",
+          "vrm_sha256": "7b2a0866c606a7a0e63225192d139d674028372f1e82f6b461d0e94f2e88c47c"
+        },
+        {
+          "bigfile_index": 9,
+          "lev_sha256": "e06ce795c969106e8e7fbd87b0c7025a65aacaafd6c71161f9af390f37e2e54a",
+          "vrm_sha256": "4814893df8aad22bdafba0d46b294675b928c0418840d2db9c5537b48fd752ad"
+        },
+        {
+          "bigfile_index": 23,
+          "lev_sha256": "72bf846cd1932a058f5a379f577dd50624fa94527150a1d6fc3e29cdd73013f8",
+          "vrm_sha256": "8abb4293f0551c8b9bfdae5fd88c6802c0c887ae60b43f2e9a86d516ef362fed"
+        },
+        {
+          "bigfile_index": 31,
+          "lev_sha256": "001a3a3a18c74e0b1b11ddf5f1167e767381ce97af3e6cea971e3b047af749eb",
+          "vrm_sha256": "cf21541f445a5ee80590ce4139b0e4853778366963a380465cd0a87488667c5f"
+        },
+        {
+          "bigfile_index": 39,
+          "lev_sha256": "557d952a537b9c481c3153dae1db936d06b3b184968d7024b08fef62e4766ba1",
+          "vrm_sha256": "af6f9a76ec03691d3bb85d746581397b9b28ebfe8b4fe92a7ed2c673c487b7e0"
+        },
+        {
+          "bigfile_index": 41,
+          "lev_sha256": "52f446ecde445dcd686afa7ae946349175902ac169399d7c33bf0c568a669e9a",
+          "vrm_sha256": "b1d341511428420d99c414a19f4c6460d0b6aa2a9e7f1f907ce15116780d49c8"
+        },
+        {
+          "bigfile_index": 47,
+          "lev_sha256": "7dd312574cda7a61b0dc216b9667a29d9a65d09bde64a18b8830d8b895b8b103",
+          "vrm_sha256": "84f1d85effc1f9199373b87bf9266bc49e0b56dbd5e501ea0b0e04324db75758"
+        },
+        {
+          "bigfile_index": 49,
+          "lev_sha256": "727508b8e1f5d6c3ae401a4979bdb690054b7c52ed69bbec1a3f2376d8e95eb8",
+          "vrm_sha256": "5e5c9ff6666f8e10c0d94801b2378f4aca611f8eed08550f0dda4b56b399e9e7"
+        },
+        {
+          "bigfile_index": 55,
+          "lev_sha256": "985663bf855f45fd8b71fe23ada322effb738c5fcf55cbd6c2710f95c631b112",
+          "vrm_sha256": "cab7eda4763a754cfda17d9b4a94f467df3ed5e01c38fe17ee1f7bc22fe922d6"
+        },
+        {
+          "bigfile_index": 71,
+          "lev_sha256": "fe6a1495be36eef29724c17653211779e26acf85d730d22d6d015a0cbfb626c8",
+          "vrm_sha256": "60bd366da39625f4dfa40cf026fd8a5f4b90aabbbc61df735a19dd88dd964379"
+        },
+        {
+          "bigfile_index": 79,
+          "lev_sha256": "14ab262ac2aaf3f0157b8d2d39b27bcfe510657fbe7136b42921e49a8ad98e80",
+          "vrm_sha256": "a41a67d202c53f6a5cd8f0c376be7fe1ad9c09440c2112c3440ef3f45ed11f53"
+        },
+        {
+          "bigfile_index": 119,
+          "lev_sha256": "4242e1c377f56d2d7bfe51ae447b5a5fceb6cc55005712c7ac1d657c1b892b31",
+          "vrm_sha256": "f12b51489e8418e79177d8580db5af1e61ae2bf067a70cfe4ba4d63b7c0dacbf"
+        },
+        {
+          "bigfile_index": 135,
+          "lev_sha256": "9471beda2e86cbde461aa79ff8e9fec358cfdd1ae86760872a82f4a19202ca1f",
+          "vrm_sha256": "ae63110af01de41f00ef2492b113e6860486a1fd955e331daffd03def65b9d57"
+        },
+        {
+          "bigfile_index": 143,
+          "lev_sha256": "82a6d81942050ad29370033ccabc111b1731f24cf42e103afab12fd42a79f14c",
+          "vrm_sha256": "c515e1d6deccf52fa53ac26e6e9c24b1230baa1682272c0e7d9353ea3957a31a"
+        },
+        {
+          "bigfile_index": 153,
+          "lev_sha256": "b29fe06e98a103ae27a7b8fb1f34571e9ebfb8f59e913fa4f837d7b62ba0df00",
+          "vrm_sha256": "f584f423f5191f7ca94ca2a56875f9ff1340860639ea3f2f8d509592d8bee828"
+        },
+        {
+          "bigfile_index": 169,
+          "lev_sha256": "a4cfe29c0e3fc7e309d7cfb7c2eeb1fb38bf9359b343d236b46b0c2aedd709e2",
+          "vrm_sha256": "ec620333dbec02d61647aca05afded16f7cb968b9a4ba552bbc36db9f91f42b9"
+        }
+      ]
+    },
+    {
+      "patch_sha256": "ffb6a81a13695c6a63737875028f27536c12f6b40b036a8d30f44bad88870b3b",
+      "file_name": "Ninas_Nightmare_99.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 81,
+          "lev_sha256": "52f446ecde445dcd686afa7ae946349175902ac169399d7c33bf0c568a669e9a",
+          "vrm_sha256": "b1d341511428420d99c414a19f4c6460d0b6aa2a9e7f1f907ce15116780d49c8"
+        }
+      ],
+      "source_url": "https://ctrcustomtracks.com/ninas-nightmare-99/"
+    },
+    {
+      "patch_sha256": "748a18082ca0dbc6ff31321e7a75bfa58c3afac80102363fb1385b32e50196df",
+      "file_name": "RELEASE_ST_PATRICK_ADVENTURE.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 7,
+          "lev_sha256": "2ac59189d36c51c18dc02c59071f3e7019f0d8084d7d0136481c37d463b1a26e",
+          "vrm_sha256": "1c068f883d9a5eff33f8dda3318f60064ede78cae7e568dc668843e66a5e65d2"
+        },
+        {
+          "bigfile_index": 9,
+          "lev_sha256": "3dbc4fdc3444495d785b952cf66e1e08e874e522a4e81fb8aafbed9f75ad29a3",
+          "vrm_sha256": "1b63009099af915b6f7a0f1a0afbab54754caed515a64f336897c87b458cecaf"
+        },
+        {
+          "bigfile_index": 15,
+          "lev_sha256": "76d6a70097f68c80aa84929edd26bf13cc165caf3e7c099156121b9583c5a4da",
+          "vrm_sha256": "d8f52c6b10c3b7657c37e68c45ebe08897e7d7eb9daf86b3196729558bf75b25"
+        },
+        {
+          "bigfile_index": 23,
+          "lev_sha256": "a62cd8a2f3a27b5ceb9c02ed9bf4d144ca66ce6c39d9677304f20191644ba6a6",
+          "vrm_sha256": "1adc2977370ddb1c216da5a053d688d4b9d0eaddd7880fd3c85dfef7d1a763bf"
+        },
+        {
+          "bigfile_index": 31,
+          "lev_sha256": "5fd4c8f36479f0168d3c1932170ca4f768d7d493081ccfbc522618d3899ebc30",
+          "vrm_sha256": "d58a44cb6e32d7a924ab55767b65006954d87fe0a0264dce2cbe7299c397afb8"
+        },
+        {
+          "bigfile_index": 39,
+          "lev_sha256": "2ff657d44e8cd20119d1f46c2a8160c03b95e029e0d0dc3d2dca7d14c4b48486",
+          "vrm_sha256": "d8f52c6b10c3b7657c37e68c45ebe08897e7d7eb9daf86b3196729558bf75b25"
+        },
+        {
+          "bigfile_index": 41,
+          "lev_sha256": "2cbb93349069ff31621054b38393ec7df08aa4ee99422ea22602043a2fe4ff61",
+          "vrm_sha256": "91ca4c79a4d3201c75ac4141d33cf8c2e2f459cb233b3314d341cad6b878c179"
+        },
+        {
+          "bigfile_index": 47,
+          "lev_sha256": "04cfb25f470e5f1a98ad64f2c180cf1c56c872b762610447d910efe933a24ee8",
+          "vrm_sha256": "73b28794cf4bdd37ef7e6e4509d6ee7d7bd5a391258e4c30b0e84b09399d2e9d"
+        },
+        {
+          "bigfile_index": 49,
+          "lev_sha256": "ff5b3a2a14eee57a684c8566b26e260d3c8289c432eb3457300ed5fe4d3b431f",
+          "vrm_sha256": "89a6f491cb47bfe753803c603b897722dc9cd5e57608af51e2dc5c074076bf20"
+        },
+        {
+          "bigfile_index": 55,
+          "lev_sha256": "af764b90d10fa952aac4502c89c5f0466dd4afdbaee7c3a65279624dfeb18aa2",
+          "vrm_sha256": "bd4849e280327a4853992a56ebc056c857148460ccbe7f27e9d41acdd84222b2"
+        },
+        {
+          "bigfile_index": 71,
+          "lev_sha256": "77677906069a02a80b443fcc730754c018a43d91c1485e06768d599ddf4c1234",
+          "vrm_sha256": "b4ee8ff3b4462a7de0a93103bdeaf08030ddad941167ecfe606b990ee4f29b0f"
+        },
+        {
+          "bigfile_index": 135,
+          "lev_sha256": "ac968f6ce814ecbe67a7efd6e926f4fa7c59803c56e8f05a194156962ec0f906",
+          "vrm_sha256": "73095c1261541884f9046104134c5c0ff2d95b917cfd847cad2cef687b138e0f"
+        },
+        {
+          "bigfile_index": 143,
+          "lev_sha256": "5158484a0216d5661a1b34af024fe9e09b4283204af0b9c555ca3a451d8e6f48",
+          "vrm_sha256": "ee657e1bfca62dcb94fa8a0a9be97a7653c17c3470144e563d9e1ebcc0e5c887"
+        }
+      ],
+      "source_url": "https://ctrcustomtracks.com/st-patricks-day-racing/"
+    },
+    {
+      "patch_sha256": "9cc5d1827d3848583f904c84c93388dfd23912fb71d7141a51b5d9d4ae517337",
+      "file_name": "sunken_sprint_v1.0.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 113,
+          "lev_sha256": "286d6574d87e158d78cc89986f16b8b51e5b94f1b153574ea9358582e32c6ba1",
+          "vrm_sha256": "bc19e0e64c89c4c6b7afbf3e33225bc640aeb10cf64f58a0cde7089620b016c4"
+        }
+      ],
+      "source_url": "https://crashynews.wordpress.com/2026/10/12/boxicfunk-sunken-sprint-ctr-crash-team-racing-1999-custom-track-mod/"
+    },
+    {
+      "patch_sha256": "9bb61db15b86dd569740120b895b7e450ef0509a3826020ccc2bed1abbc09a9c",
+      "file_name": "VL2.xdelta",
+      "slots": [
+        {
+          "bigfile_index": 1,
+          "lev_sha256": "d3e3ee82cda36d8c51cac6f572c2a5298c1ee584402f8633f47ae15c3d9c85d0",
+          "vrm_sha256": "b419364881835c663360a8125456fa5365fbb16a278d72d19d4aa78782c9c64d"
+        }
+      ],
+      "source_url": "https://ctrcustomtracks.com/vanilla-lake-2/"
+    }
+  ]
+}
