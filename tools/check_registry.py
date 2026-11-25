@@ -34,6 +34,7 @@ import sys
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
+from posixpath import normpath
 from urllib.parse import unquote, urlsplit
 
 SCHEMA_VERSION = 1
@@ -538,7 +539,8 @@ def public_patch_page(source):
     url = urlsplit(source)
     host = url.hostname
     blocked = ("discord.com", "discordapp.com", "discord.gg", "discordapp.net", "discord.media")
-    path = unquote(url.path).rstrip("/")
+    # Browsers resolve both literal and percent-encoded dot segments.
+    path = normpath("/" + unquote(url.path).lstrip("/"))
     if any(host == domain or host.endswith("." + domain) for domain in blocked):
         return False
     if host in ("projectsaphi.com", "www.projectsaphi.com") and SAPHI_DOWNLOAD.fullmatch(path):

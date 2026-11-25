@@ -551,8 +551,11 @@ class CheckerTests(unittest.TestCase):
                     "https://cdn.discordapp.com/attachments/1/2/pack",
                     "https://example.org/pack%2exdelta?download=true", "https://example.org/pack.zip",
                     "https://example.org/pack.tar.gz",
+                    "https://example.org/pack.tar.gz/.",
                     "https://www.projectsaphi.com/tracks/121/download/872",
-                    "https://github.com/example/patch/releases/download/v1/pack"):
+                    "https://www.projectsaphi.com/tracks/121/%2e/download/872",
+                    "https://github.com/example/patch/releases/download/v1/pack",
+                    "https://github.com/example/patch/releases/./download/v1/pack"):
             with self.subTest(url=url):
                 invalid = copy.deepcopy(documents)
                 invalid["sources.json"]["patches"] = [{**patch_record, "source_url": url}]
