@@ -592,18 +592,6 @@ class CheckerTests(unittest.TestCase):
         write_fixture(self.root, documents)
         self.assert_invalid("origins.json.tracks.sample: own_letter_models needs verified CTR Challenge LEV hashes")
 
-    def test_placed_letters_require_a_registered_pair_and_bounded_anchors(self):
-        documents = fixture()
-        origin = documents["origins.json"]["tracks"]["sample"]
-        origin["letter_placements"] = {A: {"vrm_sha256": B, "slots": [
-            {"x": 32768, "y": 0, "z": 0, "yaw": 4096}
-        ]}}
-        write_fixture(self.root, documents)
-        self.assert_invalid("letter placements need an exact pair in sources.json", fragment=True)
-        self.assert_invalid("slots must contain three letter anchors in pickup order", fragment=True)
-        self.assert_invalid("x must be at most 32767", fragment=True)
-        self.assert_invalid("yaw must be at most 4095", fragment=True)
-
 
 if __name__ == "__main__":
     unittest.main()

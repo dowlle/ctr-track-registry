@@ -553,9 +553,8 @@ def public_patch_page(source):
 
 
 def check_sources(root, errors):
-    pairs = set()
     if not (root / "sources.json").exists():
-        return pairs
+        return
     doc = load_record(root, "sources.json", errors)
     doc.exact({"schema_version", "patches"})
     if doc.read("schema_version", int) != SCHEMA_VERSION:
@@ -580,16 +579,13 @@ def check_sources(root, errors):
                 if index in seen_slots:
                     slot.error("duplicate bigfile_index within this patch")
                 seen_slots.add(index)
-            lev = slot.text("lev_sha256", pattern=HEX64)
-            vrm = slot.text("vrm_sha256", pattern=HEX64)
-            if lev and vrm:
-                pairs.add((lev, vrm))
+            slot.text("lev_sha256", pattern=HEX64)
+            slot.text("vrm_sha256", pattern=HEX64)
         if not seen_slots:
             patch.error("patch needs at least one slot")
-    return pairs
 
 
-def check_origins(root, registry, per_track, patch_pairs, errors):
+def check_origins(root, registry, per_track, errors):
     doc = load_record(root, "origins.json", errors)
     if doc.read("format", int) != 1:
         doc.error("format must be 1")
@@ -607,7 +603,6 @@ def check_origins(root, registry, per_track, patch_pairs, errors):
     if tracks is None:
         return
     relations = {"port", "remake", "reimagined", "mashup", "inspired", "level", "original"}
-    placed_pairs = set()
     for key, value in tracks.data.items():
         text_value(key, tracks.where, errors, pattern=KEY_RE, limit=250)
         row = tracks.child(key, value)
@@ -633,31 +628,6 @@ def check_origins(root, registry, per_track, patch_pairs, errors):
             citation.text("note")
             if url is not None and not public_origin_url(url):
                 citation.error("expected a public https URL")
-        placements = row.read("letter_placements", dict, default={})
-        if placements:
-            if not (review == "verified" and relation in ("port", "remake") and games.get(origin)):
-                row.error("letter placements require a verified racing game port or remake")
-            for lev, value in placements.items():
-                text_value(lev, f"{row.where}.letter_placements", errors, pattern=HEX64)
-                placement = row.child(f"letter_placements.{lev}", value)
-                if placement is None:
-                    continue
-                placement.exact({"vrm_sha256", "slots"})
-                vrm = placement.text("vrm_sha256", pattern=HEX64)
-                if (lev, vrm) not in patch_pairs:
-                    placement.error("letter placements need an exact pair in sources.json")
-                elif (lev, vrm) in placed_pairs:
-                    placement.error("letter placement pair already belongs to another track")
-                else:
-                    placed_pairs.add((lev, vrm))
-                slots = placement.read("slots", list)
-                if len(slots) != 3:
-                    placement.error("slots must contain three letter anchors in pickup order")
-                for slot in placement.rows("slots"):
-                    slot.exact({"x", "y", "z", "yaw"})
-                    for axis in ("x", "y", "z"):
-                        check_integer_bounds(slot, axis, minimum=-32768, maximum=32767)
-                    check_integer_bounds(slot, "yaw", minimum=0, maximum=4095)
         models = row.read("own_letter_models", dict, default={})
         if not models:
             continue
@@ -669,8 +639,6 @@ def check_origins(root, registry, per_track, patch_pairs, errors):
             where = f"{row.where}.own_letter_models"
             if text_value(lev, where, errors, pattern=HEX64) is not None and lev not in levs:
                 row.error("own_letter_models needs verified CTR Challenge LEV hashes")
-            if lev in placements:
-                row.error("the same LEV cannot use both own models and placed letters")
             origin_code(glyphs, f"{where}.{lev!r}", errors)
         if not (review == "verified" and relation in ("port", "remake") and games.get(origin)):
             row.error("stage 1 models require a verified racing game port or remake")
@@ -809,8 +777,8 @@ def check(root: Path, previous: Path | None = None) -> list[str]:
             digest_doc.error("digest does not match registry.json and tracks/")
     check_named(root, registry, digest, identity["track_key_aliases"], errors)
     check_consent(root, registry, errors)
-    patch_pairs = check_sources(root, errors)
-    check_origins(root, registry, per_track, patch_pairs, errors)
+    check_origins(root, registry, per_track, errors)
+    check_sources(root, errors)
     if previous is not None:
         check_freeze(previous, registry, identity, descriptors, errors)
     return errors
