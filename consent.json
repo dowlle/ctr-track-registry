@@ -41,6 +41,16 @@
         "on": "2026-11-12",
         "evidence": "private receipt held by the maintainer"
       }
+    },
+    {
+      "saphi_author_id": 11,
+      "name": "MisterM",
+      "client_listing": {
+        "status": "granted",
+        "scope": "all_saphi_tracks",
+        "on": "2026-11-26",
+        "evidence": "private receipt held by the maintainer"
+      }
     }
   ],
   "tracks": []
