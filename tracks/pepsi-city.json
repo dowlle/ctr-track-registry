@@ -149,6 +149,100 @@
         "wumpa"
       ],
       "revision": "LRG2Pancho"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "6b617126e962ba23a451b7666877222fddeef6622d8f5be60653b8c9f9a9c70a",
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "251440a3",
+          "vrm": "426022b7"
+        },
+        "hashed_on": "2026-11-26",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "Project Saphi download"
+      },
+      "files": {
+        "lev": {
+          "sha256": "c3a5a77e754ca7754466d1fc55ced1ebd226e403bb1725eb59398fb45dd387f4",
+          "size": 849176
+        },
+        "vrm": {
+          "sha256": "408e07d3bb5eae351b82b8669f6125bab7e27240210beed6fd26d6e897d13b32",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [
+        "arcade",
+        "ctr_challenge",
+        "ring_rally"
+      ],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "251440a3",
+            "download_id": 902,
+            "kind": "lev"
+          },
+          {
+            "crc32": "426022b7",
+            "download_id": 903,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "f31e5ae95cf7f6beb9fb1042043464a460b55a649c5c3b9b1b1cf7fb7a7fd1ab",
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "e387f2d7",
+          "vrm": "4ea116b7"
+        },
+        "hashed_on": "2026-11-26",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "Project Saphi download"
+      },
+      "files": {
+        "lev": {
+          "sha256": "f9dd02599eee3941a6cf8d2151e3b9530f18643ca8542bef175566aeb7751865",
+          "size": 847400
+        },
+        "vrm": {
+          "sha256": "fdcedfedcd3ac2743b8545b4cfaadc2589485454eb023dfd53ccb0f1d7f4a0c9",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [
+        "relic_race"
+      ],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "e387f2d7",
+            "download_id": 910,
+            "kind": "lev"
+          },
+          {
+            "crc32": "4ea116b7",
+            "download_id": 911,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.1"
     }
   ],
   "shipped_in": null,

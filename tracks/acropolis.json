@@ -1,0 +1,78 @@
+{
+  "ap_name": "Acropolis",
+  "block_index": 91,
+  "credits": [
+    {
+      "name": "Lolothesamurai",
+      "role": "track"
+    }
+  ],
+  "display_title": "Acropolis",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 126,
+      "url": "https://www.projectsaphi.com/tracks/126"
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-11-26",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "535c611793a612f2dcbe0abbadb459cd54393a465a3518fc0a40375021ff2947",
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "b7e0dad2",
+          "vrm": "143fffd2"
+        },
+        "hashed_on": "2026-11-26",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "Project Saphi download"
+      },
+      "files": {
+        "lev": {
+          "sha256": "20785164f1123ab6ed8b3f5026aaeed781496aabfee4fc5f662847f49cd54a74",
+          "size": 1054740
+        },
+        "vrm": {
+          "sha256": "02be4386105c01abecec5b3470718fcb6b1e0924b11a2e63e8797376a9a1d8db",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [
+        "arcade",
+        "ring_rally",
+        "time_trial"
+      ],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "b7e0dad2",
+            "download_id": 937,
+            "kind": "lev"
+          },
+          {
+            "crc32": "143fffd2",
+            "download_id": 938,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.0"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "acropolis"
+}
