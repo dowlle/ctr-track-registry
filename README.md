@@ -150,24 +150,11 @@ names are known. A row grants identity only.
 
 | LEV hash prefix | Track key | Name evidence |
 | --- | --- | --- |
-| `21e1ffe395f1` | `ancient-lake` | Project Saphi track 56, 1.1.0 |
-| `286d6574d87e` | `sunken-sprint` | Project Saphi track 123, 1.0.0 |
-| `2b18c6305d3c` | `toasty-terrace` | Project Saphi track 39, 1.3.0 |
-| `37f2daddfe7f` | `haven-stadium` | Project Saphi track 22, 1.1.0 |
-| `50250966e9b3` | `green-hill-raceway` | Project Saphi track 6, 2.0.0 |
-| `5d9f0d66fdc0` | `sunken-sprint` | Project Saphi track 123, 1.0.0 |
 | `7a090016795b` | `drive-thru-danger` | 30th Anniversary Adventure slot 57, identical LEV in Lockbox Adventure slot 185 |
 | `7ddbd88c8988` | `north-pole` | Project Saphi track 20, 1.2.0 |
-| `860d5d340207` | `redrock-ravine` | Project Saphi track 9, 1.2.0 |
 | `9201064be973` | `chasqui-rally` | Project Saphi track 41, 2.3.0 |
-| `9fa73436daaf` | `country-speedway` | Project Saphi track 24, 1.3.0 |
 | `a4bfafc6e1be` | `matsuri` | Project Saphi track 25, 1.1.0 |
-| `add8c2b43aaa` | `snowy-valley` | Project Saphi track 62, 1.1.0 |
-| `bbebd28a0c61` | `coco-park-2025` | Project Saphi track 14, 1.1.0 |
 | `c09b56940f31` | `green-hill-raceway` | Project Saphi track 6, 1.1.0 |
-| `c3a5a77e754c` | `pepsi-city` | Project Saphi track 58, 1.1.0 |
 | `c6a3f63d190e` | `space-labs` | Project Saphi track 21, 1.2.4 |
 | `d1b54abf41ca` | `matsuri` | Project Saphi track 25, 1.1.0 |
-| `db74f5ae84d1` | `toasty-terrace` | Project Saphi track 39, 1.3.1 |
 | `e9dd31ad94bc` | `space-labs` | Project Saphi track 21, 1.2.4 |
-| `f9dd02599eee` | `pepsi-city` | Project Saphi track 58, 1.1.1 |

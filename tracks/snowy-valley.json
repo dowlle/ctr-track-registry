@@ -233,6 +233,55 @@
         "wumpa"
       ],
       "revision": "LRG2Pancho"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "3fd58468cc8f2e640ce375950a43cad98890f7ad90c3f9bf6fdddc3618cbc0b3",
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "520cff51",
+          "vrm": "1f6fdb34"
+        },
+        "hashed_on": "2026-11-26",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "Project Saphi download"
+      },
+      "files": {
+        "lev": {
+          "sha256": "add8c2b43aaaadbac84d05d8eb819bbda81670d02baef2a04a4d82157f87cfc4",
+          "size": 744860
+        },
+        "vrm": {
+          "sha256": "175e0dafa5e07ab4360daf118be7d9092cafbabaf36c3b910401770afe921a5d",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [
+        "arcade",
+        "ctr_challenge",
+        "relic_race",
+        "ring_rally"
+      ],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "520cff51",
+            "download_id": 904,
+            "kind": "lev"
+          },
+          {
+            "crc32": "1f6fdb34",
+            "download_id": 905,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.1.0"
     }
   ],
   "shipped_in": null,

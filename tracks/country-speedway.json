@@ -282,6 +282,54 @@
         ]
       },
       "revision": "1.3.1"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "45801941c37035b0ea04e3355d3eabe7bda26ad8967626c4f7e8b39a610c526f",
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "b2c209e1",
+          "vrm": "0e714870"
+        },
+        "hashed_on": "2026-11-26",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "Project Saphi download"
+      },
+      "files": {
+        "lev": {
+          "sha256": "9fa73436daaf91434ede1d6fb036a8e6dff225c55533cc0be5723d229b5e53bd",
+          "size": 818324
+        },
+        "vrm": {
+          "sha256": "e02c94ff5fd7685c63ba107581b0bc8625cd50e6f601f6fbae0bf1b71af7ef8e",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [
+        "arcade",
+        "ctr_challenge",
+        "ring_rally"
+      ],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "b2c209e1",
+            "download_id": 896,
+            "kind": "lev"
+          },
+          {
+            "crc32": "0e714870",
+            "download_id": 897,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.3.0"
     }
   ],
   "shipped_in": null,
