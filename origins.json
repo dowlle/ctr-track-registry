@@ -207,6 +207,16 @@
       "review": "verified"
     },
     "assembly-lane-n-gage": {
+      "letter_placements": {
+        "b646db4e5564827ca228f08c3f9159593790203ab57b5bf8244bcc909353edae": {
+          "vrm_sha256": "2620d0f6b92d23497962ac1dcfa0dd6f283d44057a67918f72aa85db943aa723",
+          "slots": [
+            {"x": 11171, "y": -62, "z": -1236, "yaw": 3656},
+            {"x": 2377, "y": 89, "z": -2830, "yaw": 1003},
+            {"x": 7169, "y": -62, "z": -21034, "yaw": 3061}
+          ]
+        }
+      },
       "evidence": [
         {
           "note": "Course title: Assembly Lane N-Gage.",
@@ -532,6 +542,16 @@
       "review": "verified"
     },
     "out-of-time-n-gage": {
+      "letter_placements": {
+        "275de2169ef44626e5f9160c4fbdccf7bedacec85ad98bf40d7dbb4120a0d981": {
+          "vrm_sha256": "3ba0c84b27ab5fcc0a395456561b7df900f7981652c51e7259cb1ba47a3c7b8e",
+          "slots": [
+            {"x": 8636, "y": -4, "z": -5669, "yaw": 3507},
+            {"x": 9828, "y": -336, "z": 10906, "yaw": 3725},
+            {"x": 2892, "y": 549, "z": -3008, "yaw": 0}
+          ]
+        }
+      },
       "evidence": [
         {
           "note": "Course title: Out Of Time N-Gage.",

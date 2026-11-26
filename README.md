@@ -31,6 +31,12 @@ This repository is the record. Other tools read it from here: the CTR
 Archipelago game reads `registry.json` and `consent.json` straight from this
 repository, and each CTR Archipelago release builds from one fixed commit of it.
 
+In `origins.json`, `letter_placements` records three anchors in pickup slot
+order for a verified origin track. Each set is keyed by LEV SHA-256 and names
+the exact VRM SHA-256 from `sources.json`. Anchors use signed 16-bit world
+coordinates and a yaw from 0 to 4095. The record describes client-placed
+letters and leaves the source files' reported modes and contents intact.
+
 ## For track authors
 
 If your track is listed, you can ask us to correct its title or credit, add
