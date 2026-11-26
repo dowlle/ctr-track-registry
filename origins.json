@@ -459,6 +459,16 @@
       "review": "verified"
     },
     "jungle-boogie-n-gage": {
+      "letter_placements": {
+        "ac968f6ce814ecbe67a7efd6e926f4fa7c59803c56e8f05a194156962ec0f906": {
+          "vrm_sha256": "73095c1261541884f9046104134c5c0ff2d95b917cfd847cad2cef687b138e0f",
+          "slots": [
+            {"x": 9281, "y": -2431, "z": 4419, "yaw": 2183},
+            {"x": -16460, "y": 1085, "z": -1853, "yaw": 3852},
+            {"x": -2805, "y": 50, "z": -1256, "yaw": 2677}
+          ]
+        }
+      },
       "evidence": [
         {
           "note": "Course title: Jungle Boogie N-Gage.",
