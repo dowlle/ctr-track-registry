@@ -1,0 +1,125 @@
+{
+  "ap_name": "Nina's Nightmare",
+  "block_index": 90,
+  "credits": [
+    {
+      "name": "Lockheart",
+      "role": "track"
+    }
+  ],
+  "display_title": "Nina's Nightmare",
+  "links": {},
+  "maps_to": null,
+  "mint_status": "mint",
+  "provenance": {
+    "saphi": {
+      "category": "community",
+      "track_id": 125,
+      "url": "https://www.projectsaphi.com/tracks/125"
+    }
+  },
+  "review": {
+    "reviewed_at": "2026-11-26",
+    "superseded_by": null
+  },
+  "revisions": [
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "86cf9ed906a2b46637e90d96332d84f6484b41817071322937ca65144b288d96",
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "16a93c60",
+          "vrm": "a91ea2b7"
+        },
+        "hashed_on": "2026-11-26",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "Project Saphi download"
+      },
+      "files": {
+        "lev": {
+          "sha256": "7fc42abb12130c546a7b500815a3d3a372c4178f4f063b56460730443f4ea0a0",
+          "size": 1574284
+        },
+        "vrm": {
+          "sha256": "b5a9905448bbd18cb26609c778f93f6cc8d9dad155a955d143b091db0a80e784",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [
+        "arcade",
+        "ctr_challenge",
+        "ring_rally",
+        "time_trial"
+      ],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "16a93c60",
+            "download_id": 942,
+            "kind": "lev"
+          },
+          {
+            "crc32": "a91ea2b7",
+            "download_id": 943,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.3"
+    },
+    {
+      "apworld_max": null,
+      "apworld_min": null,
+      "content_id": "53cd1c3e2414b2a8c0ff2926a6e429a889d0f15d66ac1147fb550e2edff53207",
+      "descriptor_schema": null,
+      "evidence": {
+        "crc32": {
+          "lev": "dcb3d11f",
+          "vrm": "c931d72e"
+        },
+        "hashed_on": "2026-11-26",
+        "identity": "content_id = sha256(lev_sha256 + NUL + vrm_sha256)",
+        "level": "hash-only",
+        "saphi_crc32_verified": true,
+        "verifier": "Project Saphi download"
+      },
+      "files": {
+        "lev": {
+          "sha256": "1d6cd638c004cce3be2b018bc9fb6579cbca99f7474ae821e86b69061331ef10",
+          "size": 1547912
+        },
+        "vrm": {
+          "sha256": "d430ba4b735c52e7cf1a0adb0f3a6bbbd66f7cde5c429e9f7b90c9638974ebea",
+          "size": 458808
+        }
+      },
+      "hash_state": "verified",
+      "modes": [
+        "relic_race"
+      ],
+      "provenance": {
+        "saphi_downloads": [
+          {
+            "crc32": "dcb3d11f",
+            "download_id": 940,
+            "kind": "lev"
+          },
+          {
+            "crc32": "c931d72e",
+            "download_id": 941,
+            "kind": "vrm"
+          }
+        ]
+      },
+      "revision": "1.0.2"
+    }
+  ],
+  "shipped_in": null,
+  "state": "named",
+  "track_key": "nina-s-nightmare"
+}
