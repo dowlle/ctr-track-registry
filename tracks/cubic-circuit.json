@@ -15,6 +15,17 @@
   "links": {},
   "maps_to": null,
   "mint_status": "mint",
+  "mode_pairs": [
+    {
+      "race": "1.1.2",
+      "relic": "1.1.2-relic",
+      "relic_targets": {
+        "gold": 28800,
+        "platinum": 19200,
+        "sapphire": 38400
+      }
+    }
+  ],
   "provenance": {
     "saphi": {
       "category": "saphi",
