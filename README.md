@@ -158,3 +158,16 @@ names are known. A row grants identity only.
 | `c6a3f63d190e` | `space-labs` | Project Saphi track 21, 1.2.4 |
 | `d1b54abf41ca` | `matsuri` | Project Saphi track 25, 1.1.0 |
 | `e9dd31ad94bc` | `space-labs` | Project Saphi track 21, 1.2.4 |
+
+## Tracks with their modes in two file pairs
+
+Some tracks keep their race modes (Trophy Race, CTR Challenge) in one LEV and VRM pair and their Relic Race in another. Such a track lists `mode_pairs` beside its revisions, for example:
+
+```json
+"mode_pairs": [
+  {"race": "1.3.0", "relic": "1.3.1",
+   "relic_targets": {"sapphire": 86400, "gold": 67200, "platinum": 62400}}
+]
+```
+
+`race` and `relic` name two verified revisions of the same track, each with LEV and VRM hashes and sizes. The race revision has `arcade` or `ctr_challenge` and no `relic_race`; the Relic revision has `relic_race`. A revision is in at most one pair, and a file pair has one role in one track across the whole registry. `relic_targets` are the Relic times in 960 ticks per second, sapphire slower than gold slower than platinum. The CTR Archipelago client reads this when it writes a YAML: the race revision becomes the track's `files` and the Relic revision its `relic_files`, with these targets, so the track keeps all its modes on one pad. `registry.json` and `tracks/<key>.json` carry the same list. Pairs are not frozen and can be corrected.

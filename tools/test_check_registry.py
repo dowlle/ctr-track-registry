@@ -592,6 +592,170 @@ class CheckerTests(unittest.TestCase):
         write_fixture(self.root, documents)
         self.assert_invalid("origins.json.tracks.sample: own_letter_models needs verified CTR Challenge LEV hashes")
 
+    def mode_pair_documents(self, pair=None, relic_modes=("relic_race",)):
+        documents = fixture()
+        relic = {"revision": "1.0-relic", "hash_state": "verified", "content_id": "c" * 64,
+                 "modes": list(relic_modes), "files": {"lev": {"sha256": "d" * 64, "size": 300},
+                                                        "vrm": {"sha256": "e" * 64, "size": 400}}}
+        pair = pair if pair is not None else {"race": "1.0", "relic": "1.0-relic",
+                                              "relic_targets": {"sapphire": 86400, "gold": 67200, "platinum": 62400}}
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            track["revisions"][0]["files"]["vrm"] = {"sha256": "f" * 64, "size": 200}
+            track["revisions"].append(copy.deepcopy(relic))
+            track["mode_pairs"] = [copy.deepcopy(pair)]
+        documents["named_tracks.json"]["tracks"][0]["revisions"].append("c" * 64)
+        base = fixture()  # the race revision's VRM is part of its frozen pins
+        for track in (base["registry.json"]["tracks"][0], base[TRACK_FILE]):
+            track["revisions"][0]["files"]["vrm"] = {"sha256": "f" * 64, "size": 200}
+        write_fixture(self.previous, base)
+        return documents
+
+    def test_mode_pairs_accept_a_race_and_relic_revision(self):
+        write_fixture(self.root, self.mode_pair_documents())
+        self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+
+    def test_mode_pairs_refuse_bad_pairs(self):
+        targets = {"sapphire": 86400, "gold": 67200, "platinum": 62400}
+        cases = [
+            ({"race": "1.0", "relic": "9.9", "relic_targets": targets}, "relic revision '9.9' is not a revision of this track"),
+            ({"race": "1.0", "relic": "1.0", "relic_targets": targets}, "race and relic must be different revisions"),
+            ({"race": "1.0-relic", "relic": "1.0", "relic_targets": targets}, "race revision '1.0-relic' already has relic_race"),
+            ({"race": "1.0", "relic": "1.0-relic"}, "relic_targets: missing"),
+            ({"race": "1.0", "relic": "1.0-relic", "relic_targets": {**targets, "gold": 90000}},
+             "targets must be faster from sapphire to gold to platinum"),
+            ({"race": "1.0", "relic": "1.0-relic", "relic_targets": {**targets, "bronze": 1}}, "unknown keys ['bronze']"),
+            ({"race": "1.0", "relic": "1.0-relic", "relic_targets": targets, "laps": 3}, "unknown keys ['laps']"),
+            ({"race": "1.0", "relic": "1.0-relic", "relic_targets": {**targets, "platinum": 0}}, "platinum must be at least 1"),
+            ({"race": "1.0", "relic": "1.0-relic", "relic_targets": {**targets, "sapphire": 3456001}},
+             "sapphire must be at most 3456000"),
+            ({"race": "1.0", "relic": "1" * 65, "relic_targets": targets}, "expected 1 to 64 UTF-8 bytes"),
+        ]
+        for pair, expected in cases:
+            with self.subTest(expected=expected):
+                write_fixture(self.root, self.mode_pair_documents(pair))
+                self.assert_invalid(expected, fragment=True)
+
+    def test_mode_pairs_need_a_relic_mode_and_a_vrm(self):
+        write_fixture(self.root, self.mode_pair_documents(relic_modes=("time_trial",)))
+        self.assert_invalid("relic revision '1.0-relic' has no relic_race", fragment=True)
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            del track["revisions"][1]["files"]["vrm"]
+        write_fixture(self.root, documents)
+        self.assert_invalid("relic revision '1.0-relic' needs verified LEV and VRM hashes and sizes", fragment=True)
+
+    def test_mode_pairs_refuse_identical_files_and_oversize_pins(self):
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            track["revisions"][1]["files"] = copy.deepcopy(track["revisions"][0]["files"])
+        write_fixture(self.root, documents)
+        self.assert_invalid("race and relic revisions pin the same LEV and VRM hashes", fragment=True)
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            track["revisions"][1]["files"] = copy.deepcopy(track["revisions"][0]["files"])
+            track["revisions"][1]["files"]["lev"]["size"] += 1
+        write_fixture(self.root, documents)
+        self.assert_invalid("race and relic revisions pin the same LEV and VRM hashes", fragment=True)
+        for kind, size in (("lev", 8 * 1024 * 1024 + 1), ("vrm", 4 * 1024 * 1024 + 1)):
+            with self.subTest(kind=kind):
+                documents = self.mode_pair_documents()
+                for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+                    track["revisions"][1]["files"][kind]["size"] = size
+                write_fixture(self.root, documents)
+                self.assert_invalid("relic revision '1.0-relic' needs verified LEV and VRM hashes and sizes", fragment=True)
+
+    def test_mode_pairs_refuse_reused_files_long_label_prefixes_and_many_revisions(self):
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            twin = copy.deepcopy(track["revisions"][0])
+            twin.update(revision="2.0", content_id="9" * 64, modes=["relic_race"])
+            third = copy.deepcopy(track["revisions"][1])
+            third.update(revision="3.0", content_id="8" * 64, modes=["arcade"])
+            track["revisions"] += [twin, third]
+            track["mode_pairs"].append({"race": "3.0", "relic": "2.0",
+                                        "relic_targets": {"sapphire": 3, "gold": 2, "platinum": 1}})
+        write_fixture(self.root, documents)
+        self.assert_invalid("files are already in another pair", fragment=True)
+        long = "1." + "0" * 62
+
+        def prefix_documents(files):
+            documents = self.mode_pair_documents()
+            for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+                other = copy.deepcopy(track["revisions"][1])
+                other.update(revision=long + "x", content_id="7" * 64, modes=[], files=copy.deepcopy(files))
+                other["hash_state"] = "unverified"
+                track["revisions"][1]["revision"] = long
+                track["revisions"].append(other)
+                track["mode_pairs"][0]["relic"] = long
+            documents["named_tracks.json"]["tracks"][0]["revisions"].append("7" * 64)
+            return documents
+        # A colliding revision with both pins is indexed by the client: refused.
+        write_fixture(self.root, prefix_documents({"lev": {"sha256": "6" * 64, "size": 10},
+                                                   "vrm": {"sha256": "5" * 64, "size": 10}}))
+        self.assert_invalid("shares its first 64 bytes with another revision", fragment=True)
+        # Review round 3, finding 2: without a VRM pin (or with a pin the client
+        # cannot read) the client skips it before counting labels, so the pair
+        # still resolves there and the checker accepts it.
+        for files in ({"lev": {"sha256": "6" * 64, "size": 10}},
+                      {"lev": {"sha256": "6" * 64, "size": 10}, "vrm": {"sha256": "5" * 64, "size": 0}}):
+            with self.subTest(files=files):
+                documents = prefix_documents(files)
+                write_fixture(self.root, documents)
+                status, output = run(self.root, self.previous)
+                self.assertNotIn("shares its first 64 bytes", output)
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            for i in range(63):
+                track["revisions"].append({"revision": f"0.{i}", "hash_state": "unverified", "content_id": None,
+                                           "modes": [], "files": {}})
+        write_fixture(self.root, documents)
+        self.assert_invalid("may list at most 64 revisions", fragment=True)
+
+    def test_mode_pairs_use_each_revision_once_and_match_the_summary(self):
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            track["mode_pairs"].append(copy.deepcopy(track["mode_pairs"][0]))
+        write_fixture(self.root, documents)
+        self.assert_invalid("revision '1.0' is already in another pair", fragment=True)
+        documents = self.mode_pair_documents()
+        del documents["registry.json"]["tracks"][0]["mode_pairs"]
+        write_fixture(self.root, documents)
+        self.assert_invalid("entry must match registry.json apart from revision descriptors", fragment=True)
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            track["mode_pairs"] = []
+        write_fixture(self.root, documents)
+        self.assert_invalid("mode_pairs must list 1 to 8 pairs", fragment=True)
+
+    def test_mode_pair_files_have_one_role_across_tracks(self):
+        # Review round 3, finding 1: one track's race files listed as another
+        # track's Relic files. The client classifies Relic pairs first across
+        # every track, so the first track's race files would be left out.
+        documents = self.mode_pair_documents()
+        summary = documents["registry.json"]["tracks"][0]
+        other = copy.deepcopy(summary)
+        other.update(track_key="other", display_title="Other Circuit", block_index=None, ap_name=None,
+                     state="approved", shipped_in=None)
+        race, relic = copy.deepcopy(other["revisions"][0]), copy.deepcopy(other["revisions"][1])
+        race.update(content_id="1" * 64, files={"lev": {"sha256": "2" * 64, "size": 500},
+                                                "vrm": {"sha256": "3" * 64, "size": 600}})
+        relic.update(content_id="4" * 64, files=copy.deepcopy(summary["revisions"][0]["files"]))
+        other["revisions"] = [race, relic]
+        documents["registry.json"]["tracks"].append(other)
+        documents["tracks/other.json"] = copy.deepcopy(other)
+        documents["consent.json"]["tracks"].append({"track_key": "other",
+                                                    "client_listing": dict(documents["consent.json"]["tracks"][0]["client_listing"])})
+        write_fixture(self.root, documents)
+        self.assert_invalid("tracks.other: the relic revision's files are already the race files of mode_pairs in sample",
+                            fragment=True)
+        # The same second track with files of its own passes the cross-track check.
+        relic["files"] = {"lev": {"sha256": "5" * 64, "size": 700}, "vrm": {"sha256": "6" * 64, "size": 800}}
+        for track in (other, documents["tracks/other.json"]):
+            track["revisions"][1]["files"] = copy.deepcopy(relic["files"])
+        write_fixture(self.root, documents)
+        status, output = run(self.root, self.previous)
+        self.assertNotIn("mode_pairs in sample", output)
+
 
 if __name__ == "__main__":
     unittest.main()
