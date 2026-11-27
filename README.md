@@ -178,7 +178,7 @@ Sid House 1.1.0 on Project Saphi (track 59) is byte for byte the Sid's House bui
 
 What this means in the CTR Archipelago client:
 
-- **Download.** The client finds a download by the two file hashes. Only the `sid-house` revision has download ids, so a room that pins this pair downloads it from Project Saphi track 59 and installs it under the room's own track key and revision.
-- **An installed copy is reused only at the room's revision.** A room reuses an installed package when its files and its version match the room's entry. The copy imported from the patch is installed as version 1.0.0, so a room that pins `sid-house` 1.1.0 still downloads its own copy.
+- **Download.** The client finds a download by the two file hashes. Only the `sid-house` revision has download ids, so for a room that pins this pair, Install missing offers it from Project Saphi track 59 when the author's permission allows it, and installs it under the room's own track key and revision.
+- **An installed copy is reused only at the room's revision.** In the shared package store, a room reuses an installed package when its files and its version match the room's entry. The copy imported from the patch is installed as version 1.0.0, so it does not count for a room that pins `sid-house` 1.1.0. The exact files in that track's own folder (`tracks/sid-house/original`) also count.
 - **One room, one entry.** A room lists this pair under one track key only; the generator refuses a YAML with both.
-- **Names and credits.** The client names an imported copy from its own table (`sids-house`, "Sid's House"). Credits looked up by these two hashes find two tracks, so the client uses the package's own author line instead of either entry's credits.
+- **Names and credits.** The client names an imported copy from its own table (`sids-house`, "Sid's House"). Credits looked up by these two hashes find two tracks, so the client uses neither entry's credits: it shows the package's own author line when the package has one (the Saphi download names PanchoPew), and otherwise the source of the files.
