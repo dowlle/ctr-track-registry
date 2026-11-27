@@ -45,6 +45,7 @@ MAX_BLOCKS = 10_000
 MAX_MODE_PAIRS = 8
 MODE_PAIR_LABEL_BYTES = 64  # the client reads revision labels up to 64 bytes
 MODE_PAIR_FILE_LIMITS = {"lev": 8 * 1024 * 1024, "vrm": 4 * 1024 * 1024}  # client registry and YAML limits
+MODE_PAIR_MAX_REVISIONS = 64  # the client skips a track with more
 MODE_PAIR_MAX_TICKS = RELIC_TICKS_PER_SECOND * 60 * 60  # one hour, the client and apworld cap
 LOCATION_BASE, LOCATIONS_PER_TRACK = 35_200_000, 200
 ITEM_BASE, ITEMS_PER_TRACK = 35_100_000, 5
@@ -328,7 +329,10 @@ def check_mode_pairs(row, revisions):
     if "mode_pairs" not in row.data:
         return
     by_label = {rev.revision: rev for rev in revisions if rev.revision is not None}
+    if len(revisions) > MODE_PAIR_MAX_REVISIONS:
+        row.error(f"a track with mode_pairs may list at most {MODE_PAIR_MAX_REVISIONS} revisions")
     races, relics = set(), set()
+    race_files, relic_files = set(), set()
     pairs = list(row.rows("mode_pairs"))
     if not 1 <= len(pairs) <= MAX_MODE_PAIRS:
         row.error(f"mode_pairs must list 1 to {MAX_MODE_PAIRS} pairs")
@@ -352,7 +356,11 @@ def check_mode_pairs(row, revisions):
                 pair.error(f"{role} revision {label!r} needs verified LEV and VRM hashes and sizes "
                            "(LEV at most 8 MiB, VRM at most 4 MiB)")
             else:
-                resolved[role] = tuple((pin["sha256"], pin["size"]) for pin in pins)
+                resolved[role] = tuple(pin["sha256"] for pin in pins)
+            prefix = label.encode("utf-8")[:MODE_PAIR_LABEL_BYTES]
+            if any(other is not rev and other.revision is not None
+                   and other.revision.encode("utf-8")[:MODE_PAIR_LABEL_BYTES] == prefix for other in revisions):
+                pair.error(f"{role} revision {label!r} shares its first {MODE_PAIR_LABEL_BYTES} bytes with another revision")
             if role == "race" and "relic_race" in rev.modes:
                 pair.error(f"race revision {label!r} already has relic_race")
             if role == "race" and not {"arcade", "ctr_challenge"} & set(rev.modes):
@@ -362,7 +370,14 @@ def check_mode_pairs(row, revisions):
         if race is not None and race == relic:
             pair.error("race and relic must be different revisions")
         elif len(resolved) == 2 and resolved["race"] == resolved["relic"]:
-            pair.error("race and relic revisions pin the same LEV and VRM files")
+            pair.error("race and relic revisions pin the same LEV and VRM hashes")
+        for role, mine, other in (("race", race_files, relic_files), ("relic", relic_files, race_files)):
+            files = resolved.get(role)
+            if files is None:
+                continue
+            if files in mine or files in other:
+                pair.error(f"the {role} revision's files are already in another pair")
+            mine.add(files)
         if race is not None:
             if race in races or race in relics:
                 pair.error(f"revision {race!r} is already in another pair")
