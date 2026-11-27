@@ -267,6 +267,8 @@ class Track:
     mapping: str | None
     shipped: str | None
     revisions: list[Revision]
+    # (role, LEV and VRM hashes) of every mode pair file, for the cross-track check
+    pair_files: tuple = ()
 
     @classmethod
     def read(cls, row):
@@ -304,8 +306,8 @@ class Track:
                 if rev.content_id in seen:
                     row.error(f"duplicate content_id {rev.content_id}")
                 seen.add(rev.content_id)
-        check_mode_pairs(row, revisions)
-        return cls(key, block, name, mint, mapping, shipped, revisions)
+        pair_files = check_mode_pairs(row, revisions)
+        return cls(key, block, name, mint, mapping, shipped, revisions, tuple(pair_files))
 
     def named_row(self):
         return {"track_key": self.key, "block_index": self.block, "ap_name": self.name,
@@ -325,14 +327,16 @@ def check_mode_pairs(row, revisions):
     whose Relic Race is in another (merged mode builds, `relic_files`). The
     client merges the two into one track entry when it writes a YAML, so each
     pair names a race revision, its Relic revision and the Relic targets the
-    entry carries (960 ticks per second)."""
+    entry carries (960 ticks per second). Returns (role, LEV and VRM hashes)
+    of each resolved pair file for the check across tracks."""
     if "mode_pairs" not in row.data:
-        return
+        return []
     by_label = {rev.revision: rev for rev in revisions if rev.revision is not None}
     if len(revisions) > MODE_PAIR_MAX_REVISIONS:
         row.error(f"a track with mode_pairs may list at most {MODE_PAIR_MAX_REVISIONS} revisions")
     races, relics = set(), set()
     race_files, relic_files = set(), set()
+    found = []
     pairs = list(row.rows("mode_pairs"))
     if not 1 <= len(pairs) <= MAX_MODE_PAIRS:
         row.error(f"mode_pairs must list 1 to {MAX_MODE_PAIRS} pairs")
@@ -358,7 +362,8 @@ def check_mode_pairs(row, revisions):
             else:
                 resolved[role] = tuple(pin["sha256"] for pin in pins)
             prefix = label.encode("utf-8")[:MODE_PAIR_LABEL_BYTES]
-            if any(other is not rev and other.revision is not None
+            # Only revisions the client indexes (both pins) can share a label there.
+            if any(other is not rev and other.revision is not None and client_indexed(other)
                    and other.revision.encode("utf-8")[:MODE_PAIR_LABEL_BYTES] == prefix for other in revisions):
                 pair.error(f"{role} revision {label!r} shares its first {MODE_PAIR_LABEL_BYTES} bytes with another revision")
             if role == "race" and "relic_race" in rev.modes:
@@ -378,6 +383,7 @@ def check_mode_pairs(row, revisions):
             if files in mine or files in other:
                 pair.error(f"the {role} revision's files are already in another pair")
             mine.add(files)
+            found.append((role, files))
         if race is not None:
             if race in races or race in relics:
                 pair.error(f"revision {race!r} is already in another pair")
@@ -393,6 +399,35 @@ def check_mode_pairs(row, revisions):
                      for tier in ("sapphire", "gold", "platinum")]
             if None not in times and not times[0] > times[1] > times[2]:
                 targets.error("targets must be faster from sapphire to gold to platinum")
+    return found
+
+
+def client_indexed(rev):
+    """True when the client's registry reader keeps this revision: a LEV and a
+    VRM pin, each a 64-digit hex hash (any case) and a size of 1 to 8 MiB.
+    Revisions without both pins are skipped before labels are counted."""
+    def pin(kind):
+        value = rev.files.get(kind)
+        sha = value.get("sha256") if type(value) is dict else None
+        size = value.get("size") if type(value) is dict else None
+        return (isinstance(sha, str) and re.fullmatch(r"[0-9a-fA-F]{64}", sha) is not None
+                and type(size) is int and 0 < size <= MODE_PAIR_FILE_LIMITS["lev"])
+    return pin("lev") and pin("vrm")
+
+
+def check_mode_pair_files_across_tracks(doc, tracks):
+    """A file pair has one role in one track. The client classifies a Relic
+    pair before a race pair across every track, so one track's race files
+    listed as another track's Relic files would hide the first track."""
+    owners = {}
+    for key, track in tracks.items():
+        for role, files in track.pair_files:
+            earlier = owners.get(files)
+            if earlier is not None and earlier[0] != key:
+                doc.error(f"tracks.{key}: the {role} revision's files are already the {earlier[1]} files of "
+                          f"mode_pairs in {earlier[0]}")
+            else:
+                owners.setdefault(files, (key, role))
 
 
 def registry_tracks(root, errors):
@@ -416,6 +451,7 @@ def registry_tracks(root, errors):
                 if folded in names:
                     row.error(f"ap_name {track.name!r} also used by {names[folded]}")
                 names[folded] = row.where
+    check_mode_pair_files_across_tracks(doc, tracks)
     return tracks, rows
 
 
