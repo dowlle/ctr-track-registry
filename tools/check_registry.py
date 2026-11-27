@@ -7,7 +7,8 @@ Exit status 0 when every check passes, 1 otherwise. This is the file the
 registry repository's CI runs. The registry owns this checker.
 
 Checks: file set and digest, mint_status (mint, reserved, builtin), schema version, unique keys and block indexes,
-id ranges, name rules, named_tracks.json agreement, no private fields, and with
+id ranges, name rules, named_tracks.json agreement, no private fields, optional
+mode_pairs (a race revision, its Relic revision and Relic targets), and with
 --previous the freeze rules: no track, block, shipped name or verified hash
 that was in the older set may change or disappear.
 
@@ -41,6 +42,7 @@ RELIC_TICKS_PER_SECOND = 960
 MAX_RELIC_LAPS = 127  # Native stores the lap count in a signed char.
 MAX_RELIC_TICKS = (2**31 - 1) // 100  # The HUD multiplies ticks by 100.
 MAX_BLOCKS = 10_000
+MAX_MODE_PAIRS = 8
 LOCATION_BASE, LOCATIONS_PER_TRACK = 35_200_000, 200
 ITEM_BASE, ITEMS_PER_TRACK = 35_100_000, 5
 NAME_MAX_BYTES = 105
@@ -298,6 +300,7 @@ class Track:
                 if rev.content_id in seen:
                     row.error(f"duplicate content_id {rev.content_id}")
                 seen.add(rev.content_id)
+        check_mode_pairs(row, revisions)
         return cls(key, block, name, mint, mapping, shipped, revisions)
 
     def named_row(self):
@@ -311,6 +314,59 @@ class Track:
             if rev.hash_state == "verified" and rev.revision is not None and rev.lev_hash is not None
             and "ctr_challenge" in rev.modes and None not in rev.modes
         }
+
+
+def check_mode_pairs(row, revisions):
+    """Optional `mode_pairs`: a track whose race modes are in one file pair and
+    whose Relic Race is in another (merged mode builds, `relic_files`). The
+    client merges the two into one track entry when it writes a YAML, so each
+    pair names a race revision, its Relic revision and the Relic targets the
+    entry carries (960 ticks per second)."""
+    if "mode_pairs" not in row.data:
+        return
+    by_label = {rev.revision: rev for rev in revisions if rev.revision is not None}
+    races, relics = set(), set()
+    pairs = list(row.rows("mode_pairs"))
+    if not 1 <= len(pairs) <= MAX_MODE_PAIRS:
+        row.error(f"mode_pairs must list 1 to {MAX_MODE_PAIRS} pairs")
+    for pair in pairs:
+        pair.exact({"race", "relic", "relic_targets"})
+        race, relic = pair.text("race"), pair.text("relic")
+        for role, label in (("race", race), ("relic", relic)):
+            if label is None:
+                continue
+            rev = by_label.get(label)
+            if rev is None:
+                pair.error(f"{role} revision {label!r} is not a revision of this track")
+                continue
+            pins = [rev.files.get(kind) for kind in ("lev", "vrm")]
+            if rev.hash_state != "verified" or not all(
+                    type(pin) is dict and isinstance(pin.get("sha256"), str) and HEX64.fullmatch(pin["sha256"])
+                    and type(pin.get("size")) is int and pin["size"] > 0 for pin in pins):
+                pair.error(f"{role} revision {label!r} needs verified LEV and VRM hashes and sizes")
+            if role == "race" and "relic_race" in rev.modes:
+                pair.error(f"race revision {label!r} already has relic_race")
+            if role == "race" and not {"arcade", "ctr_challenge"} & set(rev.modes):
+                pair.error(f"race revision {label!r} has neither arcade nor ctr_challenge")
+            if role == "relic" and "relic_race" not in rev.modes:
+                pair.error(f"relic revision {label!r} has no relic_race")
+        if race is not None and race == relic:
+            pair.error("race and relic must be different revisions")
+        if race is not None:
+            if race in races or race in relics:
+                pair.error(f"revision {race!r} is already in another pair")
+            races.add(race)
+        if relic is not None:
+            if relic in races or relic in relics:
+                pair.error(f"revision {relic!r} is already in another pair")
+            relics.add(relic)
+        targets = pair.object("relic_targets")
+        if targets is not None:
+            targets.exact({"sapphire", "gold", "platinum"})
+            times = [check_integer_bounds(targets, tier, maximum=MAX_RELIC_TICKS)
+                     for tier in ("sapphire", "gold", "platinum")]
+            if None not in times and not times[0] > times[1] > times[2]:
+                targets.error("targets must be faster from sapphire to gold to platinum")
 
 
 def registry_tracks(root, errors):

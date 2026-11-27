@@ -592,6 +592,71 @@ class CheckerTests(unittest.TestCase):
         write_fixture(self.root, documents)
         self.assert_invalid("origins.json.tracks.sample: own_letter_models needs verified CTR Challenge LEV hashes")
 
+    def mode_pair_documents(self, pair=None, relic_modes=("relic_race",)):
+        documents = fixture()
+        relic = {"revision": "1.0-relic", "hash_state": "verified", "content_id": "c" * 64,
+                 "modes": list(relic_modes), "files": {"lev": {"sha256": "d" * 64, "size": 300},
+                                                        "vrm": {"sha256": "e" * 64, "size": 400}}}
+        pair = pair if pair is not None else {"race": "1.0", "relic": "1.0-relic",
+                                              "relic_targets": {"sapphire": 86400, "gold": 67200, "platinum": 62400}}
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            track["revisions"][0]["files"]["vrm"] = {"sha256": "f" * 64, "size": 200}
+            track["revisions"].append(copy.deepcopy(relic))
+            track["mode_pairs"] = [copy.deepcopy(pair)]
+        documents["named_tracks.json"]["tracks"][0]["revisions"].append("c" * 64)
+        base = fixture()  # the race revision's VRM is part of its frozen pins
+        for track in (base["registry.json"]["tracks"][0], base[TRACK_FILE]):
+            track["revisions"][0]["files"]["vrm"] = {"sha256": "f" * 64, "size": 200}
+        write_fixture(self.previous, base)
+        return documents
+
+    def test_mode_pairs_accept_a_race_and_relic_revision(self):
+        write_fixture(self.root, self.mode_pair_documents())
+        self.assertEqual(run(self.root, self.previous), (0, "registry check: ok (0 problems)\n"))
+
+    def test_mode_pairs_refuse_bad_pairs(self):
+        targets = {"sapphire": 86400, "gold": 67200, "platinum": 62400}
+        cases = [
+            ({"race": "1.0", "relic": "9.9", "relic_targets": targets}, "relic revision '9.9' is not a revision of this track"),
+            ({"race": "1.0", "relic": "1.0", "relic_targets": targets}, "race and relic must be different revisions"),
+            ({"race": "1.0-relic", "relic": "1.0", "relic_targets": targets}, "race revision '1.0-relic' already has relic_race"),
+            ({"race": "1.0", "relic": "1.0-relic"}, "relic_targets: missing"),
+            ({"race": "1.0", "relic": "1.0-relic", "relic_targets": {**targets, "gold": 90000}},
+             "targets must be faster from sapphire to gold to platinum"),
+            ({"race": "1.0", "relic": "1.0-relic", "relic_targets": {**targets, "bronze": 1}}, "unknown keys ['bronze']"),
+            ({"race": "1.0", "relic": "1.0-relic", "relic_targets": targets, "laps": 3}, "unknown keys ['laps']"),
+            ({"race": "1.0", "relic": "1.0-relic", "relic_targets": {**targets, "platinum": 0}}, "platinum must be at least 1"),
+        ]
+        for pair, expected in cases:
+            with self.subTest(expected=expected):
+                write_fixture(self.root, self.mode_pair_documents(pair))
+                self.assert_invalid(expected, fragment=True)
+
+    def test_mode_pairs_need_a_relic_mode_and_a_vrm(self):
+        write_fixture(self.root, self.mode_pair_documents(relic_modes=("time_trial",)))
+        self.assert_invalid("relic revision '1.0-relic' has no relic_race", fragment=True)
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            del track["revisions"][1]["files"]["vrm"]
+        write_fixture(self.root, documents)
+        self.assert_invalid("relic revision '1.0-relic' needs verified LEV and VRM hashes and sizes", fragment=True)
+
+    def test_mode_pairs_use_each_revision_once_and_match_the_summary(self):
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            track["mode_pairs"].append(copy.deepcopy(track["mode_pairs"][0]))
+        write_fixture(self.root, documents)
+        self.assert_invalid("revision '1.0' is already in another pair", fragment=True)
+        documents = self.mode_pair_documents()
+        del documents["registry.json"]["tracks"][0]["mode_pairs"]
+        write_fixture(self.root, documents)
+        self.assert_invalid("entry must match registry.json apart from revision descriptors", fragment=True)
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            track["mode_pairs"] = []
+        write_fixture(self.root, documents)
+        self.assert_invalid("mode_pairs must list 1 to 8 pairs", fragment=True)
+
 
 if __name__ == "__main__":
     unittest.main()
