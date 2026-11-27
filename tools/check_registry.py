@@ -43,6 +43,9 @@ MAX_RELIC_LAPS = 127  # Native stores the lap count in a signed char.
 MAX_RELIC_TICKS = (2**31 - 1) // 100  # The HUD multiplies ticks by 100.
 MAX_BLOCKS = 10_000
 MAX_MODE_PAIRS = 8
+MODE_PAIR_LABEL_BYTES = 64  # the client reads revision labels up to 64 bytes
+MODE_PAIR_FILE_LIMITS = {"lev": 8 * 1024 * 1024, "vrm": 4 * 1024 * 1024}  # client registry and YAML limits
+MODE_PAIR_MAX_TICKS = RELIC_TICKS_PER_SECOND * 60 * 60  # one hour, the client and apworld cap
 LOCATION_BASE, LOCATIONS_PER_TRACK = 35_200_000, 200
 ITEM_BASE, ITEMS_PER_TRACK = 35_100_000, 5
 NAME_MAX_BYTES = 105
@@ -331,7 +334,9 @@ def check_mode_pairs(row, revisions):
         row.error(f"mode_pairs must list 1 to {MAX_MODE_PAIRS} pairs")
     for pair in pairs:
         pair.exact({"race", "relic", "relic_targets"})
-        race, relic = pair.text("race"), pair.text("relic")
+        race = pair.text("race", limit=MODE_PAIR_LABEL_BYTES)
+        relic = pair.text("relic", limit=MODE_PAIR_LABEL_BYTES)
+        resolved = {}
         for role, label in (("race", race), ("relic", relic)):
             if label is None:
                 continue
@@ -342,8 +347,12 @@ def check_mode_pairs(row, revisions):
             pins = [rev.files.get(kind) for kind in ("lev", "vrm")]
             if rev.hash_state != "verified" or not all(
                     type(pin) is dict and isinstance(pin.get("sha256"), str) and HEX64.fullmatch(pin["sha256"])
-                    and type(pin.get("size")) is int and pin["size"] > 0 for pin in pins):
-                pair.error(f"{role} revision {label!r} needs verified LEV and VRM hashes and sizes")
+                    and type(pin.get("size")) is int and 0 < pin["size"] <= MODE_PAIR_FILE_LIMITS[kind]
+                    for kind, pin in zip(("lev", "vrm"), pins)):
+                pair.error(f"{role} revision {label!r} needs verified LEV and VRM hashes and sizes "
+                           "(LEV at most 8 MiB, VRM at most 4 MiB)")
+            else:
+                resolved[role] = tuple((pin["sha256"], pin["size"]) for pin in pins)
             if role == "race" and "relic_race" in rev.modes:
                 pair.error(f"race revision {label!r} already has relic_race")
             if role == "race" and not {"arcade", "ctr_challenge"} & set(rev.modes):
@@ -352,6 +361,8 @@ def check_mode_pairs(row, revisions):
                 pair.error(f"relic revision {label!r} has no relic_race")
         if race is not None and race == relic:
             pair.error("race and relic must be different revisions")
+        elif len(resolved) == 2 and resolved["race"] == resolved["relic"]:
+            pair.error("race and relic revisions pin the same LEV and VRM files")
         if race is not None:
             if race in races or race in relics:
                 pair.error(f"revision {race!r} is already in another pair")
@@ -363,7 +374,7 @@ def check_mode_pairs(row, revisions):
         targets = pair.object("relic_targets")
         if targets is not None:
             targets.exact({"sapphire", "gold", "platinum"})
-            times = [check_integer_bounds(targets, tier, maximum=MAX_RELIC_TICKS)
+            times = [check_integer_bounds(targets, tier, maximum=MODE_PAIR_MAX_TICKS)
                      for tier in ("sapphire", "gold", "platinum")]
             if None not in times and not times[0] > times[1] > times[2]:
                 targets.error("targets must be faster from sapphire to gold to platinum")
