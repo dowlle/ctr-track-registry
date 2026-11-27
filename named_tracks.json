@@ -2,7 +2,7 @@
   "format": 1,
   "registry": {
     "commit": null,
-    "digest": "355ef66df927c7dbf15fdd6aead0f9a28607b6a8e0cdf695ef37698a35901c5f",
+    "digest": "e45b548bca6b763a5892043fd034bf741e974528057b93b1b05237d882708b52",
     "repository": null
   },
   "tracks": [
@@ -605,7 +605,8 @@
       "revisions": [
         "240962e3f99a4e3540bc8ccabbd67d76682149d1d0439f4256d98b48deb62736",
         "cf3e19e6c9dc969fc69141ff7be2d2e3ad5c371761ac97d32d01282efaffa384",
-        "daaf9b674874315ecdbfd9f101062bd0da644bcbc05112b8d9a7606449494f37"
+        "daaf9b674874315ecdbfd9f101062bd0da644bcbc05112b8d9a7606449494f37",
+        "5a67fe78e113c89a753015f8550266ac13f15b42d6d6e2e8b31f55d7cf62c830"
       ],
       "shipped_in": null,
       "track_key": "sid-house"

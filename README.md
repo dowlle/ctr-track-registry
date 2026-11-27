@@ -171,3 +171,14 @@ Some tracks keep their race modes (Trophy Race, CTR Challenge) in one LEV and VR
 ```
 
 `race` and `relic` name two verified revisions of the same track, each with LEV and VRM hashes and sizes. The race revision has `arcade` or `ctr_challenge` and no `relic_race`; the Relic revision has `relic_race`. A revision is in at most one pair, and a file pair has one role in one track across the whole registry. `relic_targets` are the Relic times in 960 ticks per second, sapphire slower than gold slower than platinum. The CTR Archipelago client reads this when it writes a YAML: the race revision becomes the track's `files` and the Relic revision its `relic_files`, with these targets, so the track keeps all its modes on one pad. `registry.json` and `tracks/<key>.json` carry the same list. Pairs are not frozen and can be corrected.
+
+## One file pair under two tracks
+
+Sid House 1.1.0 on Project Saphi (track 59) is byte for byte the Sid's House build in the LRG2Pancho custom adventure patch (slot 17). The registry lists that pair twice: as revision `1.1.0` of `sid-house`, with its Saphi download ids, and as revision `LRG2Pancho` of `sids-house`, without download ids. Both entries keep their block, name and hashes. No other pair is listed under two tracks.
+
+What this means in the CTR Archipelago client:
+
+- **Download.** The client finds a download by the two file hashes. Only the `sid-house` revision has download ids, so for a room that pins this pair, Install missing offers it from Project Saphi track 59 when the author's permission allows it, and installs it under the room's own track key and revision.
+- **An installed copy is reused only at the room's revision.** In the shared package store, a room reuses an installed package when its files and its version match the room's entry. The copy imported from the patch is installed as version 1.0.0, so it does not count for a room that pins `sid-house` 1.1.0. The exact files in that track's own folder (`tracks/sid-house/original`) also count.
+- **One room, one entry.** A room lists this pair under one track key only; the generator refuses a YAML with both.
+- **Names and credits.** The client names an imported copy from its own table (`sids-house`, "Sid's House"). Credits looked up by these two hashes find two tracks, so the client uses neither entry's credits: it shows the package's own author line when the package has one (the Saphi download names PanchoPew), and otherwise the source of the files.
