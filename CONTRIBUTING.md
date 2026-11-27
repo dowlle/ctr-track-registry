@@ -42,7 +42,9 @@ changed or is missing. CI also runs the base branch's freeze checker.
 Export into a separate directory. Older exporters write a checker and two
 JSON indexes that predate the road hashes. Keep the registry repository's
 checker. Carry `track_key_aliases`, `road_sha256` and `patch_lev_keys` from
-the current `registry.json` into the new export. When a supplemental LEV
+the current `registry.json` into the new export, and each track's `mode_pairs`
+into both its `registry.json` row and `tracks/<key>.json` (the exporter does
+not write them, and the freeze check does not protect them). When a supplemental LEV
 becomes a verified registry revision on the same track, remove its redundant
 supplemental entry.
 Keep the aliases targeting mint and built-in entries in `named_tracks.json`.

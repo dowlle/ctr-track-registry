@@ -626,6 +626,9 @@ class CheckerTests(unittest.TestCase):
             ({"race": "1.0", "relic": "1.0-relic", "relic_targets": {**targets, "bronze": 1}}, "unknown keys ['bronze']"),
             ({"race": "1.0", "relic": "1.0-relic", "relic_targets": targets, "laps": 3}, "unknown keys ['laps']"),
             ({"race": "1.0", "relic": "1.0-relic", "relic_targets": {**targets, "platinum": 0}}, "platinum must be at least 1"),
+            ({"race": "1.0", "relic": "1.0-relic", "relic_targets": {**targets, "sapphire": 3456001}},
+             "sapphire must be at most 3456000"),
+            ({"race": "1.0", "relic": "1" * 65, "relic_targets": targets}, "expected 1 to 64 UTF-8 bytes"),
         ]
         for pair, expected in cases:
             with self.subTest(expected=expected):
@@ -640,6 +643,20 @@ class CheckerTests(unittest.TestCase):
             del track["revisions"][1]["files"]["vrm"]
         write_fixture(self.root, documents)
         self.assert_invalid("relic revision '1.0-relic' needs verified LEV and VRM hashes and sizes", fragment=True)
+
+    def test_mode_pairs_refuse_identical_files_and_oversize_pins(self):
+        documents = self.mode_pair_documents()
+        for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+            track["revisions"][1]["files"] = copy.deepcopy(track["revisions"][0]["files"])
+        write_fixture(self.root, documents)
+        self.assert_invalid("race and relic revisions pin the same LEV and VRM files", fragment=True)
+        for kind, size in (("lev", 8 * 1024 * 1024 + 1), ("vrm", 4 * 1024 * 1024 + 1)):
+            with self.subTest(kind=kind):
+                documents = self.mode_pair_documents()
+                for track in (documents["registry.json"]["tracks"][0], documents[TRACK_FILE]):
+                    track["revisions"][1]["files"][kind]["size"] = size
+                write_fixture(self.root, documents)
+                self.assert_invalid("relic revision '1.0-relic' needs verified LEV and VRM hashes and sizes", fragment=True)
 
     def test_mode_pairs_use_each_revision_once_and_match_the_summary(self):
         documents = self.mode_pair_documents()
