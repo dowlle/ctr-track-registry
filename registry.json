@@ -2793,6 +2793,17 @@
       "links": {},
       "maps_to": null,
       "mint_status": "mint",
+      "mode_pairs": [
+        {
+          "race": "1.3.0",
+          "relic": "1.3.1",
+          "relic_targets": {
+            "sapphire": 72000,
+            "gold": 57600,
+            "platinum": 43200
+          }
+        }
+      ],
       "provenance": {
         "saphi": {
           "category": "saphi",
@@ -3167,6 +3178,17 @@
       "links": {},
       "maps_to": null,
       "mint_status": "mint",
+      "mode_pairs": [
+        {
+          "race": "1.1.2",
+          "relic": "1.1.2-relic",
+          "relic_targets": {
+            "sapphire": 38400,
+            "gold": 28800,
+            "platinum": 19200
+          }
+        }
+      ],
       "provenance": {
         "saphi": {
           "category": "saphi",
@@ -7789,6 +7811,17 @@
       "links": {},
       "maps_to": null,
       "mint_status": "mint",
+      "mode_pairs": [
+        {
+          "race": "1.1.0",
+          "relic": "1.1.1",
+          "relic_targets": {
+            "sapphire": 86400,
+            "gold": 67200,
+            "platinum": 48000
+          }
+        }
+      ],
       "provenance": {
         "saphi": {
           "category": "saphi",
@@ -9364,6 +9397,17 @@
       "links": {},
       "maps_to": null,
       "mint_status": "mint",
+      "mode_pairs": [
+        {
+          "race": "1.0.0",
+          "relic": "1.0.0-relic",
+          "relic_targets": {
+            "sapphire": 153600,
+            "gold": 115200,
+            "platinum": 91200
+          }
+        }
+      ],
       "provenance": {
         "saphi": {
           "category": "community",
@@ -9951,6 +9995,17 @@
       "links": {},
       "maps_to": null,
       "mint_status": "mint",
+      "mode_pairs": [
+        {
+          "race": "1.3.0",
+          "relic": "1.3.1",
+          "relic_targets": {
+            "sapphire": 86400,
+            "gold": 67200,
+            "platinum": 62400
+          }
+        }
+      ],
       "provenance": {
         "saphi": {
           "category": "saphi",
@@ -11776,6 +11831,17 @@
       "links": {},
       "maps_to": null,
       "mint_status": "mint",
+      "mode_pairs": [
+        {
+          "race": "1.0.3",
+          "relic": "1.0.2",
+          "relic_targets": {
+            "sapphire": 57600,
+            "gold": 43200,
+            "platinum": 28800
+          }
+        }
+      ],
       "provenance": {
         "saphi": {
           "category": "community",
