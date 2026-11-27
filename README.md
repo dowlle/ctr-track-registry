@@ -174,4 +174,11 @@ Some tracks keep their race modes (Trophy Race, CTR Challenge) in one LEV and VR
 
 ## One file pair under two tracks
 
-Sid House 1.1.0 on Project Saphi (track 59) is byte for byte the Sid's House build in the LRG2Pancho custom adventure patch (slot 17). The registry lists that pair twice: as revision `1.1.0` of `sid-house`, with its Saphi download ids, and as revision `LRG2Pancho` of `sids-house`, without download ids. Both entries keep their block, name and hashes. A room pins files, not a track key, so either install satisfies either entry. The CTR Archipelago client downloads the pair from the `sid-house` revision, the only one with download ids. Where only the files are known, the client cannot tell the two tracks apart: it names an imported copy from its own table (`sids-house`) and credits the pair from the package's own author line. No other pair is listed under two tracks.
+Sid House 1.1.0 on Project Saphi (track 59) is byte for byte the Sid's House build in the LRG2Pancho custom adventure patch (slot 17). The registry lists that pair twice: as revision `1.1.0` of `sid-house`, with its Saphi download ids, and as revision `LRG2Pancho` of `sids-house`, without download ids. Both entries keep their block, name and hashes. No other pair is listed under two tracks.
+
+What this means in the CTR Archipelago client:
+
+- **Download.** The client finds a download by the two file hashes. Only the `sid-house` revision has download ids, so a room that pins this pair downloads it from Project Saphi track 59 and installs it under the room's own track key and revision.
+- **An installed copy counts only for its own entry.** A room accepts an installed package with the room's track key and revision. A copy imported from the patch is `sids-house`, not `sid-house` 1.1.0, so a room that pins `sid-house` 1.1.0 still downloads its own copy.
+- **One room, one entry.** A room lists this pair under one track key only; the generator refuses a YAML with both.
+- **Names and credits.** The client names an imported copy from its own table (`sids-house`, "Sid's House"). Credits looked up by these two hashes find two tracks, so the client uses the package's own author line instead of either entry's credits.
